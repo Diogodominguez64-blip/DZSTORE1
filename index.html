@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <!-- MONEDA / PAÍS -->
+  <!-- PAÍS / MONEDA -->
   <div class="currency">
     <h2>🌍 Tu país</h2>
     <select id="currency" onchange="updateCurrency()">
@@ -46,6 +46,17 @@
       <option value="ARS">Argentina (ARS)</option>
       <option value="CLP">Chile (CLP)</option>
       <option value="PEN">Perú (PEN)</option>
+    </select>
+  </div>
+
+  <!-- VENDEDOR -->
+  <div class="seller">
+    <h2>👤 Elige un vendedor</h2>
+    <select id="seller">
+      <option value="">Selecciona un vendedor</option>
+      <option value="diogo">Dz Diogo</option>
+      <option value="ozoria">Dz Ozoria</option>
+      <option value="david">David</option>
     </select>
   </div>
 
@@ -71,6 +82,7 @@
 </div>
 
 <script>
+  /* ===== CONFIGURACIÓN ===== */
   const rates = {
     USD: 1,
     COP: 4000,
@@ -80,11 +92,18 @@
     PEN: 3.7
   };
 
+  const sellers = {
+    diogo: { name: "Dz Diogo", phone: "18293185425" },
+    ozoria: { name: "Dz Ozoria", phone: "18093185425" },
+    david: { name: "David", phone: "584262984228" }
+  };
+
   let currentCurrency = "USD";
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   renderCart();
 
+  /* ===== CARRITO ===== */
   function addToCart(product, price) {
     cart.push({ product, price });
     saveCart();
@@ -138,17 +157,26 @@
     countSpan.textContent = cart.length;
   }
 
+  /* ===== WHATSAPP ===== */
   function sendWhatsApp() {
     if (cart.length === 0) {
       alert("El carrito está vacío");
       return;
     }
 
+    const sellerKey = document.getElementById("seller").value;
+    if (!sellerKey) {
+      alert("Selecciona un vendedor");
+      return;
+    }
+
+    const seller = sellers[sellerKey];
     const orderCode = generateOrderCode();
     let total = 0;
 
     let msg = `🧾 *TICKET DZSTORE OFICIAL*%0A`;
-    msg += `Pedido: *${orderCode}*%0A%0A`;
+    msg += `Pedido: *${orderCode}*%0A`;
+    msg += `Vendedor: *${seller.name}*%0A%0A`;
 
     cart.forEach((item, i) => {
       msg += `${i + 1}. ${item.product} - ${item.price} USD%0A`;
@@ -162,7 +190,7 @@
     msg += `%0A💵 Total USD: ${total} USD`;
 
     window.open(
-      "https://wa.me/18294103676?text=" + msg,
+      `https://wa.me/${seller.phone}?text=${msg}`,
       "_blank"
     );
   }
