@@ -13,54 +13,51 @@ body {
   color: white;
 }
 
-.fade-in {
-  animation: fadeUp 1s ease;
+@keyframes slideUpHard {
+  from { opacity: 0; transform: translateY(60px) scale(.95); }
+  to { opacity: 1; transform: none; }
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes neonPulse {
+  0% { box-shadow: 0 0 10px #00ff7b; }
+  50% { box-shadow: 0 0 30px #00ff7b, 0 0 60px rgba(0,255,120,.4); }
+  100% { box-shadow: 0 0 10px #00ff7b; }
 }
 
 .card {
   background: #0b0b0b;
-  padding: 30px 22px;
+  padding: 22px;
   border-radius: 18px;
-  width: 92%;
-  max-width: 420px;
-  text-align: center;
-  box-shadow:
-    0 0 25px rgba(0,255,120,.25),
-    0 0 60px rgba(0,255,120,.15);
+  width: 95%;
+  max-width: 430px;
+  animation: slideUpHard .9s ease;
+  box-shadow: 0 0 40px rgba(0,255,120,.25);
 }
 
 .subtitle {
+  text-align: center;
   color: #9cffc2;
-  font-size: 14px;
-  margin-bottom: 25px;
 }
 
-/* SERVICIOS */
-.services h2 {
+.category {
   color: #00ff7b;
+  margin-top: 20px;
 }
 
 .service {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 10px;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   background: #111;
   padding: 10px;
-  margin: 8px 0;
   border-radius: 8px;
-  font-size: 14px;
+  margin: 6px 0;
+  transition: .25s;
+}
+
+.service:hover {
+  transform: translateX(6px) scale(1.02);
+  box-shadow: 0 0 18px rgba(0,255,120,.4);
 }
 
 .service button {
@@ -68,99 +65,50 @@ body {
   border: none;
   padding: 6px 10px;
   border-radius: 6px;
-  cursor: pointer;
   font-weight: bold;
+  cursor: pointer;
 }
 
-/* MONEDA */
-.currency, .seller {
-  background: #111;
-  padding: 15px;
-  border-radius: 12px;
-  margin-top: 20px;
-}
-
-.currency h2, .seller h2 {
-  color: #00ff7b;
-  margin-top: 0;
-}
-
-.currency select, .seller select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-}
-
-/* CARRITO */
-.cart {
-  background: #111;
-  margin-top: 20px;
-  padding: 15px;
-  border-radius: 12px;
-  text-align: left;
-}
-
-.cart h2 {
-  color: #00ff7b;
-  text-align: center;
-}
-
-.cart ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.cart li {
+.cart-item {
   display: flex;
   justify-content: space-between;
-  margin: 6px 0;
-  font-size: 14px;
+  margin: 5px 0;
+  font-size: 13px;
 }
 
-.cart li button {
-  background: none;
+.cart-item button {
+  background: #ff4d4d;
   border: none;
-  color: red;
-  cursor: pointer;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
 }
 
-.total {
-  text-align: center;
-  margin-top: 10px;
-  font-weight: bold;
+select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+  border-radius: 6px;
 }
 
-.usd {
-  text-align: center;
-  font-size: 12px;
-  color: #aaa;
-}
-
-/* BOTÓN WHATSAPP */
-.btn.whatsapp {
-  display: block;
-  margin-top: 20px;
-  padding: 15px;
-  border-radius: 12px;
+.btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 14px;
   background: #00ff7b;
   color: #000;
   font-weight: bold;
-  text-decoration: none;
-  text-align: center;
-  box-shadow: 0 0 25px #00ff7b;
-  transition: transform .2s;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  animation: neonPulse 2s infinite;
 }
 
-.btn.whatsapp:hover {
-  transform: scale(1.05);
-}
-
-.footer {
-  font-size: 12px;
-  color: #666;
-  margin-top: 15px;
-  display: block;
-  text-align: center;
+.invoice {
+  background: #000;
+  border: 1px solid #00ff7b;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 12px;
+  font-size: 13px;
 }
