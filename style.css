@@ -73,19 +73,19 @@ body {
 }
 
 /* MONEDA */
-.currency {
+.currency, .seller {
   background: #111;
   padding: 15px;
   border-radius: 12px;
   margin-top: 20px;
 }
 
-.currency h2 {
+.currency h2, .seller h2 {
   color: #00ff7b;
   margin-top: 0;
 }
 
-.currency select {
+.currency select, .seller select {
   width: 100%;
   padding: 10px;
   border-radius: 8px;
