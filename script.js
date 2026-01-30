@@ -39,20 +39,41 @@ function render(){
   });
 
   document.getElementById("count").innerText=cart.length;
-  invoice.innerHTML=`💵 Total USD: ${total}<br>
-  🌍 Total ${currency}: ${Math.round(total*rates[currency])}`;
+  invoice.innerHTML=`
+    💵 Total USD: ${total}<br>
+    🌍 Total ${currency}: ${Math.round(total*rates[currency])}
+  `;
 }
 
-function payPaypal(){
+function pay(method){
   if(!cart.length) return alert("Carrito vacío");
-  const total = cart.reduce((s,p)=>s+p.price,0);
-  const paypalEmail = "TU_CORREO_PAYPAL@gmail.com";
-  const url = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${paypalEmail}&currency_code=USD&amount=${total}&item_name=DZSTORE+Pedido`;
-  window.open(url,"_blank");
-}
+  if(!seller) return alert("Selecciona un vendedor");
 
-function payWhatsapp(){
-  window.open("https://wa.me/18294103676","_blank");
+  const id = "DZ-" + Math.floor(Math.random()*99999);
+  const total = cart.reduce((s,p)=>s+p.price,0);
+
+  let msg = `🧾 *TICKET DZSTORE OFICIAL*\n`;
+  msg += `🆔 Pedido: *${id}*\n`;
+  msg += `👤 Vendedor: *${seller}*\n`;
+  msg += `💳 Método de pago: *${method === "paypal" ? "PayPal" : "Otros métodos"}*\n\n`;
+
+  cart.forEach((p,i)=>{
+    msg += `${i+1}. ${p.name} - ${p.price} USD\n`;
+  });
+
+  msg += `\n💵 Total USD: ${total}`;
+  msg += `\n🌍 Total ${currency}: ${Math.round(total*rates[currency])}`;
+
+  // 📲 WhatsApp DZSTORE
+  const phone = "18294103676";
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,"_blank");
+
+  // 🅿️ Redirigir a PayPal si aplica
+  if(method === "paypal"){
+    const paypalEmail = "dzstore0817@gmail.com";
+    const url = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${paypalEmail}&currency_code=USD&amount=${total}&item_name=DZSTORE+Pedido+${id}`;
+    setTimeout(()=>window.open(url,"_blank"),800);
+  }
 }
 
 function toast(msg){
