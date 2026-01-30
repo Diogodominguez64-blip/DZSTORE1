@@ -1,11 +1,11 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let seller = "Dz Diogo";
 let currency = "USD";
-let seller = "Diogo";
 
 const rates = {
   USD: 1,
-  COP: 4000,
   MXN: 17,
+  COP: 4000,
   ARS: 900
 };
 
@@ -19,42 +19,60 @@ function save() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-function changeCurrency(cur) {
-  currency = cur;
-  render();
+function setSeller(v) {
+  seller = v;
 }
 
-function setSeller(s) {
-  seller = s;
+function changeCurrency(c) {
+  currency = c;
+  render();
 }
 
 function render() {
   const items = document.getElementById("cart-items");
-  const totalEl = document.getElementById("total");
-  const countEl = document.getElementById("count");
+  const count = document.getElementById("count");
+  const totalLocal = document.getElementById("total-local");
+  const totalUSD = document.getElementById("total-usd");
 
   items.innerHTML = "";
-  let total = 0;
+  let usdTotal = 0;
 
-  cart.forEach(item => {
-    total += item.price;
-    items.innerHTML += `<div>${item.name} - ${(item.price * rates[currency]).toFixed(0)} ${currency}</div>`;
+  cart.forEach((item, i) => {
+    usdTotal += item.price;
+    items.innerHTML += `<div>${i + 1}. ${item.name} - ${item.price} USD</div>`;
   });
 
-  totalEl.innerText = (total * rates[currency]).toFixed(0) + " " + currency;
-  countEl.innerText = cart.length;
+  count.innerText = cart.length;
+  totalUSD.innerText = usdTotal;
+  totalLocal.innerText = Math.round(usdTotal * rates[currency]) + " " + currency;
+}
+
+function generateOrderCode() {
+  return "DZ-" + Math.floor(10000 + Math.random() * 90000);
 }
 
 function sendOrder() {
-  if (!cart.length) return alert("Carrito vacío");
+  if (!cart.length) return alert("El carrito está vacío");
 
-  let msg = `🧾 PEDIDO DZSTORE\n\n`;
-  cart.forEach(i => msg += `• ${i.name} - ${i.price} USD\n`);
-  msg += `\nTotal: ${cart.reduce((a,b)=>a+b.price,0)} USD`;
+  const orderCode = generateOrderCode();
+  let usdTotal = cart.reduce((s, i) => s + i.price, 0);
+  let localTotal = Math.round(usdTotal * rates[currency]);
 
-  let phone =
-    seller === "Ozoria" ? "18093185425" :
-    seller === "David" ? "584262984228" :
+  let msg = `🧾 *TICKET DZSTORE OFICIAL*\n`;
+  msg += `Pedido: *${orderCode}*\n`;
+  msg += `Vendedor: *${seller}*\n\n`;
+
+  cart.forEach((item, i) => {
+    msg += `${i + 1}. ${item.name} - ${item.price} USD\n`;
+  });
+
+  msg += `\n🌍 Moneda: ${currency}`;
+  msg += `\n💱 Total local: ${localTotal} ${currency}`;
+  msg += `\n💵 Total USD: ${usdTotal} USD`;
+
+  const phone =
+    seller.includes("Ozoria") ? "18093185425" :
+    seller.includes("David") ? "584262984228" :
     "18294103676";
 
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
