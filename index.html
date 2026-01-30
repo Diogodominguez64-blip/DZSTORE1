@@ -8,80 +8,134 @@
 </head>
 <body>
 
-  <div class="card fade-in">
-    <img src="logo.png" alt="DZSTORE" class="logo">
+<div class="card fade-in">
 
-    <h1>DZSTORE OFICIAL</h1>
-    <p class="subtitle">Game Cheats · Ventas digitales · Seguro</p>
+  <h1>DZSTORE OFICIAL</h1>
+  <p class="subtitle">Game Cheats · Ventas digitales · Seguro</p>
 
-    <div class="services">
-      <h2>Servicios</h2>
+  <!-- SERVICIOS -->
+  <div class="services">
+    <h2>Servicios</h2>
 
-      <div class="service">
-        <span>DRIP NO ROOT – 1 día</span>
-        <strong>3 USD</strong>
-        <button onclick="addToCart('DRIP NO ROOT – 1 día', 3)">Comprar</button>
-      </div>
-
-      <div class="service">
-        <span>DRIP NO ROOT – 7 días</span>
-        <strong>5 USD</strong>
-        <button onclick="addToCart('DRIP NO ROOT – 7 días', 5)">Comprar</button>
-      </div>
-
-      <div class="service">
-        <span>DRIP NO ROOT – 15 días</span>
-        <strong>8 USD</strong>
-        <button onclick="addToCart('DRIP NO ROOT – 15 días', 8)">Comprar</button>
-      </div>
+    <div class="service">
+      <span>DRIP NO ROOT – 1 día</span>
+      <strong>3 USD</strong>
+      <button onclick="addToCart('DRIP NO ROOT – 1 día', 3)">Comprar</button>
     </div>
 
-    <!-- CARRITO -->
-    <div class="cart">
-      <h2>🛒 Carrito</h2>
-      <ul id="cartItems"></ul>
-      <p class="total">Total: <span id="total">0</span> USD</p>
+    <div class="service">
+      <span>DRIP NO ROOT – 7 días</span>
+      <strong>5 USD</strong>
+      <button onclick="addToCart('DRIP NO ROOT – 7 días', 5)">Comprar</button>
     </div>
 
-    <a class="btn whatsapp" onclick="sendWhatsApp()">
-      📲 Finalizar pedido
-    </a>
-
-    <span class="footer">© 2026 DZSTORE OFICIAL</span>
+    <div class="service">
+      <span>DRIP NO ROOT – 15 días</span>
+      <strong>8 USD</strong>
+      <button onclick="addToCart('DRIP NO ROOT – 15 días', 8)">Comprar</button>
+    </div>
   </div>
 
+  <!-- MONEDA / PAÍS -->
+  <div class="currency">
+    <h2>🌍 Tu país</h2>
+    <select id="currency" onchange="updateCurrency()">
+      <option value="USD">Estados Unidos (USD)</option>
+      <option value="COP">Colombia (COP)</option>
+      <option value="MXN">México (MXN)</option>
+      <option value="ARS">Argentina (ARS)</option>
+      <option value="CLP">Chile (CLP)</option>
+      <option value="PEN">Perú (PEN)</option>
+    </select>
+  </div>
+
+  <!-- CARRITO -->
+  <div class="cart">
+    <h2>🛒 Carrito (<span id="count">0</span>)</h2>
+    <ul id="cartItems"></ul>
+
+    <p class="total">
+      Total: <span id="totalLocal">0</span>
+      <span id="currencyLabel">USD</span>
+    </p>
+    <p class="usd">
+      (Equivalente: <span id="totalUSD">0</span> USD)
+    </p>
+  </div>
+
+  <a class="btn whatsapp" onclick="sendWhatsApp()">
+    📲 Finalizar pedido
+  </a>
+
+  <span class="footer">© 2026 DZSTORE OFICIAL</span>
+</div>
+
 <script>
-  let cart = [];
+  const rates = {
+    USD: 1,
+    COP: 4000,
+    MXN: 17,
+    ARS: 900,
+    CLP: 950,
+    PEN: 3.7
+  };
+
+  let currentCurrency = "USD";
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  renderCart();
 
   function addToCart(product, price) {
     cart.push({ product, price });
+    saveCart();
     renderCart();
   }
 
   function removeItem(index) {
     cart.splice(index, 1);
+    saveCart();
     renderCart();
   }
 
-  function renderCart() {
-    const cartItems = document.getElementById("cartItems");
-    const totalSpan = document.getElementById("total");
+  function saveCart() {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
 
-    cartItems.innerHTML = "";
+  function updateCurrency() {
+    currentCurrency = document.getElementById("currency").value;
+    renderCart();
+  }
+
+  function generateOrderCode() {
+    return "DZ-" + Math.floor(10000 + Math.random() * 90000);
+  }
+
+  function renderCart() {
+    const list = document.getElementById("cartItems");
+    const totalLocal = document.getElementById("totalLocal");
+    const totalUSD = document.getElementById("totalUSD");
+    const currencyLabel = document.getElementById("currencyLabel");
+    const countSpan = document.getElementById("count");
+
+    list.innerHTML = "";
     let total = 0;
 
-    cart.forEach((item, index) => {
+    cart.forEach((item, i) => {
       total += item.price;
-
       const li = document.createElement("li");
       li.innerHTML = `
         ${item.product} - ${item.price} USD
-        <button onclick="removeItem(${index})">❌</button>
+        <button onclick="removeItem(${i})">❌</button>
       `;
-      cartItems.appendChild(li);
+      list.appendChild(li);
     });
 
-    totalSpan.textContent = total;
+    const converted = total * rates[currentCurrency];
+
+    totalUSD.textContent = total.toFixed(2);
+    totalLocal.textContent = converted.toLocaleString();
+    currencyLabel.textContent = currentCurrency;
+    countSpan.textContent = cart.length;
   }
 
   function sendWhatsApp() {
@@ -90,18 +144,27 @@
       return;
     }
 
-    let message = "🧾 *TICKET DZSTORE OFICIAL*%0A%0A";
+    const orderCode = generateOrderCode();
     let total = 0;
 
-    cart.forEach((item, index) => {
-      message += `${index + 1}. ${item.product} - ${item.price} USD%0A`;
+    let msg = `🧾 *TICKET DZSTORE OFICIAL*%0A`;
+    msg += `Pedido: *${orderCode}*%0A%0A`;
+
+    cart.forEach((item, i) => {
+      msg += `${i + 1}. ${item.product} - ${item.price} USD%0A`;
       total += item.price;
     });
 
-    message += `%0A💰 *Total:* ${total} USD`;
+    const localTotal = (total * rates[currentCurrency]).toLocaleString();
 
-    const phone = "18294103676";
-    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+    msg += `%0A🌍 Moneda: ${currentCurrency}`;
+    msg += `%0A💱 Total local: ${localTotal} ${currentCurrency}`;
+    msg += `%0A💵 Total USD: ${total} USD`;
+
+    window.open(
+      "https://wa.me/18294103676?text=" + msg,
+      "_blank"
+    );
   }
 </script>
 
