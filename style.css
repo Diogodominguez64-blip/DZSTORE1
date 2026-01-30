@@ -2,7 +2,7 @@
   box-sizing:border-box;
   margin:0;
   padding:0;
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-family:'Segoe UI',system-ui,sans-serif;
 }
 
 body{
@@ -12,9 +12,28 @@ body{
   justify-content:center;
   padding:20px;
   color:#fff;
+  position:relative;
+  overflow-x:hidden;
 }
 
-/* CARD PRINCIPAL */
+/* FONDO ANIMADO NEON */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(28,255,133,.18), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(28,255,133,.15), transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(28,255,133,.08), transparent 50%);
+  animation: neonMove 12s linear infinite;
+  z-index:-1;
+}
+
+@keyframes neonMove{
+  0%{background-position:0% 0%,100% 100%,50% 50%}
+  100%{background-position:100% 100%,0% 0%,60% 40%}
+}
+
 .card{
   width:100%;
   max-width:420px;
@@ -24,70 +43,38 @@ body{
   box-shadow:0 0 30px rgba(0,0,0,.85);
 }
 
-/* TITULOS */
-h1{
-  text-align:center;
-  margin-bottom:6px;
-  font-weight:700;
-}
+h1{text-align:center;margin-bottom:6px}
+.subtitle{text-align:center;font-size:14px;color:#9a9a9a;margin-bottom:20px}
 
-.subtitle{
-  text-align:center;
-  font-size:14px;
-  color:#9a9a9a;
-  margin-bottom:20px;
-}
-
-/* CATEGORIAS */
 .category{
   margin:22px 0 10px;
-  color:#eaeaea;        /* ← YA NO VERDE */
+  color:#eaeaea;
   font-size:15px;
   font-weight:600;
-  letter-spacing:.3px;
 }
 
-/* SERVICIOS */
 .service{
   background:#171717;
   border-radius:14px;
   padding:14px;
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   margin-bottom:12px;
-  box-shadow: inset 0 0 0 1px #222;
 }
 
-.service span{
-  font-size:14px;
-  color:#cfcfcf;
-}
-
-.service strong{
-  font-size:15px;
-  color:#fff;
-}
-
-/* BOTÓN + */
 .service button{
   width:44px;
   height:44px;
   border:none;
   border-radius:12px;
-  background:#1cff85;   /* verde controlado */
+  background:#1cff85;
   color:#000;
   font-size:22px;
   font-weight:bold;
   cursor:pointer;
-  transition:.15s ease;
 }
 
-.service button:active{
-  transform:scale(.92);
-}
-
-/* CARRITO */
 .cart-item{
   background:#151515;
   border-radius:12px;
@@ -95,18 +82,15 @@ h1{
   margin-bottom:8px;
   display:flex;
   justify-content:space-between;
-  align-items:center;
 }
 
 .cart-item button{
   background:none;
   border:none;
   color:#ff5a5a;
-  font-size:16px;
   cursor:pointer;
 }
 
-/* SELECTS */
 select{
   width:100%;
   margin-top:10px;
@@ -117,20 +101,17 @@ select{
   border:1px solid #2a2a2a;
 }
 
-/* FACTURA */
 .invoice{
   background:#101010;
   border-radius:12px;
   padding:12px;
   margin-top:12px;
   font-size:14px;
-  color:#d0d0d0;
 }
 
-/* BOTÓN FINAL */
 .btn{
   width:100%;
-  margin-top:14px;
+  margin-top:12px;
   padding:14px;
   border:none;
   border-radius:14px;
@@ -141,22 +122,23 @@ select{
   cursor:pointer;
 }
 
-/* TOAST */
+.btn.alt{
+  background:#181818;
+  color:#1cff85;
+  border:1px solid #1cff85;
+}
+
 .toast{
   position:fixed;
   bottom:20px;
   left:50%;
   transform:translateX(-50%);
-  background:#1a1a1a;   /* oscuro */
-  color:#1cff85;        /* texto verde */
+  background:#1a1a1a;
+  color:#1cff85;
   padding:12px 18px;
   border-radius:12px;
   opacity:0;
-  pointer-events:none;
   transition:.3s;
-  border:1px solid #1cff85;
 }
 
-.toast.show{
-  opacity:1;
-}
+.toast.show{opacity:1}
