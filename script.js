@@ -4,11 +4,12 @@ let currency = "USD";
 
 const rates = { USD:1, MXN:17, COP:4000, ARS:900 };
 
+// ================= AGREGAR PRODUCTO =================
 function add(name, price){
   cart.push({name,price});
   save();
   render();
-  toast("✔ Producto agregado");
+  toast("✔ Producto agregado al carrito");
   playSound();
 }
 
@@ -22,34 +23,47 @@ function save(){
   localStorage.setItem("dz_cart",JSON.stringify(cart));
 }
 
+// ================= RENDER =================
 function render(){
-  const items=document.getElementById("items");
-  const invoice=document.getElementById("invoice");
-  items.innerHTML="";
-  invoice.innerHTML="";
-  let total=0;
+  const items = document.getElementById("items");
+  const invoice = document.getElementById("invoice");
+
+  items.innerHTML = "";
+  invoice.innerHTML = "";
+
+  let total = 0;
 
   cart.forEach((p,i)=>{
-    total+=p.price;
-    items.innerHTML+=`
+    total += p.price;
+    items.innerHTML += `
       <div class="cart-item">
         ${p.name} - ${p.price} USD
         <button onclick="removeItem(${i})">✖</button>
-      </div>`;
+      </div>
+    `;
   });
 
-  document.getElementById("count").innerText=cart.length;
-  invoice.innerHTML=`
+  document.getElementById("count").innerText = cart.length;
+
+  invoice.innerHTML = `
     💵 Total USD: ${total}<br>
-    🌍 Total ${currency}: ${Math.round(total*rates[currency])}
+    🌍 Total ${currency}: ${Math.round(total * rates[currency])}
   `;
 }
 
+// ================= PAGO =================
 function pay(method){
-  if(!cart.length) return alert("Carrito vacío");
-  if(!seller) return alert("Selecciona un vendedor");
+  if(cart.length === 0){
+    toast("❌ El carrito está vacío");
+    return;
+  }
 
-  const id = "DZ-" + Math.floor(Math.random()*99999);
+  if(!seller){
+    toast("❌ Selecciona un vendedor");
+    return;
+  }
+
+  const id = "DZ-" + Math.floor(10000 + Math.random()*90000);
   const total = cart.reduce((s,p)=>s+p.price,0);
 
   let msg = `🧾 *TICKET DZSTORE OFICIAL*\n`;
@@ -62,30 +76,39 @@ function pay(method){
   });
 
   msg += `\n💵 Total USD: ${total}`;
-  msg += `\n🌍 Total ${currency}: ${Math.round(total*rates[currency])}`;
+  msg += `\n🌍 Total ${currency}: ${Math.round(total * rates[currency])}`;
 
-  // 📲 WhatsApp DZSTORE
+  // 📲 WHATSAPP PRINCIPAL
   const phone = "18294103676";
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,"_blank");
 
-  // 🅿️ Redirigir a PayPal si aplica
+  // 🅿️ PAYPAL
   if(method === "paypal"){
     const paypalEmail = "dzstore0817@gmail.com";
-    const url = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${paypalEmail}&currency_code=USD&amount=${total}&item_name=DZSTORE+Pedido+${id}`;
-    setTimeout(()=>window.open(url,"_blank"),800);
+    const paypalURL =
+      `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick` +
+      `&business=${paypalEmail}` +
+      `&currency_code=USD` +
+      `&amount=${total}` +
+      `&item_name=DZSTORE+Pedido+${id}`;
+
+    setTimeout(()=>{
+      window.open(paypalURL,"_blank");
+    }, 800);
   }
 }
 
+// ================= UI =================
 function toast(msg){
-  const t=document.getElementById("toast");
-  t.innerText=msg;
+  const t = document.getElementById("toast");
+  t.innerText = msg;
   t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),1500);
+  setTimeout(()=>t.classList.remove("show"), 1800);
 }
 
 function playSound(){
-  const s=document.getElementById("cart-sound");
-  s.currentTime=0;
+  const s = document.getElementById("cart-sound");
+  s.currentTime = 0;
   s.play().catch(()=>{});
 }
 
