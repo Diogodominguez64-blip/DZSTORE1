@@ -1,130 +1,70 @@
-// ====== ESTADO GLOBAL ======
 let cart = JSON.parse(localStorage.getItem("dz_cart")) || [];
-let seller = localStorage.getItem("dz_seller") || "Dz Diogo";
-let currency = localStorage.getItem("dz_currency") || "USD";
+let seller = "Dz Diogo";
+let currency = "USD";
+let last = localStorage.getItem("dz_last") || 0;
 
-// ====== TASAS ======
-const rates = {
-  USD: 1,
-  MXN: 17,
-  COP: 4000,
-  ARS: 900
-};
+const rates = { USD: 1, MXN: 17, COP: 4000, ARS: 900 };
 
-// ====== UTILIDADES ======
-function saveState() {
-  localStorage.setItem("dz_cart", JSON.stringify(cart));
-  localStorage.setItem("dz_seller", seller);
-  localStorage.setItem("dz_currency", currency);
+function add(name, price) {
+  cart.push({ name, price });
+  save();
+  render();
 }
 
-function generateOrderCode() {
+function remove(i) {
+  cart.splice(i, 1);
+  save();
+  render();
+}
+
+function save() {
+  localStorage.setItem("dz_cart", JSON.stringify(cart));
+}
+
+function code() {
   return "DZ-" + Math.floor(10000 + Math.random() * 90000);
 }
 
-// ====== CARRITO ======
-function addToCart(name, price) {
-  cart.push({ name, price });
-  saveState();
-  renderCart();
-}
-
-function removeItem(index) {
-  cart.splice(index, 1);
-  saveState();
-  renderCart();
-}
-
-function clearCart() {
-  cart = [];
-  saveState();
-  renderCart();
-}
-
-// ====== SELECTORES ======
-function setSeller(value) {
-  seller = value;
-  saveState();
-}
-
-function changeCurrency(value) {
-  currency = value;
-  saveState();
-  renderCart();
-}
-
-// ====== RENDER ======
-function renderCart() {
-  const itemsEl = document.getElementById("cart-items");
-  const countEl = document.getElementById("count");
-  const totalUsdEl = document.getElementById("total-usd");
-  const totalLocalEl = document.getElementById("total-local");
-  const currencyLabelEl = document.getElementById("currency-label");
-
-  if (!itemsEl) return;
-
-  itemsEl.innerHTML = "";
-  let totalUSD = 0;
-
-  cart.forEach((item, index) => {
-    totalUSD += item.price;
-
-    itemsEl.innerHTML += `
-      <div class="cart-item">
-        <span>${index + 1}. ${item.name}</span>
-        <strong>${item.price} USD</strong>
-        <button onclick="removeItem(${index})">✖</button>
-      </div>
-    `;
-  });
-
-  countEl.textContent = cart.length;
-  totalUsdEl.textContent = totalUSD;
-  totalLocalEl.textContent = Math.round(totalUSD * rates[currency]) + " " + currency;
-  currencyLabelEl.textContent = currency;
-}
-
-// ====== WHATSAPP ======
-function sendOrder() {
-  if (cart.length === 0) {
-    alert("El carrito está vacío");
-    return;
-  }
-
-  const orderCode = generateOrderCode();
-  const totalUSD = cart.reduce((sum, i) => sum + i.price, 0);
-  const totalLocal = Math.round(totalUSD * rates[currency]);
-
-  let message = `🧾 *TICKET DZSTORE OFICIAL*\n`;
-  message += `Pedido: *${orderCode}*\n`;
-  message += `Vendedor: *${seller}*\n\n`;
+function render() {
+  const items = document.getElementById("items");
+  const invoice = document.getElementById("invoice");
+  items.innerHTML = "";
+  invoice.innerHTML = "";
+  let total = 0;
 
   cart.forEach((item, i) => {
-    message += `${i + 1}. ${item.name} - ${item.price} USD\n`;
+    total += item.price;
+    items.innerHTML += `
+      <div class="cart-item">
+        ${i + 1}. ${item.name} - ${item.price} USD
+        <button onclick="remove(${i})">✖</button>
+      </div>`;
+    invoice.innerHTML += `${i + 1}. ${item.name} - ${item.price} USD<br>`;
   });
 
-  message += `\n🌍 Moneda: ${currency}`;
-  message += `\n💱 Total local: ${totalLocal} ${currency}`;
-  message += `\n💵 Total USD: ${totalUSD} USD`;
-
-  let phone = "18294103676"; // Dz Diogo
-  if (seller === "Dz Ozoria") phone = "18093185425";
-  if (seller === "David") phone = "584262984228";
-
-  window.open(
-    `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
-    "_blank"
-  );
+  document.getElementById("count").innerText = cart.length;
+  invoice.innerHTML += `<hr>Total USD: ${total}<br>Total ${currency}: ${Math.round(total * rates[currency])}`;
 }
 
-// ====== INIT ======
-window.addEventListener("load", () => {
-  // restaurar selects
-  const sellerSelect = document.querySelector("select[onchange*='setSeller']");
-  const currencySelect = document.querySelector("select[onchange*='changeCurrency']");
+function send() {
+  const now = Date.now();
+  if (now - last < 30000) return alert("Espera 30 segundos");
+  if (!cart.length) return alert("Carrito vacío");
 
-  if (sellerSelect) sellerSelect.value = seller;
-  if (currencySelect) currencySelect.value = currency;
+  localStorage.setItem("dz_last", now);
 
-  renderCart();
-});
+  const id = code();
+  const total = cart.reduce((s, i) => s + i.price, 0);
+
+  let msg = `🧾 *TICKET DZSTORE OFICIAL*\nPedido: *${id}*\nVendedor: *${seller}*\n\n`;
+  cart.forEach((i, x) => msg += `${x + 1}. ${i.name} - ${i.price} USD\n`);
+  msg += `\n🌍 Moneda: ${currency}\n💱 Total local: ${Math.round(total * rates[currency])} ${currency}\n💵 Total USD: ${total} USD`;
+
+  let phone = seller.includes("Ozoria") ? "18093185425" :
+              seller.includes("David") ? "584262984228" : "18294103676";
+
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
+}
+
+document.addEventListener("contextmenu", e => e.preventDefault());
+render();
