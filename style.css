@@ -1,142 +1,156 @@
-* {
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
-body {
-  margin: 0;
-  background: radial-gradient(circle at top, #0f3, #000 70%);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  padding: 20px;
+body{
+  background:#0b0b0b; /* negro limpio */
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  padding:20px;
+  color:#fff;
 }
 
-.card {
-  background: rgba(0,0,0,0.85);
-  border-radius: 22px;
-  padding: 20px;
-  max-width: 420px;
-  width: 100%;
-  color: #fff;
-  box-shadow: 0 0 40px rgba(0,255,120,0.3);
+/* CARD PRINCIPAL */
+.card{
+  width:100%;
+  max-width:420px;
+  background:#111;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 0 25px rgba(0,0,0,.7);
 }
 
-/* ===== HERO LOGO FIX ===== */
-.hero {
-  position: relative;
-  width: 100%;
-  height: 240px;
-  border-radius: 18px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
+/* TITULOS */
+h1{
+  text-align:center;
+  margin-bottom:6px;
 }
 
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background: url("logo.png") center/contain no-repeat;
-  filter: blur(30px) brightness(0.3);
-  transform: scale(1.7);
+.subtitle{
+  text-align:center;
+  font-size:14px;
+  color:#9f9f9f;
+  margin-bottom:20px;
 }
 
-.hero-logo {
-  position: relative;
-  max-width: 160px;
-  width: 70%;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 0 15px #00ff77);
+/* CATEGORIAS */
+.category{
+  margin:22px 0 10px;
+  color:#00ff7f;
+  font-size:16px;
 }
 
-/* TEXT */
-h1 {
-  text-align: center;
-  margin: 10px 0 5px;
+/* SERVICIOS */
+.service{
+  background:#181818;
+  border-radius:14px;
+  padding:14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
+  box-shadow: inset 0 0 0 1px #222;
 }
 
-.subtitle {
-  text-align: center;
-  color: #7dffb0;
-  font-size: 14px;
-  margin-bottom: 20px;
+.service span{
+  font-size:14px;
 }
 
-.category {
-  margin-top: 25px;
-  color: #00ff77;
+.service strong{
+  font-size:15px;
 }
 
-/* SERVICES */
-.service {
-  background: #111;
-  border-radius: 14px;
-  padding: 12px 15px;
-  margin: 10px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* BOTÓN + */
+.service button{
+  width:44px;
+  height:44px;
+  border:none;
+  border-radius:12px;
+  background:#00ff7f;
+  color:#000;
+  font-size:22px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.2s;
 }
 
-.service button {
-  background: #00ff77;
-  border: none;
-  border-radius: 10px;
-  width: 40px;
-  height: 40px;
-  font-size: 22px;
-  cursor: pointer;
+.service button:active{
+  transform:scale(.9);
 }
 
-/* CART */
-#items .cart-item {
-  background: #111;
-  margin: 6px 0;
-  padding: 8px 10px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
+/* CARRITO */
+.cart-item{
+  background:#161616;
+  border-radius:12px;
+  padding:10px;
+  margin-bottom:8px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-/* BUTTON */
-.btn {
-  width: 100%;
-  margin-top: 15px;
-  padding: 14px;
-  background: #00ff77;
-  border: none;
-  border-radius: 14px;
-  font-size: 16px;
-  cursor: pointer;
+.cart-item button{
+  background:none;
+  border:none;
+  color:#ff4d4d;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* SELECTS */
+select{
+  width:100%;
+  margin-top:10px;
+  padding:10px;
+  border-radius:10px;
+  background:#181818;
+  color:#fff;
+  border:1px solid #222;
+}
+
+/* FACTURA */
+.invoice{
+  background:#0f0f0f;
+  border-radius:12px;
+  padding:12px;
+  margin-top:12px;
+  font-size:14px;
+  color:#dcdcdc;
+}
+
+/* BOTÓN FINAL */
+.btn{
+  width:100%;
+  margin-top:14px;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:#00ff7f;
+  color:#000;
+  font-weight:bold;
+  font-size:16px;
+  cursor:pointer;
 }
 
 /* TOAST */
-.toast {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #00ff77;
-  color: #000;
-  padding: 12px 20px;
-  border-radius: 20px;
-  opacity: 0;
-  transition: 0.3s;
+.toast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#00ff7f;
+  color:#000;
+  padding:12px 18px;
+  border-radius:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
 }
 
-.toast.show {
-  opacity: 1;
-}
-
-/* MOBILE */
-@media (max-width: 480px) {
-  .hero {
-    height: 210px;
-  }
-  .hero-logo {
-    max-width: 140px;
-  }
+.toast.show{
+  opacity:1;
 }
