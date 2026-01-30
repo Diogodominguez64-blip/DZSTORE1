@@ -15,6 +15,12 @@ function addToCart(name, price) {
   render();
 }
 
+function removeItem(index) {
+  cart.splice(index, 1);
+  save();
+  render();
+}
+
 function save() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
@@ -33,18 +39,26 @@ function render() {
   const count = document.getElementById("count");
   const totalLocal = document.getElementById("total-local");
   const totalUSD = document.getElementById("total-usd");
+  const currencyLabel = document.getElementById("currency-label");
 
   items.innerHTML = "";
   let usdTotal = 0;
 
   cart.forEach((item, i) => {
     usdTotal += item.price;
-    items.innerHTML += `<div>${i + 1}. ${item.name} - ${item.price} USD</div>`;
+    items.innerHTML += `
+      <div class="cart-item">
+        <span>${i + 1}. ${item.name}</span>
+        <strong>${item.price} USD</strong>
+        <button onclick="removeItem(${i})">✖</button>
+      </div>
+    `;
   });
 
   count.innerText = cart.length;
   totalUSD.innerText = usdTotal;
   totalLocal.innerText = Math.round(usdTotal * rates[currency]) + " " + currency;
+  currencyLabel.innerText = currency;
 }
 
 function generateOrderCode() {
@@ -52,11 +66,14 @@ function generateOrderCode() {
 }
 
 function sendOrder() {
-  if (!cart.length) return alert("El carrito está vacío");
+  if (!cart.length) {
+    alert("El carrito está vacío");
+    return;
+  }
 
   const orderCode = generateOrderCode();
-  let usdTotal = cart.reduce((s, i) => s + i.price, 0);
-  let localTotal = Math.round(usdTotal * rates[currency]);
+  const usdTotal = cart.reduce((s, i) => s + i.price, 0);
+  const localTotal = Math.round(usdTotal * rates[currency]);
 
   let msg = `🧾 *TICKET DZSTORE OFICIAL*\n`;
   msg += `Pedido: *${orderCode}*\n`;
