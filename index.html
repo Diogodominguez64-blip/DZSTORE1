@@ -13,45 +13,39 @@
   <h1>DZSTORE OFICIAL</h1>
   <p class="subtitle">Game Cheats · Ventas digitales · Seguro</p>
 
-  <!-- SELECTOR MONEDA -->
-  <select id="currency" onchange="changeCurrency(this.value)">
-    <option value="USD">USD</option>
-    <option value="COP">COP</option>
-    <option value="MXN">MXN</option>
-    <option value="ARS">ARS</option>
-  </select>
-
-  <!-- PRODUCTOS -->
   <h2>Productos</h2>
 
+  <!-- DRIP NO ROOT -->
   <h3 class="category">🟢 DRIP NO ROOT</h3>
-  <div class="service"><span>1 día</span><strong data-price="3">3 USD</strong><button onclick="addToCart('DRIP NO ROOT – 1 día',3)">Comprar</button></div>
-  <div class="service"><span>7 días</span><strong data-price="5">5 USD</strong><button onclick="addToCart('DRIP NO ROOT – 7 días',5)">Comprar</button></div>
-  <div class="service"><span>15 días</span><strong data-price="8">8 USD</strong><button onclick="addToCart('DRIP NO ROOT – 15 días',8)">Comprar</button></div>
-  <div class="service"><span>30 días</span><strong data-price="12">12 USD</strong><button onclick="addToCart('DRIP NO ROOT – 30 días',12)">Comprar</button></div>
-
-  <h3 class="category">🧠 CUBAN PANEL PC</h3>
-  <div class="service"><span>1 día</span><strong data-price="2">2 USD</strong><button onclick="addToCart('CUBAN PANEL PC – 1 día',2)">Comprar</button></div>
-  <div class="service"><span>7 días</span><strong data-price="3">3 USD</strong><button onclick="addToCart('CUBAN PANEL PC – 7 días',3)">Comprar</button></div>
-  <div class="service"><span>30 días</span><strong data-price="8">8 USD</strong><button onclick="addToCart('CUBAN PANEL PC – 30 días',8)">Comprar</button></div>
-  <div class="service"><span>PERMANENTE</span><strong data-price="25">25 USD</strong><button onclick="addToCart('CUBAN PANEL PC – PERMANENTE',25)">Comprar</button></div>
-
-  <h3 class="category">🛡️ BYPASS ID PC</h3>
-  <div class="service"><span>1 día</span><strong data-price="2">2 USD</strong><button onclick="addToCart('BYPASS ID PC – 1 día',2)">Comprar</button></div>
-  <div class="service"><span>7 días</span><strong data-price="3">3 USD</strong><button onclick="addToCart('BYPASS ID PC – 7 días',3)">Comprar</button></div>
-  <div class="service"><span>30 días</span><strong data-price="6">6 USD</strong><button onclick="addToCart('BYPASS ID PC – 30 días',6)">Comprar</button></div>
+  <div class="service"><span>1 día</span><strong>3 USD</strong><button onclick="addToCart('DRIP NO ROOT – 1 día',3)">Comprar</button></div>
+  <div class="service"><span>7 días</span><strong>5 USD</strong><button onclick="addToCart('DRIP NO ROOT – 7 días',5)">Comprar</button></div>
+  <div class="service"><span>15 días</span><strong>8 USD</strong><button onclick="addToCart('DRIP NO ROOT – 15 días',8)">Comprar</button></div>
+  <div class="service"><span>30 días</span><strong>12 USD</strong><button onclick="addToCart('DRIP NO ROOT – 30 días',12)">Comprar</button></div>
 
   <!-- CARRITO -->
   <div class="cart">
     <h3>🛒 Carrito (<span id="count">0</span>)</h3>
     <div id="cart-items"></div>
-    <p>Total: <strong><span id="total">0</span></strong></p>
 
-    <select onchange="setSeller(this.value)">
-      <option value="Diogo">Dz Diogo</option>
-      <option value="Ozoria">Dz Ozoria</option>
-      <option value="David">David</option>
-    </select>
+    <div class="selectors">
+      <select onchange="setSeller(this.value)">
+        <option value="Dz Diogo">Dz Diogo</option>
+        <option value="Dz Ozoria">Dz Ozoria</option>
+        <option value="David">David</option>
+      </select>
+
+      <select onchange="changeCurrency(this.value)">
+        <option value="USD">USD</option>
+        <option value="MXN">MXN</option>
+        <option value="COP">COP</option>
+        <option value="ARS">ARS</option>
+      </select>
+    </div>
+
+    <p>
+      💱 Total local: <strong><span id="total-local">0</span></strong><br>
+      💵 Total USD: <strong><span id="total-usd">0</span> USD</strong>
+    </p>
 
     <button class="btn whatsapp" onclick="sendOrder()">Enviar pedido</button>
   </div>
