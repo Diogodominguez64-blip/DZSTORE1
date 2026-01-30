@@ -20,26 +20,90 @@
       <div class="service">
         <span>DRIP NO ROOT – 1 día</span>
         <strong>3 USD</strong>
+        <button onclick="addToCart('DRIP NO ROOT – 1 día', 3)">Comprar</button>
       </div>
 
       <div class="service">
         <span>DRIP NO ROOT – 7 días</span>
         <strong>5 USD</strong>
+        <button onclick="addToCart('DRIP NO ROOT – 7 días', 5)">Comprar</button>
       </div>
 
       <div class="service">
         <span>DRIP NO ROOT – 15 días</span>
         <strong>8 USD</strong>
+        <button onclick="addToCart('DRIP NO ROOT – 15 días', 8)">Comprar</button>
       </div>
     </div>
 
-    <a class="btn whatsapp" target="_blank"
-       href="https://wa.me/18294103676?text=Hola%20quiero%20información%20sobre%20DZSTORE%20OFICIAL">
-      📲 WhatsApp
+    <!-- CARRITO -->
+    <div class="cart">
+      <h2>🛒 Carrito</h2>
+      <ul id="cartItems"></ul>
+      <p class="total">Total: <span id="total">0</span> USD</p>
+    </div>
+
+    <a class="btn whatsapp" onclick="sendWhatsApp()">
+      📲 Finalizar pedido
     </a>
 
     <span class="footer">© 2026 DZSTORE OFICIAL</span>
   </div>
+
+<script>
+  let cart = [];
+
+  function addToCart(product, price) {
+    cart.push({ product, price });
+    renderCart();
+  }
+
+  function removeItem(index) {
+    cart.splice(index, 1);
+    renderCart();
+  }
+
+  function renderCart() {
+    const cartItems = document.getElementById("cartItems");
+    const totalSpan = document.getElementById("total");
+
+    cartItems.innerHTML = "";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      total += item.price;
+
+      const li = document.createElement("li");
+      li.innerHTML = `
+        ${item.product} - ${item.price} USD
+        <button onclick="removeItem(${index})">❌</button>
+      `;
+      cartItems.appendChild(li);
+    });
+
+    totalSpan.textContent = total;
+  }
+
+  function sendWhatsApp() {
+    if (cart.length === 0) {
+      alert("El carrito está vacío");
+      return;
+    }
+
+    let message = "🧾 *TICKET DZSTORE OFICIAL*%0A%0A";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      message += `${index + 1}. ${item.product} - ${item.price} USD%0A`;
+      total += item.price;
+    });
+
+    message += `%0A💰 *Total:* ${total} USD`;
+
+    const phone = "18294103676";
+    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+  }
+</script>
 
 </body>
 </html>
