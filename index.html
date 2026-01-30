@@ -41,11 +41,11 @@
   <div class="service"><span>30 días</span><strong>12 USD</strong><button onclick="add('DRIP PC – 30 días',12)">+</button></div>
 
   <!-- STRICKS BR -->
-  <h3 class="category">🎯 Stricks BR (Virtual / Root)</h3>
-  <div class="service"><span>1 día</span><strong>3 USD</strong><button onclick="add('Stricks BR – 1 día',3)">+</button></div>
-  <div class="service"><span>7 días</span><strong>7 USD</strong><button onclick="add('Stricks BR – 7 días',7)">+</button></div>
-  <div class="service"><span>15 días</span><strong>10 USD</strong><button onclick="add('Stricks BR – 15 días',10)">+</button></div>
-  <div class="service"><span>30 días</span><strong>15 USD</strong><button onclick="add('Stricks BR – 30 días',15)">+</button></div>
+  <h3 class="category">🎯 STRICKS BR (VIRTUAL / ROOT)</h3>
+  <div class="service"><span>1 día</span><strong>3 USD</strong><button onclick="add('STRICKS BR – 1 día',3)">+</button></div>
+  <div class="service"><span>7 días</span><strong>7 USD</strong><button onclick="add('STRICKS BR – 7 días',7)">+</button></div>
+  <div class="service"><span>15 días</span><strong>10 USD</strong><button onclick="add('STRICKS BR – 15 días',10)">+</button></div>
+  <div class="service"><span>30 días</span><strong>15 USD</strong><button onclick="add('STRICKS BR – 30 días',15)">+</button></div>
 
   <!-- HG NO ROOT -->
   <h3 class="category">🛡️ HG NO ROOT</h3>
@@ -77,13 +77,14 @@
   <h3 class="category">🛒 Carrito (<span id="count">0</span>)</h3>
   <div id="items"></div>
 
-  <!-- VENDEDOR Y MONEDA -->
+  <!-- VENDEDOR -->
   <select onchange="seller=this.value">
     <option>Dz Diogo</option>
     <option>Dz Ozoria</option>
     <option>David</option>
   </select>
 
+  <!-- MONEDA -->
   <select onchange="currency=this.value;render()">
     <option value="USD">USD</option>
     <option value="MXN">MXN</option>
@@ -91,10 +92,19 @@
     <option value="ARS">ARS</option>
   </select>
 
+  <!-- FACTURA -->
   <div class="invoice" id="invoice"></div>
 
   <button class="btn" onclick="send()">Enviar pedido</button>
 </div>
+
+<!-- TOAST -->
+<div id="toast" class="toast">Producto agregado</div>
+
+<!-- SONIDO -->
+<audio id="cart-sound" preload="auto">
+  <source src="add.mp3" type="audio/mpeg">
+</audio>
 
 <script src="script.js"></script>
 </body>
