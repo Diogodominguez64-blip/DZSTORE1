@@ -1,21 +1,21 @@
 let cart = [];
 let seller = "";
 let currency = "USD";
-let paymentMethod = "";
 
 const rates = {
   USD: 1,
   MXN: 17,
-  COP: 4000,
+  COP: 3900,
   ARS: 900
 };
 
 const sellerPhones = {
-  "Dz Diogo": "18294103676",
-  "Dz Ozoria": "18093185425",
-  "David": "584262984228"
+  "Dz Diogo": "593999999999",
+  "Dz Ozoria": "593888888888",
+  "David": "593777777777"
 };
 
+// ================= AGREGAR PRODUCTO =================
 function add(product){
   cart.push(product);
   render();
@@ -23,11 +23,13 @@ function add(product){
   playSound();
 }
 
+// ================= ELIMINAR =================
 function removeItem(i){
   cart.splice(i,1);
   render();
 }
 
+// ================= RENDER =================
 function render(){
   const items = document.getElementById("items");
   const invoice = document.getElementById("invoice");
@@ -42,74 +44,64 @@ function render(){
       <div class="cart-item">
         ${p.name} - ${p.plan} (${p.price} USD)
         <button onclick="removeItem(${i})">✖</button>
-      </div>
-    `;
+      </div>`;
   });
 
+  const converted = (totalUSD * rates[currency]).toFixed(2);
+
   document.getElementById("count").innerText = cart.length;
-
-  let totalLocal = Math.round(totalUSD * rates[currency]);
-
   invoice.innerHTML = `
-    🧾 <b>Resumen</b><br>
-    👤 Vendedor: ${seller || "-"}<br>
-    💳 Método de pago: ${paymentMethod || "-"}<br><br>
-    💵 Total USD: ${totalUSD}<br>
-    🌍 Total ${currency}: ${totalLocal}
+    <strong>Total:</strong> ${converted} ${currency}
   `;
 }
 
+// ================= PAGO =================
 function pay(method){
-  if(!cart.length){
-    alert("Carrito vacío");
+  if(cart.length === 0){
+    alert("❌ El carrito está vacío");
     return;
   }
 
   if(!seller){
-    alert("Selecciona un vendedor");
+    alert("❌ Selecciona un vendedor");
     return;
   }
 
-  paymentMethod = method === "paypal" ? "PayPal" : "Otro método de pago";
-  render();
+  const phone = sellerPhones[seller];
+  let totalUSD = cart.reduce((s,p)=>s+p.price,0);
+  const converted = (totalUSD * rates[currency]).toFixed(2);
 
-  sendTicket();
+  let ticket = `🧾 *NUEVO PEDIDO DZSTORE*\n\n`;
+  cart.forEach(p=>{
+    ticket += `• ${p.name} - ${p.plan} (${p.price} USD)\n`;
+  });
 
+  ticket += `
+----------------------
+💰 Total: ${converted} ${currency}
+💳 Método de pago: ${method === "paypal" ? "PayPal" : "Otro método"}
+👤 Vendedor: ${seller}
+
+Gracias por tu compra 💚
+En breve ${seller} te atenderá.
+`;
+
+  // WhatsApp
+  const wa = `https://wa.me/${phone}?text=${encodeURIComponent(ticket)}`;
+  window.open(wa, "_blank");
+
+  // PayPal redirect
   if(method === "paypal"){
     setTimeout(()=>{
       window.open(
-        "https://www.paypal.com/paypalme/dzstore0817",
+        `https://www.paypal.com/paypalme/dzstore0817/${totalUSD}`,
         "_blank"
       );
     }, 800);
   }
 }
 
-function sendTicket(){
-  const phone = sellerPhones[seller];
-  let totalUSD = cart.reduce((s,p)=>s+p.price,0);
-  let totalLocal = Math.round(totalUSD * rates[currency]);
-  let orderId = "DZ-" + Math.floor(Math.random()*99999);
-
-  let msg = `🧾 *TICKET DZSTORE OFICIAL*\n`;
-  msg += `Pedido: *${orderId}*\n`;
-  msg += `Vendedor: *${seller}*\n`;
-  msg += `Método de pago: *${paymentMethod}*\n\n`;
-
-  cart.forEach((p,i)=>{
-    msg += `${i+1}. ${p.name} - ${p.plan} (${p.price} USD)\n`;
-  });
-
-  msg += `\n💵 Total USD: ${totalUSD}`;
-  msg += `\n🌍 Total ${currency}: ${totalLocal}`;
-  msg += `\n\n✅ Gracias por tu compra.\nUn vendedor se pondrá en contacto contigo en breve.`;
-
-  window.open(
-    `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,
-    "_blank"
-  );
-}
-
+// ================= TOAST =================
 function toast(msg){
   const t = document.getElementById("toast");
   t.innerText = msg;
@@ -117,6 +109,7 @@ function toast(msg){
   setTimeout(()=>t.classList.remove("show"),1500);
 }
 
+// ================= SONIDO =================
 function playSound(){
   const s = document.getElementById("cart-sound");
   s.currentTime = 0;
