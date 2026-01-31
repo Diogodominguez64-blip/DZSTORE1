@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>DZ STORE</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>DZ STORE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ===== NAVBAR ===== -->
 <header class="navbar">
   <div class="nav-left">
     <img src="logo.png" class="nav-logo">
@@ -17,14 +16,12 @@
       <span class="nav-sub">GAME CHEATS</span>
     </div>
   </div>
-
-  <div class="nav-right">
-    <button class="orders-icon" onclick="toggleOrders()">🛒</button>
-  </div>
+  <button class="orders-icon" onclick="toggleOrders()">🛒</button>
 </header>
 
 <main class="products">
 
+  <!-- DRIP -->
   <div class="card">
     <img src="drip.png">
     <h2>DRIP</h2>
@@ -36,6 +33,7 @@
     <button onclick="addToCart('DRIP')">➕ AÑADIR AL CARRITO</button>
   </div>
 
+  <!-- HG -->
   <div class="card">
     <img src="HG.png">
     <h2>HG</h2>
@@ -46,6 +44,38 @@
     <button onclick="addToCart('HG')">➕ AÑADIR AL CARRITO</button>
   </div>
 
+  <!-- BR MODS -->
+  <div class="card">
+    <img src="Brmods.png">
+    <h2>BR MODS PC</h2>
+    <select class="plan">
+      <option value="10" data-label="15 DÍAS">15 DÍAS – 10 USD</option>
+      <option value="15" data-label="30 DÍAS">30 DÍAS – 15 USD</option>
+    </select>
+    <button onclick="addToCart('BR MODS PC')">➕ AÑADIR AL CARRITO</button>
+  </div>
+
+  <!-- STRICKER -->
+  <div class="card">
+    <img src="Stricker.png">
+    <h2>STRICKER VR</h2>
+    <select class="plan">
+      <option value="15" data-label="VIRTUAL">VIRTUAL – 15 USD</option>
+    </select>
+    <button onclick="addToCart('STRICKER VR')">➕ AÑADIR AL CARRITO</button>
+  </div>
+
+  <!-- CUBAN -->
+  <div class="card">
+    <img src="cuban.png">
+    <h2>CUBAN</h2>
+    <select class="plan">
+      <option value="25" data-label="PANEL PERMA">PANEL PERMA – 25 USD</option>
+      <option value="30" data-label="RAGE PERMA">RAGE PERMA – 30 USD</option>
+    </select>
+    <button onclick="addToCart('CUBAN')">➕ AÑADIR AL CARRITO</button>
+  </div>
+
 </main>
 
 <section id="checkout">
@@ -53,14 +83,14 @@
   <div id="cart"></div>
 
   <select id="seller">
-    <option value="">👤 Seleccionar vendedor ⬇</option>
+    <option value="">👤 Seleccionar vendedor</option>
     <option value="David|584262984228">David (+58)</option>
     <option value="Diogo|18294103676">Diogo (+1 829)</option>
     <option value="Osoria|18093185425">Osoria (+1 809)</option>
   </select>
 
   <select id="payment">
-    <option value="">💳 Método de pago ⬇</option>
+    <option value="">💳 Método de pago</option>
     <option>Bancolombia</option>
     <option>Nequi</option>
     <option>Zelle</option>
@@ -69,27 +99,18 @@
   </select>
 
   <select id="currency">
-    <option value="USD">💱 Moneda ⬇ (USD)</option>
-    <option value="MXN">MXN</option>
+    <option value="USD">💱 USD</option>
     <option value="COP">COP</option>
-    <option value="PEN">PEN</option>
+    <option value="MXN">MXN</option>
     <option value="ARS">ARS</option>
   </select>
 
   <div id="total"></div>
-  <button class="pay" onclick="sendTicket()">🚀 PAGAR Y ABRIR TICKET</button>
+  <button class="pay" onclick="sendTicket()">🚀 PAGAR Y ABRIR WHATSAPP</button>
 </section>
 
-<!-- MODAL PEDIDOS -->
-<div id="ordersModal" class="orders-modal">
-  <div class="orders-box">
-    <h3>🛍️ MIS PEDIDOS</h3>
-    <div id="ordersList"></div>
-    <button onclick="toggleOrders()">Cerrar</button>
-  </div>
-</div>
+<div id="toast">✅ Producto añadido</div>
 
-<div id="toast">Producto añadido al carrito</div>
 <script src="script.js"></script>
 </body>
 </html>
