@@ -3,130 +3,173 @@
 <head>
   <meta charset="UTF-8">
   <title>DZSTORE OFICIAL</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="card">
+<header class="top">
+  <h1>DZSTORE</h1>
+  <p>Cheats & Servicios Premium</p>
+</header>
 
-  <h1>DZSTORE OFICIAL</h1>
-  <p class="subtitle">Game Cheats · Ventas digitales · Seguro</p>
+<main class="shop">
 
-  <!-- DRIP -->
-  <h3 class="category">🟢 DRIP</h3>
-
-  <div class="product">
-    <img src="images/DRIP.png">
-    <div class="p-info">
-      <h4>DRIP NO ROOT</h4>
+  <!-- ================= DRIP ================= -->
+  <section class="product-card">
+    <div class="product-image">
+      <img src="images/DRIP.png">
+      <div class="overlay"></div>
+      <span class="product-title">DRIP NO ROOT</span>
+    </div>
+    <div class="product-body">
       <select onchange="selectPlan(this,'DRIP NO ROOT')">
-        <option selected disabled>Selecciona días</option>
+        <option selected disabled>Selecciona duración</option>
         <option value="3">1 día – 3 USD</option>
         <option value="5">7 días – 5 USD</option>
       </select>
       <button onclick="addToCart('DRIP NO ROOT')">➕ AÑADIR AL CARRITO</button>
     </div>
-  </div>
+  </section>
 
-  <div class="product">
-    <img src="images/DRIP.png">
-    <div class="p-info">
-      <h4>DRIP ROOT</h4>
+  <section class="product-card">
+    <div class="product-image">
+      <img src="images/DRIP.png">
+      <div class="overlay"></div>
+      <span class="product-title">DRIP ROOT</span>
+    </div>
+    <div class="product-body">
       <select onchange="selectPlan(this,'DRIP ROOT')">
-        <option selected disabled>Selecciona días</option>
+        <option selected disabled>Selecciona duración</option>
         <option value="20">30 días – 20 USD</option>
       </select>
       <button onclick="addToCart('DRIP ROOT')">➕ AÑADIR AL CARRITO</button>
     </div>
-  </div>
+  </section>
 
-  <!-- BR MODS -->
-  <h3 class="category">💻 BR MODS PC</h3>
-
-  <div class="product">
-    <img src="images/BRMODS.png">
-    <div class="p-info">
-      <h4>BR MODS PC</h4>
+  <!-- ================= BR MODS ================= -->
+  <section class="product-card">
+    <div class="product-image">
+      <img src="images/BRMODS.png">
+      <div class="overlay"></div>
+      <span class="product-title">BR MODS PC</span>
+    </div>
+    <div class="product-body">
       <select onchange="selectPlan(this,'BR MODS PC')">
-        <option selected disabled>Selecciona días</option>
+        <option selected disabled>Selecciona duración</option>
         <option value="10">15 días – 10 USD</option>
         <option value="15">30 días – 15 USD</option>
       </select>
       <button onclick="addToCart('BR MODS PC')">➕ AÑADIR AL CARRITO</button>
     </div>
-  </div>
+  </section>
 
-  <!-- HG -->
-  <h3 class="category">🛡️ HG</h3>
-
-  <div class="product">
-    <img src="images/HG.png">
-    <div class="p-info">
-      <h4>HG NO ROOT</h4>
+  <!-- ================= HG ================= -->
+  <section class="product-card">
+    <div class="product-image">
+      <img src="images/HG.png">
+      <div class="overlay"></div>
+      <span class="product-title">HG NO ROOT</span>
+    </div>
+    <div class="product-body">
       <select onchange="selectPlan(this,'HG NO ROOT')">
-        <option selected disabled>Selecciona días</option>
+        <option selected disabled>Selecciona duración</option>
         <option value="5">10 días – 5 USD</option>
       </select>
       <button onclick="addToCart('HG NO ROOT')">➕ AÑADIR AL CARRITO</button>
     </div>
-  </div>
+  </section>
 
-  <div class="product">
-    <img src="images/HG.png">
-    <div class="p-info">
-      <h4>HG ROOT</h4>
+  <section class="product-card">
+    <div class="product-image">
+      <img src="images/HG.png">
+      <div class="overlay"></div>
+      <span class="product-title">HG ROOT</span>
+    </div>
+    <div class="product-body">
       <select onchange="selectPlan(this,'HG ROOT')">
-        <option selected disabled>Selecciona días</option>
+        <option selected disabled>Selecciona duración</option>
         <option value="12">30 días – 12 USD</option>
       </select>
       <button onclick="addToCart('HG ROOT')">➕ AÑADIR AL CARRITO</button>
     </div>
-  </div>
+  </section>
 
-  <!-- STRICKS -->
-  <h3 class="category">🎯 STRICKS VR</h3>
-
-  <div class="product">
-    <img src="images/STRICKS.png">
-    <div class="p-info">
-      <h4>STRICKS VR</h4>
+  <!-- ================= STRICKS ================= -->
+  <section class="product-card">
+    <div class="product-image">
+      <img src="images/STRICKS.png">
+      <div class="overlay"></div>
+      <span class="product-title">STRICKS VR</span>
+    </div>
+    <div class="product-body">
       <select onchange="selectPlan(this,'STRICKS VR')">
         <option selected disabled>Selecciona plan</option>
         <option value="15">Virtual – 15 USD</option>
       </select>
       <button onclick="addToCart('STRICKS VR')">➕ AÑADIR AL CARRITO</button>
     </div>
-  </div>
+  </section>
 
-  <!-- CUBAN -->
-  <h3 class="category">💥 CUBAN</h3>
-
-  <div class="product">
-    <img src="images/CUBAN.png">
-    <div class="p-info">
-      <h4>CUBAN PANEL</h4>
+  <!-- ================= CUBAN ================= -->
+  <section class="product-card">
+    <div class="product-image">
+      <img src="images/CUBAN.png">
+      <div class="overlay"></div>
+      <span class="product-title">CUBAN PANEL</span>
+    </div>
+    <div class="product-body">
       <select onchange="selectPlan(this,'CUBAN PANEL')">
         <option selected disabled>Selecciona plan</option>
         <option value="25">PERMA – 25 USD</option>
       </select>
       <button onclick="addToCart('CUBAN PANEL')">➕ AÑADIR AL CARRITO</button>
     </div>
-  </div>
+  </section>
 
-  <div class="product">
-    <img src="images/CUBAN.png">
-    <div class="p-info">
-      <h4>CUBAN RAGE</h4>
+  <section class="product-card">
+    <div class="product-image">
+      <img src="images/CUBAN.png">
+      <div class="overlay"></div>
+      <span class="product-title">CUBAN RAGE</span>
+    </div>
+    <div class="product-body">
       <select onchange="selectPlan(this,'CUBAN RAGE')">
         <option selected disabled>Selecciona plan</option>
         <option value="30">PERMA – 30 USD</option>
       </select>
       <button onclick="addToCart('CUBAN RAGE')">➕ AÑADIR AL CARRITO</button>
     </div>
-  </div>
+  </section>
 
-</div>
+</main>
+
+<!-- ================= CARRITO ================= -->
+<section id="cart">
+  <h3>🛒 Tu carrito</h3>
+  <div id="cartItems"></div>
+  <div id="cartTotal"></div>
+
+  <div class="checkout">
+    <select id="seller">
+      <option value="David">David</option>
+      <option value="Dz Diogo">Dz Diogo</option>
+      <option value="Dz Ozoria">Dz Ozoria</option>
+    </select>
+
+    <select id="currency">
+      <option value="USD">USD</option>
+      <option value="MXN">MXN</option>
+      <option value="COP">COP</option>
+      <option value="PEN">PEN</option>
+      <option value="ARS">ARS</option>
+    </select>
+
+    <button class="pay" onclick="openTicket()">💬 Pagar y abrir ticket</button>
+  </div>
+</section>
+
+<div id="toast">Producto añadido</div>
 
 <script src="script.js"></script>
 </body>
