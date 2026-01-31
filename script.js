@@ -1,103 +1,120 @@
-let cart=[];
-const rates={USD:1,MXN:17,COP:3900,PEN:3.7,ARS:900};
+let cart = [];
+// Rates actualizados (puedes ajustarlos luego)
+const rates = { USD: 1, MXN: 17.1, COP: 3950, PEN: 3.75, ARS: 820 };
 
-function addToCart(name){
-  const card=event.target.closest('.card');
-  const plan=card.querySelector('.plan');
-  cart.push({
-    name,
-    label:plan.selectedOptions[0].dataset.label,
-    price:parseFloat(plan.value)
-  });
-  showToast();
-  renderCart();
+// 1. Mejora en la captura del evento
+function addToCart(name) {
+    const card = event.currentTarget.closest('.card'); // Usamos currentTarget para evitar errores
+    const plan = card.querySelector('.plan');
+    
+    const item = {
+        id: Date.now(), // ID único para cada item
+        name,
+        label: plan.selectedOptions[0].dataset.label,
+        price: parseFloat(plan.value)
+    };
+
+    cart.push(item);
+    showToast(`✅ ${name} añadido`);
+    renderCart();
 }
 
-function renderCart(){
-  const box=document.getElementById("cart");
-  box.innerHTML="";
-  let total=0;
+// 2. Renderizado más limpio con Template Literals
+function renderCart() {
+    const box = document.getElementById("cart");
+    box.innerHTML = "";
+    let total = 0;
 
-  cart.forEach((p,i)=>{
-    total+=p.price;
-    box.innerHTML+=`
-      <div class="cart-item">
-        ${p.name} — ${p.label}
-        <b>${p.price} USD</b>
-        <button onclick="removeItem(${i})">❌</button>
-      </div>`;
-  });
-  updateTotal(total);
+    cart.forEach((p, i) => {
+        total += p.price;
+        box.innerHTML += `
+            <div class="cart-item" style="animation: fadeIn 0.3s ease forwards;">
+                <div class="item-info">
+                    <strong>${p.name}</strong><br>
+                    <small>${p.label}</small>
+                </div>
+                <div class="item-price">
+                    <b>$${p.price}</b>
+                    <button class="btn-remove" onclick="removeItem(${i})">✕</button>
+                </div>
+            </div>`;
+    });
+    updateTotal(total);
 }
 
-function removeItem(i){
-  cart.splice(i,1);
-  renderCart();
+function removeItem(i) {
+    cart.splice(i, 1);
+    renderCart();
 }
 
-function updateTotal(usd){
-  const cur=document.getElementById("currency").value;
-  let t=`💰 TOTAL: ${usd.toFixed(2)} USD`;
-  if(cur!=="USD") t+=` | ${(usd*rates[cur]).toFixed(0)} ${cur}`;
-  document.getElementById("total").innerText=t;
+// 3. Formateo de moneda internacional
+function updateTotal(usd) {
+    const cur = document.getElementById("currency").value;
+    const totalLocal = (usd * rates[cur]);
+    
+    // Formateo elegante según la moneda
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: cur,
+        minimumFractionDigits: 0
+    });
+
+    let t = `💰 TOTAL: ${usd.toFixed(2)} USD`;
+    if (cur !== "USD") {
+        t += ` | ${formatter.format(totalLocal)}`;
+    }
+    document.getElementById("total").innerText = t;
 }
 
-function sendTicket(){
-  if(!cart.length) return alert("Carrito vacío");
-  const seller=document.getElementById("seller").value;
-  const pay=document.getElementById("payment").value;
-  if(!seller||!pay) return alert("Completa vendedor y pago");
+// 4. Ticket de WhatsApp más limpio y profesional
+function sendTicket() {
+    if (!cart.length) return alert("❌ El carrito está vacío");
+    
+    const sellerSelect = document.getElementById("seller");
+    const pay = document.getElementById("payment").value;
+    
+    if (!sellerSelect.value || !pay) return alert("⚠️ Completa vendedor y método de pago");
 
-  const [name,phone]=seller.split("|");
-  const order="#DZ-"+(Math.floor(Math.random()*90000)+10000);
-  const time=new Date().toLocaleString();
-  const totalUSD=cart.reduce((a,b)=>a+b.price,0);
+    const [name, phone] = sellerSelect.value.split("|");
+    const orderID = "#DZ" + Math.floor(1000 + Math.random() * 9000);
+    const time = new Date().toLocaleString();
+    const totalUSD = cart.reduce((a, b) => a + b.price, 0);
 
-  let msg=`💣🧾 DZ STORE — FACTURA
-🆔 ${order}
-⏱️ ${time}
+    let msg = `*💣 DZ STORE — ORDEN CONFIRMADA*\n`;
+    msg += `----------------------------------\n`;
+    msg += `🆔 *ID:* ${orderID}\n`;
+    msg += `⏱️ *FECHA:* ${time}\n\n`;
+    msg += `📦 *PRODUCTOS:*\n`;
+    
+    cart.forEach(p => {
+        msg += `• ${p.name} (${p.label}) - $${p.price} USD\n`;
+    });
 
-📦 PRODUCTOS
-`;
-  cart.forEach(p=>msg+=`• ${p.name} ${p.label} — ${p.price} USD\n`);
+    msg += `\n💵 *TOTAL:* $${totalUSD.toFixed(2)} USD\n`;
+    msg += `💳 *PAGO:* ${pay}\n`;
+    msg += `👤 *VENDEDOR:* ${name}\n`;
+    msg += `----------------------------------\n`;
+    msg += `🚀 _El vendedor te contactará en breve._`;
 
-  msg+=`
-💳 MÉTODO: ${pay}
-👤 VENDEDOR: ${name}
-🚀 ${name} te atenderá en breves`;
+    saveOrder({ order: orderID, time, totalUSD, seller: name });
+    
+    const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+    window.open(waUrl, '_blank');
 
-  saveOrder({order,time,totalUSD,seller:name});
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
-
-  cart=[];
-  renderCart();
+    cart = [];
+    renderCart();
 }
 
-function saveOrder(o){
-  const orders=JSON.parse(localStorage.getItem("dz_orders"))||[];
-  orders.unshift(o);
-  localStorage.setItem("dz_orders",JSON.stringify(orders));
+// 5. Guardar órdenes y Toast
+function saveOrder(o) {
+    const orders = JSON.parse(localStorage.getItem("dz_orders")) || [];
+    orders.unshift(o);
+    localStorage.setItem("dz_orders", JSON.stringify(orders.slice(0, 10))); // Guardamos solo las últimas 10
 }
 
-function toggleOrders(){
-  document.getElementById("ordersModal").classList.toggle("show");
-  loadOrders();
-}
-
-function loadOrders(){
-  const list=document.getElementById("ordersList");
-  const orders=JSON.parse(localStorage.getItem("dz_orders"))||[];
-  list.innerHTML=orders.length?orders.map(o=>`
-    <div class="order-item">
-      🧾 ${o.order}<br>
-      👤 ${o.seller}<br>
-      💰 ${o.totalUSD} USD<br>
-      ⏱️ ${o.time}
-    </div>`).join(""):"No hay pedidos aún";
-}
-
-function showToast(){
-  const t=document.getElementById("toast");
-  t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),1200);
+function showToast(text) {
+    const t = document.getElementById("toast");
+    t.innerText = text || "Añadido al carrito";
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 1500);
 }
