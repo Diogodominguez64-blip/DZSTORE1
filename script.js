@@ -33,7 +33,7 @@ function renderCart(){
       <div class="cart-item">
         <span>📦 ${p.name} — ${p.label}</span>
         <span>${p.price.toFixed(2)} USD</span>
-        <button onclick="removeItem(${i})">✖</button>
+        <button onclick="removeItem(${i})">❌</button>
       </div>
     `;
   });
@@ -48,7 +48,7 @@ function removeItem(i){
 
 function updateTotal(usd){
   const cur = document.getElementById("currency").value;
-  let text = `💰 Total: ${usd.toFixed(2)} USD`;
+  let text = `💰 TOTAL: ${usd.toFixed(2)} USD`;
 
   if(cur !== "USD"){
     text += ` | ${(usd * rates[cur]).toFixed(0)} ${cur}`;
@@ -77,36 +77,32 @@ function sendTicket(){
   const [sellerName, phone] = sellerValue.split("|");
 
   const order = Math.floor(Math.random() * 90000) + 10000;
-  const time = new Date().toLocaleTimeString('es-ES', {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
-  });
+  const time = new Date().toLocaleTimeString('es-ES');
 
-  let msg = 
-`DZ STORE — FACTURA
-ORDEN: #DZ-${order}
-HORA: ${time}
+  let msg =
+`🧾 DZ STORE — FACTURA
+━━━━━━━━━━━━━━━━━━
+🆔 ORDEN: #DZ-${order}
+⏰ HORA: ${time}
 
-PRODUCTOS:
+📦 PRODUCTOS
 `;
 
   cart.forEach(p => {
-    msg += `- ${p.name} ${p.label} — ${p.price.toFixed(2)} USD\n`;
+    msg += `• ${p.name} ${p.label} — 💵 ${p.price.toFixed(2)} USD\n`;
   });
 
   msg += `
-METODO DE PAGO: OTROS
-VENDEDOR: ${sellerName}
+━━━━━━━━━━━━━━━━━━
+💳 MÉTODO DE PAGO: OTROS
+👤 VENDEDOR: ${sellerName}
 
-${sellerName} te atenderá en breves.
-Gracias por tu compra.
+✅ ${sellerName} te atenderá en breves
+🔥 Gracias por tu compra
 `;
 
-  // Abrir WhatsApp directo
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
 
-  // Limpiar carrito
   cart = [];
   renderCart();
 }
