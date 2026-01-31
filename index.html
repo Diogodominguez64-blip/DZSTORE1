@@ -8,102 +8,61 @@
 </head>
 <body>
 
-<header>
+<header class="top">
   <h1>DZSTORE OFICIAL</h1>
   <p>Game Cheats · Ventas digitales · Seguro</p>
-</header>
-
-<!-- PRODUCTOS -->
-
-<section class="product">
-  <img src="drip.png">
-  <h2>DRIP CLIENT</h2>
-
-  <select onchange="setPrice(this,[3,12,25,35])">
-    <option value="0" selected>1 Día - $3</option>
-    <option value="1">7 Días - $12</option>
-    <option value="2">15 Días - $25</option>
-    <option value="3">30 Días - $35</option>
-  </select>
-
-  <button onclick="addToCart('DRIP CLIENT',3)">➕ Añadir al carrito</button>
-</section>
-
-<section class="product">
-  <img src="Brmods.png">
-  <h2>BR MODS PC</h2>
-
-  <select onchange="setPrice(this,[10,15])">
-    <option value="0" selected>15 días - $10</option>
-    <option value="1">30 días - $15</option>
-  </select>
-
-  <button onclick="addToCart('BR MODS PC',10)">➕ Añadir al carrito</button>
-</section>
-
-<section class="product">
-  <img src="HG.png">
-  <h2>HG</h2>
-
-  <select onchange="setPrice(this,[5,12])">
-    <option value="0" selected>NO ROOT - 10 días $5</option>
-    <option value="1">ROOT - 30 días $12</option>
-  </select>
-
-  <button onclick="addToCart('HG',5)">➕ Añadir al carrito</button>
-</section>
-
-<section class="product">
-  <img src="Stricker.png">
-  <h2>STRICKS VR</h2>
-
-  <select>
-    <option selected>Virtual - $15</option>
-  </select>
-
-  <button onclick="addToCart('STRICKS VR',15)">➕ Añadir al carrito</button>
-</section>
-
-<section class="product">
-  <img src="cuban.png">
-  <h2>CUBAN</h2>
-
-  <select onchange="setPrice(this,[25,30])">
-    <option value="0" selected>Panel PERMA - $25</option>
-    <option value="1">Rage PERMA - $30</option>
-  </select>
-
-  <button onclick="addToCart('CUBAN PANEL',25)">➕ Añadir al carrito</button>
-</section>
-
-<!-- CHECKOUT -->
-<section id="checkout">
-  <h2>🛒 Carrito</h2>
-  <div id="cart"></div>
-  <h3 id="total"></h3>
 
   <div class="selectors">
     <select id="seller">
-      <option value="8294103676">Dz Diogo</option>
-      <option value="8093185425">David</option>
-      <option value="584262984228">Vendedor 3</option>
+      <option value="Dz Diogo|+1 829 410 3676">Dz Diogo</option>
+      <option value="David|+1 (809) 318-5425">David</option>
+      <option value="Vendedor 3|+58 426-2984228">Vendedor 3</option>
     </select>
 
-    <select id="currency" onchange="renderCart()">
-      <option value="USD" selected>USD 🇺🇸</option>
-      <option value="MXN">MXN 🇲🇽</option>
-      <option value="COP">COP 🇨🇴</option>
-      <option value="PEN">PEN 🇵🇪</option>
-      <option value="ARS">ARS 🇦🇷</option>
-      <option value="DOP">DOP 🇩🇴</option>
+    <select id="currency">
+      <option value="USD">USD</option>
+      <option value="MXN">MXN</option>
+      <option value="COP">COP</option>
+      <option value="PEN">PEN</option>
+      <option value="ARS">ARS</option>
     </select>
   </div>
+</header>
 
-  <button class="pay" onclick="pay()">Pagar y crear ticket</button>
-</section>
+<!-- PRODUCTO HG -->
+<div class="product">
+  <img src="HG.png">
+  <h2>HG</h2>
 
-<div id="toast">✔ Producto añadido al carrito</div>
-<audio id="sound" src="add.mp3"></audio>
+  <div class="plans">
+    <button class="plan active" onclick="selectPlan(this,'HG NO ROOT','10 días',5)">NO ROOT · 10 días · $5</button>
+    <button class="plan" onclick="selectPlan(this,'HG ROOT','30 días',12)">ROOT · 30 días · $12</button>
+  </div>
+
+  <button class="add" onclick="addToCart()">🛒 Añadir al carrito</button>
+</div>
+
+<!-- STRICKS -->
+<div class="product">
+  <img src="Stricker.png">
+  <h2>STRICKS VR</h2>
+
+  <div class="plans">
+    <button class="plan active" onclick="selectPlan(this,'STRICKS VR','Virtual',15)">Virtual · $15</button>
+  </div>
+
+  <button class="add" onclick="addToCart()">🛒 Añadir al carrito</button>
+</div>
+
+<!-- CARRITO -->
+<div class="cart">
+  <h3>🛒 Carrito</h3>
+  <div id="cartItems"></div>
+  <div id="total"></div>
+  <button class="pay" onclick="openTicket()">💬 Pagar y abrir ticket</button>
+</div>
+
+<div id="toast">Producto añadido ✔</div>
 
 <script src="script.js"></script>
 </body>
