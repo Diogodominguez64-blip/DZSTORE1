@@ -8,90 +8,106 @@
 </head>
 <body>
 
-<header class="header">
+<header class="top">
   <h1>DZSTORE OFICIAL</h1>
   <p>Game Cheats · Ventas digitales · Seguro</p>
 </header>
 
-<main class="products">
+<div class="container">
 
-  <!-- PRODUCTO DRIP -->
-  <section class="product-card">
-    <img src="drip.png" alt="Drip Client">
-    <div class="product-info">
-      <h2>DRIP CLIENT</h2>
+  <!-- PRODUCTOS -->
 
-      <select class="plan">
-        <option selected>1 día - 3 USD</option>
-        <option>7 días - 5 USD</option>
-        <option>30 días - 20 USD</option>
-      </select>
+  <div class="product">
+    <img src="drip.png">
+    <h2>DRIP NO ROOT</h2>
+    <select onchange="selectProduct(this,'DRIP NO ROOT')">
+      <option value="1|3">1 día - 3 USD</option>
+      <option value="7|5">7 días - 5 USD</option>
+    </select>
+    <button onclick="addFromSelect(this)">➕ Añadir al carrito</button>
+  </div>
 
-      <button class="add-cart" onclick="addToCart('Drip Client')">
-        + Añadir al carrito
-      </button>
-    </div>
+  <div class="product">
+    <img src="drip.png">
+    <h2>DRIP ROOT</h2>
+    <select onchange="selectProduct(this,'DRIP ROOT')">
+      <option value="30|20">30 días - 20 USD</option>
+    </select>
+    <button onclick="addFromSelect(this)">➕ Añadir al carrito</button>
+  </div>
+
+  <div class="product">
+    <img src="HG.png">
+    <h2>HG</h2>
+    <select onchange="selectProduct(this,'HG')">
+      <option value="10|5">NO ROOT - 10 días - 5 USD</option>
+      <option value="30|12">ROOT - 30 días - 12 USD</option>
+    </select>
+    <button onclick="addFromSelect(this)">➕ Añadir al carrito</button>
+  </div>
+
+  <div class="product">
+    <img src="Stricker.png">
+    <h2>STRICKS VR</h2>
+    <select onchange="selectProduct(this,'STRICKS VR')">
+      <option value="0|15">Virtual - 15 USD</option>
+    </select>
+    <button onclick="addFromSelect(this)">➕ Añadir al carrito</button>
+  </div>
+
+  <div class="product">
+    <img src="Brmods.png">
+    <h2>BR MODS PC</h2>
+    <select onchange="selectProduct(this,'BR MODS PC')">
+      <option value="15|10">15 días - 10 USD</option>
+      <option value="30|15">30 días - 15 USD</option>
+    </select>
+    <button onclick="addFromSelect(this)">➕ Añadir al carrito</button>
+  </div>
+
+  <div class="product">
+    <img src="cuban.png">
+    <h2>CUBAN</h2>
+    <select onchange="selectProduct(this,'CUBAN')">
+      <option value="0|25">Panel PERMA - 25 USD</option>
+      <option value="0|30">Rage PERMA - 30 USD</option>
+    </select>
+    <button onclick="addFromSelect(this)">➕ Añadir al carrito</button>
+  </div>
+
+  <!-- CARRITO -->
+
+  <section id="checkout">
+    <h3>🛒 Carrito</h3>
+    <div id="cart"></div>
+
+    <label>Vendedor</label>
+    <select id="seller">
+      <option value="">Selecciona vendedor</option>
+      <option value="Dz Diogo|+18294103676">Dz Diogo</option>
+      <option value="David|+18093185425">David</option>
+      <option value="Soporte|+584262984228">Soporte</option>
+    </select>
+
+    <label>Moneda</label>
+    <select id="currency">
+      <option value="USD">USD</option>
+      <option value="MXN">MXN</option>
+      <option value="COP">COP</option>
+      <option value="PEN">PEN</option>
+      <option value="ARS">ARS</option>
+    </select>
+
+    <button class="pay" onclick="sendTicket()">💳 Pagar y abrir ticket</button>
   </section>
 
-  <!-- PRODUCTO HG -->
-  <section class="product-card">
-    <img src="HG.png" alt="HG Cheats">
-    <div class="product-info">
-      <h2>HG</h2>
+</div>
 
-      <select class="plan">
-        <option selected>NO ROOT - 10 días - 5 USD</option>
-        <option>ROOT - 30 días - 12 USD</option>
-      </select>
+<div id="toast"></div>
 
-      <button class="add-cart" onclick="addToCart('HG')">
-        + Añadir al carrito
-      </button>
-    </div>
-  </section>
-
-  <!-- PRODUCTO STRICKS VR -->
-  <section class="product-card">
-    <img src="Stricker.png" alt="Stricks VR">
-    <div class="product-info">
-      <h2>STRICKS VR</h2>
-
-      <select class="plan">
-        <option selected>Virtual - 15 USD</option>
-      </select>
-
-      <button class="add-cart" onclick="addToCart('Stricks VR')">
-        + Añadir al carrito
-      </button>
-    </div>
-  </section>
-
-</main>
-
-<!-- CARRITO -->
-<section id="checkout" class="checkout hidden">
-  <h3>Finalizar compra</h3>
-
-  <label>Seleccionar vendedor</label>
-  <select id="seller">
-    <option selected>Dz Diogo</option>
-    <option>David</option>
-    <option>Will</option>
-  </select>
-
-  <label>Seleccionar moneda</label>
-  <select id="currency">
-    <option selected>USD</option>
-    <option>MXN</option>
-    <option>COP</option>
-    <option>PEN</option>
-    <option>ARS</option>
-  </select>
-
-  <button class="pay-btn" onclick="sendTicket()">
-    Pagar y abrir ticket
-  </button>
-</section>
+<audio id="sound">
+  <source src="add.mp3" type="audio/mpeg">
+</audio>
 
 <script src="script.js"></script>
 </body>
