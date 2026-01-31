@@ -1,54 +1,80 @@
 let cart = [];
-let selected = null;
 
-function selectPlan(el){
-  const [name, plan, price] = el.value.split("|");
-  selected = {name, plan, price: Number(price)};
-}
+const rates = {
+  USD:1,
+  MXN:17,
+  COP:4000,
+  PEN:3.7,
+  ARS:900
+};
 
-function add(){
-  if(!selected) return;
-  cart.push(selected);
+const phones = {
+  Diogo:"18294103676",
+  Ozoria:"18093185425",
+  David:"584262984228"
+};
+
+function addProduct(name, plan, price){
+  cart.push({name, plan, price});
   render();
-  document.getElementById("sound").play();
-  showToast();
-  document.getElementById("cart").scrollIntoView({behavior:"smooth"});
+  toast("Producto agregado");
+  playSound();
+  document.getElementById("items").scrollIntoView({behavior:"smooth"});
 }
 
 function render(){
-  const items = document.getElementById("items");
-  const totalDiv = document.getElementById("total");
-  items.innerHTML = "";
-  let total = 0;
+  const items=document.getElementById("items");
+  const invoice=document.getElementById("invoice");
+  items.innerHTML="";
+  invoice.innerHTML="";
+  let total=0;
 
-  cart.forEach(p=>{
-    total += p.price;
-    items.innerHTML += `<div>${p.name} - ${p.plan} ($${p.price})</div>`;
+  cart.forEach((p,i)=>{
+    total+=p.price;
+    items.innerHTML+=`
+      <div class="cart-item">
+        ${p.name} (${p.plan}) - ${p.price} USD
+        <button onclick="cart.splice(${i},1);render()">✖</button>
+      </div>`;
   });
 
-  totalDiv.innerText = "Total: $" + total;
+  document.getElementById("count").innerText=cart.length;
+
+  const cur=document.getElementById("currency").value;
+  invoice.innerHTML=`
+    🧾 FACTURA<br>
+    Productos: ${cart.length}<br>
+    Total USD: ${total}<br>
+    Total ${cur}: ${Math.round(total*rates[cur])}
+  `;
 }
 
-function sendTicket(){
-  if(cart.length === 0) return;
+function pay(method){
+  if(!cart.length) return alert("Carrito vacío");
 
-  const sellerData = document.getElementById("seller").value.split("|");
-  const sellerName = sellerData[0];
-  const phone = sellerData[1];
-  const currency = document.getElementById("currency").value;
+  const seller=document.getElementById("seller").value;
+  const cur=document.getElementById("currency").value;
+  const phone=phones[seller];
+  const time=new Date().toLocaleString();
 
-  let msg = `🧾 *NUEVO PEDIDO DZSTORE*\n\n`;
-  cart.forEach(p=>{
-    msg += `• ${p.name} (${p.plan}) - ${p.price} ${currency}\n`;
-  });
+  let total=cart.reduce((s,p)=>s+p.price,0);
 
-  msg += `\n💳 Método: OTROS\n👤 Vendedor: ${sellerName}`;
+  let msg=`🧾 *TICKET DZSTORE*\nVendedor: ${seller}\nHora: ${time}\nMétodo: ${method}\n\n`;
+  cart.forEach((p,i)=>msg+=`${i+1}. ${p.name} (${p.plan}) - ${p.price} USD\n`);
+  msg+=`\n💵 Total USD: ${total}\n🌍 Total ${cur}: ${Math.round(total*rates[cur])}\n\nGracias por tu compra 💚`;
 
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
 }
 
-function showToast(){
-  const t = document.getElementById("toast");
+function toast(msg){
+  const t=document.getElementById("toast");
+  t.innerText=msg;
   t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),1200);
+  setTimeout(()=>t.classList.remove("show"),1500);
+}
+
+function playSound(){
+  const s=document.getElementById("cart-sound");
+  s.currentTime=0;
+  s.play().catch(()=>{});
 }
