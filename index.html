@@ -2,21 +2,22 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>DZ STORE</title>
+<title>ZSTORE</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="bg-logo"></div>
+<div class="bg-text">ZSTORE</div>
 
 <div class="app">
-<h1 class="title">DZ STORE</h1>
+<h1 class="title">ZSTORE</h1>
 
-<!-- PRODUCTO -->
-<div class="product-card">
-  <img src="drip.png" class="product-img">
+<!-- PRODUCTOS -->
+
+<div class="product-card fade-in">
+  <img src="DRIP.PNG" class="product-img">
   <div class="product-body">
     <h3>DRIP NO ROOT</h3>
     <select id="drip">
@@ -28,8 +29,8 @@
   </div>
 </div>
 
-<div class="product-card">
-  <img src="HG.png" class="product-img">
+<div class="product-card fade-in">
+  <img src="HG.PNG" class="product-img">
   <div class="product-body">
     <h3>HG</h3>
     <select id="hg">
@@ -40,8 +41,8 @@
   </div>
 </div>
 
-<div class="product-card">
-  <img src="Striker.png" class="product-img">
+<div class="product-card fade-in">
+  <img src="STRICKS.PNG" class="product-img">
   <div class="product-body">
     <h3>STRIKE VR</h3>
     <select id="strike">
@@ -51,8 +52,8 @@
   </div>
 </div>
 
-<div class="product-card">
-  <img src="cuban.png" class="product-img">
+<div class="product-card fade-in">
+  <img src="CUBAN.PNG" class="product-img">
   <div class="product-body">
     <h3>CUBAN PANEL</h3>
     <select id="cuban">
@@ -64,18 +65,17 @@
 </div>
 
 <!-- CARRITO -->
-<div class="cart">
+<div class="cart" id="cartBox">
   <h2>🛒 Carrito (<span id="count">0</span>)</h2>
   <div id="cartItems"></div>
   <p class="total">Total: <span id="total">0</span> USD</p>
 </div>
 
-<!-- OPCIONES -->
 <select id="seller">
   <option value="">👤 Seleccionar vendedor</option>
   <option value="David|584262984228">David</option>
-  <option value="Diogo|18294103676">Diego</option>
-  <option value="Ozoria|18093185425">Osoria</option>
+  <option value="Diego|18294103676">Diego</option>
+  <option value="Osoria|18093185425">Osoria</option>
 </select>
 
 <select id="currency" onchange="convert()">
