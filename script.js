@@ -1,64 +1,42 @@
-let cart = [];
-let seller = null;
-let currency = "USD";
+let cart=[];
+let currentPrice=0;
 
-const rates = { USD:1, MXN:17, COP:3900, ARS:900 };
-
-function setSeller(v){ seller = v; }
-function setCurrency(c){ currency = c; render(); }
-
-function updatePrice(sel,id){
-  const price = sel.value.split("|")[0];
-  document.getElementById(id).innerText =
-    `$${(price*rates[currency]).toFixed(2)} ${currency}`;
+function setPrice(sel,prices){
+  currentPrice=prices[sel.value];
 }
 
-function buy(name,id,btn){
-  if(!seller){ alert("Selecciona un vendedor"); return; }
-
-  const sel = btn.parentElement.querySelector("select");
-  const [price,plan] = sel.value.split("|");
-
-  cart.push({name,plan,price});
+function addToCart(name){
+  cart.push({name,price:currentPrice});
+  showToast();
   document.getElementById("sound").play();
-  render();
+  renderCart();
+  document.getElementById("checkout").scrollIntoView({behavior:"smooth"});
 }
 
-function render(){
-  const items = document.getElementById("items");
-  const totalBox = document.getElementById("total");
-  items.innerHTML="";
+function renderCart(){
+  let cur=document.getElementById("currency").value;
+  let rate=cur==="DOP"?58:1;
+  let html="";
   let total=0;
 
-  cart.forEach((p,i)=>{
-    total+=p.price;
-    items.innerHTML+=`
-      <div class="cart">
-        ${p.name} - ${p.plan}
-        <b>$${(p.price*rates[currency]).toFixed(2)} ${currency}</b>
-        <button onclick="cart.splice(${i},1);render()">✖</button>
-      </div>`;
+  cart.forEach(p=>{
+    total+=p.price*rate;
+    html+=`<div>${p.name} - ${p.price*rate} ${cur}</div>`;
   });
 
-  document.getElementById("count").innerText=cart.length;
-  totalBox.innerHTML=`TOTAL: $${(total*rates[currency]).toFixed(2)} ${currency}`;
+  document.getElementById("cart").innerHTML=html;
+  document.getElementById("total").innerText="Total: "+total+" "+cur;
 }
 
-function pay(type){
-  if(cart.length==0){ alert("Carrito vacío"); return; }
+function showToast(){
+  let t=document.getElementById("toast");
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),1500);
+}
 
-  const [name,phone]=seller.split("|");
-  let msg=`🧾 NUEVO PEDIDO\nVendedor: ${name}\n\n`;
-
-  cart.forEach(p=>{
-    msg+=`• ${p.name} (${p.plan}) - $${p.price} USD\n`;
-  });
-
-  msg+=`\nMétodo: ${type.toUpperCase()}`;
-
-  window.open(`https://wa.me/${phone.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`);
-
-  if(type=="paypal"){
-    window.open("https://www.paypal.com/paypalme/dzstore0817");
-  }
+function pay(){
+  let phone=document.getElementById("seller").value;
+  let msg="Pedido:%0A";
+  cart.forEach(p=>msg+=`- ${p.name} $${p.price}%0A`);
+  window.open(`https://wa.me/${phone}?text=${msg}`);
 }
