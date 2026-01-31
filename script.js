@@ -1,5 +1,5 @@
 let cart = [];
-const rates = { USD: 1, MXN: 17.1, COP: 3950, PEN: 3.75, ARS: 820 };
+const rates = { USD: 1, MXN: 17.5, COP: 3900, PEN: 3.7, ARS: 850 };
 
 function addToCart(name) {
     const card = event.currentTarget.closest('.card');
@@ -23,12 +23,9 @@ function renderCart() {
     cart.forEach((p, i) => {
         total += p.price;
         box.innerHTML += `
-            <div class="cart-item">
+            <div style="display:flex; justify-content:space-between; background:#121212; padding:10px; border-radius:8px; margin-bottom:5px; border-left:3px solid #3cff78;">
                 <span>${p.name} (${p.label})</span>
-                <div>
-                    <b>$${p.price}</b>
-                    <button onclick="removeItem(${i})" style="background:none; border:none; color:red; cursor:pointer; margin-left:10px;">✕</button>
-                </div>
+                <b>$${p.price} USD <span onclick="removeItem(${i})" style="color:#ff4757; cursor:pointer; margin-left:10px;">✕</span></b>
             </div>`;
     });
     updateTotal(total);
@@ -42,8 +39,7 @@ function removeItem(i) {
 function updateTotal(usd) {
     const cur = document.getElementById("currency").value;
     const totalLocal = (usd * rates[cur]);
-    
-    let t = `💰 TOTAL: ${usd.toFixed(2)} USD`;
+    let t = `TOTAL: ${usd.toFixed(2)} USD`;
     if (cur !== "USD") {
         t += ` | ${totalLocal.toLocaleString()} ${cur}`;
     }
@@ -51,19 +47,19 @@ function updateTotal(usd) {
 }
 
 function sendTicket() {
-    if (!cart.length) return alert("Carrito vacío");
+    if (!cart.length) return alert("El carrito está vacío");
     const sellerSelect = document.getElementById("seller");
     const pay = document.getElementById("payment").value;
     
-    if (!sellerSelect.value || !pay) return alert("Completa vendedor y pago");
+    if (!sellerSelect.value || !pay) return alert("Selecciona vendedor y método de pago");
 
     const [name, phone] = sellerSelect.value.split("|");
     const orderID = "#DZ" + Math.floor(1000 + Math.random() * 9000);
     const totalUSD = cart.reduce((a, b) => a + b.price, 0);
 
-    let msg = `*💣 DZ STORE — FACTURA*\n🆔 ${orderID}\n\n*PRODUCTOS:*\n`;
+    let msg = `*💣 DZ STORE — ORDEN*\n🆔 ID: ${orderID}\n\n*PRODUCTOS:*\n`;
     cart.forEach(p => msg += `• ${p.name} (${p.label}) — ${p.price} USD\n`);
-    msg += `\n*PAGO:* ${pay}\n*VENDEDOR:* ${name}\n🚀 El vendedor te atenderá en breves.`;
+    msg += `\n*PAGO:* ${pay}\n*VENDEDOR:* ${name}\n🚀 Contactando al vendedor...`;
 
     saveOrder({ order: orderID, time: new Date().toLocaleString(), totalUSD, seller: name });
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
@@ -87,14 +83,14 @@ function loadOrders() {
     const list = document.getElementById("ordersList");
     const orders = JSON.parse(localStorage.getItem("dz_orders")) || [];
     list.innerHTML = orders.length ? orders.map(o => `
-        <div class="order-item">
+        <div style="background:#121212; padding:10px; border-radius:8px; margin-bottom:10px; font-size:13px;">
             <b>${o.order}</b> - ${o.totalUSD} USD<br>
-            <small>${o.time}</small>
-        </div>`).join("") : "Sin pedidos aún";
+            <small style="color:#666;">${o.time}</small>
+        </div>`).join("") : "No hay pedidos recientes";
 }
 
 function showToast() {
     const t = document.getElementById("toast");
     t.classList.add("show");
-    setTimeout(() => t.classList.remove("show"), 1200);
+    setTimeout(() => t.classList.remove("show"), 1500);
 }
