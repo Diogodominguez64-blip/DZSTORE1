@@ -18,7 +18,7 @@
     </div>
   </div>
   <div class="nav-right">
-    <select id="currency" onchange="renderCart()">
+    <select id="currency" onchange="updateAllCurrency()">
       <option value="USD">USD</option>
       <option value="MXN">MXN</option>
       <option value="COP">COP</option>
@@ -38,12 +38,13 @@
     <div class="card-content">
       <h2>DRIP NO ROOT APK</h2>
       <label>Planes</label>
-      <select class="plan">
+      <select class="plan" onchange="updateCardPrice(this)">
         <option value="3" data-label="1 DÍA">1 DÍA – 3 USD</option>
         <option value="5" data-label="7 DÍAS">7 DÍAS – 5 USD</option>
         <option value="8" data-label="15 DÍAS">15 DÍAS – 8 USD</option>
         <option value="12" data-label="30 DÍAS">30 DÍAS – 12 USD</option>
       </select>
+      <div class="price-display"><span class="val" data-usd="3">3.00</span> <small class="cur">USD</small></div>
       <button onclick="addToCart('DRIP NO ROOT APK')">ADD TO CART</button>
     </div>
   </div>
@@ -53,11 +54,12 @@
     <div class="card-content">
       <h2>DRIP ROOT</h2>
       <label>Planes</label>
-      <select class="plan">
+      <select class="plan" onchange="updateCardPrice(this)">
         <option value="10" data-label="10 DÍAS">10 DÍAS – 10 USD</option>
         <option value="16" data-label="20 DÍAS">20 DÍAS – 16 USD</option>
         <option value="20" data-label="30 DÍAS">30 DÍAS – 20 USD</option>
       </select>
+      <div class="price-display"><span class="val" data-usd="10">10.00</span> <small class="cur">USD</small></div>
       <button onclick="addToCart('DRIP ROOT')">ADD TO CART</button>
     </div>
   </div>
@@ -67,12 +69,13 @@
     <div class="card-content">
       <h2>BR MODS PC "BYPASS"</h2>
       <label>Planes</label>
-      <select class="plan">
+      <select class="plan" onchange="updateCardPrice(this)">
         <option value="3" data-label="1 DÍA">1 DÍA – 3 USD</option>
         <option value="7" data-label="7 DÍAS">7 DÍAS – 7 USD</option>
         <option value="10" data-label="15 DÍAS">15 DÍAS – 10 USD</option>
         <option value="15" data-label="30 DÍAS">30 DÍAS – 15 USD</option>
       </select>
+      <div class="price-display"><span class="val" data-usd="3">3.00</span> <small class="cur">USD</small></div>
       <button onclick="addToCart('BR MODS PC BYPASS')">ADD TO CART</button>
     </div>
   </div>
@@ -82,12 +85,13 @@
     <div class="card-content">
       <h2>DRIP PC</h2>
       <label>Planes</label>
-      <select class="plan">
+      <select class="plan" onchange="updateCardPrice(this)">
         <option value="3" data-label="1 DÍA">1 DÍA – 3 USD</option>
         <option value="5" data-label="7 DÍAS">7 DÍAS – 5 USD</option>
         <option value="8" data-label="15 DÍAS">15 DÍAS – 8 USD</option>
         <option value="12" data-label="30 DÍAS">30 DÍAS – 12 USD</option>
       </select>
+      <div class="price-display"><span class="val" data-usd="3">3.00</span> <small class="cur">USD</small></div>
       <button onclick="addToCart('DRIP PC')">ADD TO CART</button>
     </div>
   </div>
@@ -97,12 +101,13 @@
     <div class="card-content">
       <h2>STRICKS BR VIRTUAL/ROOT</h2>
       <label>Planes</label>
-      <select class="plan">
+      <select class="plan" onchange="updateCardPrice(this)">
         <option value="3" data-label="1 DÍA">1 DÍA – 3 USD</option>
         <option value="7" data-label="7 DÍAS">7 DÍAS – 7 USD</option>
         <option value="10" data-label="15 DÍAS">15 DÍAS – 10 USD</option>
         <option value="15" data-label="30 DÍAS">30 DÍAS – 15 USD</option>
       </select>
+      <div class="price-display"><span class="val" data-usd="3">3.00</span> <small class="cur">USD</small></div>
       <button onclick="addToCart('STRICKS BR')">ADD TO CART</button>
     </div>
   </div>
@@ -112,11 +117,12 @@
     <div class="card-content">
       <h2>HG NO ROOT</h2>
       <label>Planes</label>
-      <select class="plan">
+      <select class="plan" onchange="updateCardPrice(this)">
         <option value="3" data-label="1 DÍA">1 DÍA – 3 USD</option>
         <option value="5" data-label="10 DÍAS">10 DÍAS – 5 USD</option>
         <option value="12" data-label="30 DÍAS">30 DÍAS – 12 USD</option>
       </select>
+      <div class="price-display"><span class="val" data-usd="3">3.00</span> <small class="cur">USD</small></div>
       <button onclick="addToCart('HG NO ROOT')">ADD TO CART</button>
     </div>
   </div>
@@ -126,12 +132,13 @@
     <div class="card-content">
       <h2>CUBAN RAGE PC</h2>
       <label>Planes</label>
-      <select class="plan">
+      <select class="plan" onchange="updateCardPrice(this)">
         <option value="2" data-label="1 DÍA">1 DÍA – 2 USD</option>
         <option value="6" data-label="7 DÍAS">7 DÍAS – 6 USD</option>
         <option value="10" data-label="30 DÍAS">30 DÍAS – 10 USD</option>
         <option value="30" data-label="PERMA">PERMA – 30 USD</option>
       </select>
+      <div class="price-display"><span class="val" data-usd="2">2.00</span> <small class="cur">USD</small></div>
       <button onclick="addToCart('CUBAN RAGE PC')">ADD TO CART</button>
     </div>
   </div>
@@ -141,12 +148,13 @@
     <div class="card-content">
       <h2>CUBAN PANEL PC</h2>
       <label>Planes</label>
-      <select class="plan">
+      <select class="plan" onchange="updateCardPrice(this)">
         <option value="2" data-label="1 DÍA">1 DÍA – 2 USD</option>
         <option value="3" data-label="7 DÍAS">7 DÍAS – 3 USD</option>
         <option value="8" data-label="30 DÍAS">30 DÍAS – 8 USD</option>
         <option value="25" data-label="PERMA">PERMA – 25 USD</option>
       </select>
+      <div class="price-display"><span class="val" data-usd="2">2.00</span> <small class="cur">USD</small></div>
       <button onclick="addToCart('CUBAN PANEL PC')">ADD TO CART</button>
     </div>
   </div>
@@ -156,11 +164,12 @@
     <div class="card-content">
       <h2>BYPASS ID PC</h2>
       <label>Planes</label>
-      <select class="plan">
+      <select class="plan" onchange="updateCardPrice(this)">
         <option value="2" data-label="1 DÍA">1 DÍA – 2 USD</option>
         <option value="3" data-label="7 DÍAS">7 DÍAS – 3 USD</option>
         <option value="6" data-label="30 DÍAS">30 DÍAS – 6 USD</option>
       </select>
+      <div class="price-display"><span class="val" data-usd="2">2.00</span> <small class="cur">USD</small></div>
       <button onclick="addToCart('BYPASS ID PC')">ADD TO CART</button>
     </div>
   </div>
