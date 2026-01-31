@@ -1,87 +1,64 @@
 let cart = [];
+let seller = null;
+let currency = "USD";
 
-function add(product){
-  cart.push(product);
-  render();
-  toast(`✔ ${product.name} agregado`);
-  playSound();
+const rates = { USD:1, MXN:17, COP:3900, ARS:900 };
+
+function setSeller(v){ seller = v; }
+function setCurrency(c){ currency = c; render(); }
+
+function updatePrice(sel,id){
+  const price = sel.value.split("|")[0];
+  document.getElementById(id).innerText =
+    `$${(price*rates[currency]).toFixed(2)} ${currency}`;
 }
 
-function removeItem(i){
-  cart.splice(i,1);
+function buy(name,id,btn){
+  if(!seller){ alert("Selecciona un vendedor"); return; }
+
+  const sel = btn.parentElement.querySelector("select");
+  const [price,plan] = sel.value.split("|");
+
+  cart.push({name,plan,price});
+  document.getElementById("sound").play();
   render();
 }
 
 function render(){
   const items = document.getElementById("items");
-  const invoice = document.getElementById("invoice");
-  items.innerHTML = "";
-  let total = 0;
+  const totalBox = document.getElementById("total");
+  items.innerHTML="";
+  let total=0;
 
   cart.forEach((p,i)=>{
-    total += p.price;
-    items.innerHTML += `
-      <div class="cart-item">
-        ${p.name} - ${p.plan} (${p.price} USD)
-        <button onclick="removeItem(${i})">✖</button>
+    total+=p.price;
+    items.innerHTML+=`
+      <div class="cart">
+        ${p.name} - ${p.plan}
+        <b>$${(p.price*rates[currency]).toFixed(2)} ${currency}</b>
+        <button onclick="cart.splice(${i},1);render()">✖</button>
       </div>`;
   });
 
-  document.getElementById("count").innerText = cart.length;
-  invoice.innerHTML = `💵 Total: ${total} USD`;
+  document.getElementById("count").innerText=cart.length;
+  totalBox.innerHTML=`TOTAL: $${(total*rates[currency]).toFixed(2)} ${currency}`;
 }
 
-function toast(msg){
-  const t = document.getElementById("toast");
-  t.innerText = msg;
-  t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),1500);
-}
+function pay(type){
+  if(cart.length==0){ alert("Carrito vacío"); return; }
 
-function playSound(){
-  const s = document.getElementById("cart-sound");
-  s.currentTime = 0;
-  s.play().catch(()=>{});
-}
+  const [name,phone]=seller.split("|");
+  let msg=`🧾 NUEVO PEDIDO\nVendedor: ${name}\n\n`;
 
-function getTotal(){
-  return cart.reduce((s,p)=>s+p.price,0);
-}
+  cart.forEach(p=>{
+    msg+=`• ${p.name} (${p.plan}) - $${p.price} USD\n`;
+  });
 
-function payPaypal(){
-  processPayment("PayPal", true);
-}
+  msg+=`\nMétodo: ${type.toUpperCase()}`;
 
-function payOther(){
-  processPayment("Otro método", false);
-}
+  window.open(`https://wa.me/${phone.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`);
 
-function processPayment(method, paypal){
-  const sellerData = document.getElementById("seller").value;
-  if(!sellerData || cart.length===0){
-    alert("Selecciona vendedor y productos");
-    return;
-  }
-
-  const [seller, phone] = sellerData.split("|");
-  const total = getTotal();
-
-  const msg = `
-🧾 DZSTORE - NUEVO PEDIDO
-👤 Vendedor: ${seller}
-
-📦 Productos:
-${cart.map(p=>`- ${p.name} (${p.plan})`).join("\n")}
-
-💵 Total: ${total} USD
-💳 Método: ${method}
-
-Gracias por tu compra 💚
-`;
-
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
-
-  if(paypal){
-    window.open(`https://www.paypal.me/dzstore/${total}`);
+  if(type=="paypal"){
+    window.open("https://www.paypal.com/paypalme/dzstore0817");
   }
 }
