@@ -48,46 +48,13 @@ body {
     padding: 0 20px;
 }
 
-/* --- AJUSTE PARA PROMOS --- */
 .card {
-    position: relative; /* Importante para la etiqueta de fuego */
     background: #1e1e1e;
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid #2a2a2a;
     transition: 0.3s;
 }
-
-/* ETIQUETA ROJO FUEGO */
-
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    background: linear-gradient(0deg, #b20000 0%, #ff0000 100%);
-    color: white;
-    padding: 5px 12px;
-    font-size: 11px;
-    font-weight: 900;
-    border-radius: 5px;
-    text-transform: uppercase;
-    z-index: 10;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
-    border: 1px solid #ff4d4d;
-    animation: firePulse 1.5s infinite;
-}
-
-/* BORDE ROJO PARA CARDS EN PROMO */
-
-    border: 2px solid #ff0000 !important;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
-}
-
-
-    0% { transform: scale(1); box-shadow: 0 0 8px rgba(255, 0, 0, 0.6); }
-    50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(255, 0, 0, 1); }
-    100% { transform: scale(1); box-shadow: 0 0 8px rgba(255, 0, 0, 0.6); }
-}
-/* -------------------------- */
 
 .card img {
     width: 100%;
@@ -145,7 +112,7 @@ body {
     border: 1px solid #333;
     padding: 12px;
     border-radius: 8px;
-    width: 100%; /* Asegura que llene su mitad en el grid */
+    width: 100%;
 }
 
 #total {
@@ -191,7 +158,7 @@ body {
 .orders-box { background: #1e1e1e; padding: 25px; border-radius: 15px; width: 90%; max-width: 400px; border: 1px solid #333; }
 .btn-close { width: 100%; background: #ff4757; border: none; padding: 10px; color: #fff; margin-top: 15px; border-radius: 8px; }
 
-/* RESPONSIVE PARA EL CHECKOUT EN CELULARES */
+/* RESPONSIVE */
 @media (max-width: 600px) {
     .checkout-grid {
         grid-template-columns: 1fr;
