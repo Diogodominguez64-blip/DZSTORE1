@@ -4,13 +4,17 @@ const rates = { USD:1, MXN:17, COP:3900, PEN:3.7, ARS:900 };
 function addToCart(name){
   const card = event.target.closest('.card');
   const select = card.querySelector('.plan');
+
   cart.push({
     name,
     label: select.selectedOptions[0].dataset.label,
     price: parseFloat(select.value)
   });
+
   showToast();
   renderCart();
+  document.getElementById("checkout")
+    .scrollIntoView({behavior:"smooth"});
 }
 
 function renderCart(){
@@ -23,7 +27,7 @@ function renderCart(){
     box.innerHTML+=`
       <div class="cart-item">
         🔥 ${p.name} — ${p.label}
-        <b>${p.price} USD</b>
+        <b>${p.price.toFixed(2)} USD</b>
         <button onclick="removeItem(${i})">❌</button>
       </div>`;
   });
@@ -55,18 +59,21 @@ function sendTicket(){
 
   let totalUSD=cart.reduce((a,b)=>a+b.price,0);
 
-  let msg=`💣🧾 DZ STORE — FACTURA
-━━━━━━━━━━━━━━
+  let msg=`🧾 DZ STORE - FACTURA
+--------------------
 🆔 ORDEN: ${order}
 ⏱️ ${time}
 
 📦 PRODUCTOS
 `;
-  cart.forEach(p=>msg+=`• ${p.name} ${p.label} — ${p.price} USD\n`);
+
+  cart.forEach(p=>{
+    msg+=`• ${p.name} ${p.label} - ${p.price} USD\n`;
+  });
 
   msg+=`
-━━━━━━━━━━━━━━
-💳 MÉTODO: ${pay}
+--------------------
+💳 METODO: ${pay}
 👤 VENDEDOR: ${seller}
 
 🚀 ${seller} te atenderá en breves
@@ -74,7 +81,7 @@ function sendTicket(){
 `;
 
   saveOrder({order,time,totalUSD,seller});
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,"_blank");
 
   cart=[];
   renderCart();
@@ -95,13 +102,20 @@ function toggleOrders(){
 function loadOrders(){
   const list=document.getElementById("ordersList");
   const orders=JSON.parse(localStorage.getItem("dz_orders"))||[];
-  list.innerHTML=orders.length?orders.map(o=>`
+
+  if(!orders.length){
+    list.innerHTML="<p>📭 No hay pedidos aún</p>";
+    return;
+  }
+
+  list.innerHTML=orders.map(o=>`
     <div class="order-item">
       🧾 ${o.order}<br>
       👤 ${o.seller}<br>
-      💰 ${o.totalUSD} USD<br>
+      💰 ${o.totalUSD.toFixed(2)} USD<br>
       ⏱️ ${o.time}
-    </div>`).join(""):"<p>No hay pedidos aún</p>";
+    </div>
+  `).join("");
 }
 
 function showToast(){
