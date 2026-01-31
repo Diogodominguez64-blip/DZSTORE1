@@ -2,12 +2,12 @@ let cart=[];
 const rates={USD:1,MXN:17,COP:3900,PEN:3.7,ARS:900};
 
 function addToCart(name){
-  const card=event.target.closest(".card");
-  const select=card.querySelector(".plan");
+  const card=event.target.closest('.card');
+  const plan=card.querySelector('.plan');
   cart.push({
     name,
-    label:select.selectedOptions[0].dataset.label,
-    price:parseFloat(select.value)
+    label:plan.selectedOptions[0].dataset.label,
+    price:parseFloat(plan.value)
   });
   showToast();
   renderCart();
@@ -22,12 +22,11 @@ function renderCart(){
     total+=p.price;
     box.innerHTML+=`
       <div class="cart-item">
-        <span>🔥 ${p.name} — ${p.label}</span>
-        <span>${p.price} USD <button onclick="removeItem(${i})">❌</button></span>
-      </div>
-    `;
+        ${p.name} — ${p.label}
+        <b>${p.price} USD</b>
+        <button onclick="removeItem(${i})">❌</button>
+      </div>`;
   });
-
   updateTotal(total);
 }
 
@@ -39,83 +38,66 @@ function removeItem(i){
 function updateTotal(usd){
   const cur=document.getElementById("currency").value;
   let t=`💰 TOTAL: ${usd.toFixed(2)} USD`;
-  if(cur!=="USD"){
-    t+=` | ${(usd*rates[cur]).toFixed(0)} ${cur}`;
-  }
+  if(cur!=="USD") t+=` | ${(usd*rates[cur]).toFixed(0)} ${cur}`;
   document.getElementById("total").innerText=t;
 }
 
 function sendTicket(){
   if(!cart.length) return alert("Carrito vacío");
-
-  const sellerVal=document.getElementById("seller").value;
+  const seller=document.getElementById("seller").value;
   const pay=document.getElementById("payment").value;
-  if(!sellerVal||!pay) return alert("Completa vendedor y pago");
+  if(!seller||!pay) return alert("Completa vendedor y pago");
 
-  const [seller,phone]=sellerVal.split("|");
+  const [name,phone]=seller.split("|");
   const order="#DZ-"+(Math.floor(Math.random()*90000)+10000);
   const time=new Date().toLocaleString();
-
-  let totalUSD=cart.reduce((a,b)=>a+b.price,0);
+  const totalUSD=cart.reduce((a,b)=>a+b.price,0);
 
   let msg=`💣🧾 DZ STORE — FACTURA
-━━━━━━━━━━━━━━
-🆔 ORDEN: ${order}
+🆔 ${order}
 ⏱️ ${time}
 
 📦 PRODUCTOS
 `;
-
-  cart.forEach(p=>{
-    msg+=`• ${p.name} ${p.label} — ${p.price} USD\n`;
-  });
+  cart.forEach(p=>msg+=`• ${p.name} ${p.label} — ${p.price} USD\n`);
 
   msg+=`
-━━━━━━━━━━━━━━
-💰 TOTAL: ${totalUSD.toFixed(2)} USD
 💳 MÉTODO: ${pay}
-👤 VENDEDOR: ${seller}
+👤 VENDEDOR: ${name}
+🚀 ${name} te atenderá en breves`;
 
-🚀 ${seller} te atenderá en breves
-💚 Gracias por tu compra
-`;
-
-  saveOrder({order,time,totalUSD,seller});
-  location.href=`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+  saveOrder({order,time,totalUSD,seller:name});
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
 
   cart=[];
   renderCart();
 }
 
-function saveOrder(order){
-  let orders=JSON.parse(localStorage.getItem("dz_orders"))||[];
-  orders.unshift(order);
+function saveOrder(o){
+  const orders=JSON.parse(localStorage.getItem("dz_orders"))||[];
+  orders.unshift(o);
   localStorage.setItem("dz_orders",JSON.stringify(orders));
 }
 
 function toggleOrders(){
-  const modal=document.getElementById("ordersModal");
-  modal.classList.toggle("show");
+  document.getElementById("ordersModal").classList.toggle("show");
   loadOrders();
 }
 
 function loadOrders(){
   const list=document.getElementById("ordersList");
   const orders=JSON.parse(localStorage.getItem("dz_orders"))||[];
-  list.innerHTML=orders.length
-    ? orders.map(o=>`
-      <div class="order-item">
-        🧾 ${o.order}<br>
-        👤 ${o.seller}<br>
-        💰 ${o.totalUSD} USD<br>
-        ⏱️ ${o.time}
-      </div>
-    `).join("")
-    : "<p>No hay pedidos aún</p>";
+  list.innerHTML=orders.length?orders.map(o=>`
+    <div class="order-item">
+      🧾 ${o.order}<br>
+      👤 ${o.seller}<br>
+      💰 ${o.totalUSD} USD<br>
+      ⏱️ ${o.time}
+    </div>`).join(""):"No hay pedidos aún";
 }
 
 function showToast(){
   const t=document.getElementById("toast");
   t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),1500);
+  setTimeout(()=>t.classList.remove("show"),1200);
 }
