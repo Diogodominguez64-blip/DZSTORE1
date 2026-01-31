@@ -1,130 +1,133 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>DZSTORE OFICIAL</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>DZSTORE OFICIAL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="bg"></div>
-
 <div class="card">
-<h1>DZSTORE OFICIAL</h1>
-<p class="subtitle">Cheats Premium · Pagos seguros · Soporte inmediato</p>
+  <h1>DZSTORE OFICIAL</h1>
+  <p class="subtitle">Game Cheats · Ventas digitales · Seguro</p>
 
-<!-- DRIP -->
-<h3 class="category">🟣 DRIP</h3>
+  <!-- DRIP -->
+  <h3 class="category">🟢 DRIP</h3>
 
-<div class="product">
-<img src="images/drip.png">
-<div class="info">
-<b>DRIP NO ROOT</b>
-<button onclick="add('DRIP NO ROOT - 30 días',12)">+ 12 USD</button>
+  <div class="service">
+    <img src="images/drip.png" class="product-img">
+    <div class="info">
+      <span>DRIP NO ROOT – 1 día</span>
+      <strong>3 USD</strong>
+    </div>
+    <button onclick="add({name:'DRIP NO ROOT',plan:'1 día',price:3})">+</button>
+  </div>
+
+  <div class="service">
+    <img src="images/drip.png" class="product-img">
+    <div class="info">
+      <span>DRIP NO ROOT – 7 días</span>
+      <strong>5 USD</strong>
+    </div>
+    <button onclick="add({name:'DRIP NO ROOT',plan:'7 días',price:5})">+</button>
+  </div>
+
+  <div class="service">
+    <img src="images/drip.png" class="product-img">
+    <div class="info">
+      <span>DRIP ROOT – 30 días</span>
+      <strong>20 USD</strong>
+    </div>
+    <button onclick="add({name:'DRIP ROOT',plan:'30 días',price:20})">+</button>
+  </div>
+
+  <!-- BR MODS -->
+  <h3 class="category">💻 BR MODS PC</h3>
+
+  <div class="service">
+    <img src="images/brmods.png" class="product-img">
+    <div class="info">
+      <span>BR MODS – 15 días</span>
+      <strong>10 USD</strong>
+    </div>
+    <button onclick="add({name:'BR MODS PC',plan:'15 días',price:10})">+</button>
+  </div>
+
+  <div class="service">
+    <img src="images/brmods.png" class="product-img">
+    <div class="info">
+      <span>BR MODS – 30 días</span>
+      <strong>15 USD</strong>
+    </div>
+    <button onclick="add({name:'BR MODS PC',plan:'30 días',price:15})">+</button>
+  </div>
+
+  <!-- HG -->
+  <h3 class="category">🛡️ HG</h3>
+
+  <div class="service">
+    <img src="images/hg.png" class="product-img">
+    <div class="info">
+      <span>HG NO ROOT – 10 días</span>
+      <strong>5 USD</strong>
+    </div>
+    <button onclick="add({name:'HG NO ROOT',plan:'10 días',price:5})">+</button>
+  </div>
+
+  <div class="service">
+    <img src="images/hg.png" class="product-img">
+    <div class="info">
+      <span>HG ROOT – 30 días</span>
+      <strong>12 USD</strong>
+    </div>
+    <button onclick="add({name:'HG ROOT',plan:'30 días',price:12})">+</button>
+  </div>
+
+  <!-- STRICKS -->
+  <h3 class="category">🎯 STRICKS VR</h3>
+
+  <div class="service">
+    <img src="images/stricks.png" class="product-img">
+    <div class="info">
+      <span>STRICKS VR – Virtual</span>
+      <strong>15 USD</strong>
+    </div>
+    <button onclick="add({name:'STRICKS VR',plan:'Virtual',price:15})">+</button>
+  </div>
+
+  <!-- CUBAN -->
+  <h3 class="category">💥 CUBAN</h3>
+
+  <div class="service">
+    <img src="images/cuban.png" class="product-img">
+    <div class="info">
+      <span>CUBAN PANEL – PERMA</span>
+      <strong>25 USD</strong>
+    </div>
+    <button onclick="add({name:'CUBAN PANEL',plan:'PERMA',price:25})">+</button>
+  </div>
+
+  <div class="service">
+    <img src="images/cuban.png" class="product-img">
+    <div class="info">
+      <span>CUBAN RAGE – PERMA</span>
+      <strong>30 USD</strong>
+    </div>
+    <button onclick="add({name:'CUBAN RAGE',plan:'PERMA',price:30})">+</button>
+  </div>
+
+  <!-- CARRITO -->
+  <h3 class="category">🛒 Carrito (<span id="count">0</span>)</h3>
+  <div id="items"></div>
+
+  <div class="invoice" id="invoice"></div>
 </div>
-</div>
 
-<div class="product">
-<img src="images/drip.png">
-<div class="info">
-<b>DRIP ROOT</b>
-<button onclick="add('DRIP ROOT - 30 días',20)">+ 20 USD</button>
-</div>
-</div>
-
-<!-- BR MODS -->
-<h3 class="category">🟦 BR MODS PC</h3>
-
-<div class="product">
-<img src="images/brmods.png">
-<div class="info">
-<b>BR MODS PC</b>
-<button onclick="add('BR MODS PC - 30 días',15)">+ 15 USD</button>
-</div>
-</div>
-
-<!-- HG -->
-<h3 class="category">🔵 HG CHEATS</h3>
-
-<div class="product">
-<img src="images/hg.png">
-<div class="info">
-<b>HG NO ROOT</b>
-<button onclick="add('HG NO ROOT - 30 días',10)">+ 10 USD</button>
-</div>
-</div>
-
-<div class="product">
-<img src="images/hg.png">
-<div class="info">
-<b>HG ROOT</b>
-<button onclick="add('HG ROOT - 30 días',18)">+ 18 USD</button>
-</div>
-</div>
-
-<!-- STRICKS -->
-<h3 class="category">🟪 STRICKS BR</h3>
-
-<div class="product">
-<img src="images/stricks.png">
-<div class="info">
-<b>STRICKS BR ROOT</b>
-<button onclick="add('STRICKS ROOT',25)">+ 25 USD</button>
-</div>
-</div>
-
-<div class="product">
-<img src="images/stricks.png">
-<div class="info">
-<b>STRICKS BR VIRTUAL</b>
-<button onclick="add('STRICKS VIRTUAL',20)">+ 20 USD</button>
-</div>
-</div>
-
-<!-- CUBAN -->
-<h3 class="category">🟢 CUBAN</h3>
-
-<div class="product">
-<img src="images/cuban.png">
-<div class="info">
-<b>CUBAN PANEL</b>
-<button onclick="add('CUBAN PANEL',30)">+ 30 USD</button>
-</div>
-</div>
-
-<div class="product">
-<img src="images/cuban.png">
-<div class="info">
-<b>CUBAN RANGE</b>
-<button onclick="add('CUBAN RANGE',18)">+ 18 USD</button>
-</div>
-</div>
-
-<!-- CARRITO -->
-<h3 class="category">🛒 Carrito (<span id="count">0</span>)</h3>
-<div id="items"></div>
-
-<select id="seller">
-<option value="">👤 Seleccionar vendedor</option>
-<option value="Dz Diogo|18294103676">Dz Diogo</option>
-<option value="Dz Ozoria|18093185425">Dz Ozoria</option>
-<option value="David|584262984228">David</option>
-</select>
-
-<div class="invoice" id="invoice"></div>
-
-<h3 class="category">💳 Métodos de pago</h3>
-<button class="btn" onclick="pay('paypal')">🅿️ PayPal</button>
-<button class="btn alt" onclick="pay('otro')">📲 Otro método</button>
-
-</div>
-
-<div id="toast" class="toast"></div>
+<div id="toast" class="toast">Producto agregado</div>
 
 <audio id="cart-sound">
-<source src="add.mp3" type="audio/mpeg">
+  <source src="add.mp3" type="audio/mpeg">
 </audio>
 
 <script src="script.js"></script>
