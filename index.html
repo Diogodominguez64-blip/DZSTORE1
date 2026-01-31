@@ -11,6 +11,76 @@
 <header>
   <h1>DZSTORE OFICIAL</h1>
   <p>Game Cheats · Ventas digitales · Seguro</p>
+</header>
+
+<!-- PRODUCTOS -->
+
+<section class="product">
+  <img src="drip.png">
+  <h2>DRIP CLIENT</h2>
+
+  <select onchange="setPrice(this,[3,12,25,35])">
+    <option value="0" selected>1 Día - $3</option>
+    <option value="1">7 Días - $12</option>
+    <option value="2">15 Días - $25</option>
+    <option value="3">30 Días - $35</option>
+  </select>
+
+  <button onclick="addToCart('DRIP CLIENT',3)">➕ Añadir al carrito</button>
+</section>
+
+<section class="product">
+  <img src="Brmods.png">
+  <h2>BR MODS PC</h2>
+
+  <select onchange="setPrice(this,[10,15])">
+    <option value="0" selected>15 días - $10</option>
+    <option value="1">30 días - $15</option>
+  </select>
+
+  <button onclick="addToCart('BR MODS PC',10)">➕ Añadir al carrito</button>
+</section>
+
+<section class="product">
+  <img src="HG.png">
+  <h2>HG</h2>
+
+  <select onchange="setPrice(this,[5,12])">
+    <option value="0" selected>NO ROOT - 10 días $5</option>
+    <option value="1">ROOT - 30 días $12</option>
+  </select>
+
+  <button onclick="addToCart('HG',5)">➕ Añadir al carrito</button>
+</section>
+
+<section class="product">
+  <img src="Stricker.png">
+  <h2>STRICKS VR</h2>
+
+  <select>
+    <option selected>Virtual - $15</option>
+  </select>
+
+  <button onclick="addToCart('STRICKS VR',15)">➕ Añadir al carrito</button>
+</section>
+
+<section class="product">
+  <img src="cuban.png">
+  <h2>CUBAN</h2>
+
+  <select onchange="setPrice(this,[25,30])">
+    <option value="0" selected>Panel PERMA - $25</option>
+    <option value="1">Rage PERMA - $30</option>
+  </select>
+
+  <button onclick="addToCart('CUBAN PANEL',25)">➕ Añadir al carrito</button>
+</section>
+
+<!-- CHECKOUT -->
+<section id="checkout">
+  <h2>🛒 Carrito</h2>
+  <div id="cart"></div>
+  <h3 id="total"></h3>
 
   <div class="selectors">
     <select id="seller">
@@ -20,85 +90,19 @@
     </select>
 
     <select id="currency" onchange="renderCart()">
-      <option value="USD">USD</option>
-      <option value="DOP">DOP</option>
+      <option value="USD" selected>USD 🇺🇸</option>
+      <option value="MXN">MXN 🇲🇽</option>
+      <option value="COP">COP 🇨🇴</option>
+      <option value="PEN">PEN 🇵🇪</option>
+      <option value="ARS">ARS 🇦🇷</option>
+      <option value="DOP">DOP 🇩🇴</option>
     </select>
   </div>
-</header>
-
-<!-- PRODUCTOS -->
-<section class="product">
-  <img src="drip.png">
-  <h2>DRIP CLIENT</h2>
-
-  <select onchange="setPrice(this,[3,12,25,35])">
-    <option value="0">1 Día - $3</option>
-    <option value="1">7 Días - $12</option>
-    <option value="2">15 Días - $25</option>
-    <option value="3">30 Días - $35</option>
-  </select>
-
-  <button onclick="addToCart('DRIP CLIENT')">➕ Añadir al carrito</button>
-</section>
-
-<section class="product">
-  <img src="Brmods.png">
-  <h2>BR MODS PC</h2>
-
-  <select onchange="setPrice(this,[10,15])">
-    <option value="0">15 días - $10</option>
-    <option value="1">30 días - $15</option>
-  </select>
-
-  <button onclick="addToCart('BR MODS PC')">➕ Añadir al carrito</button>
-</section>
-
-<section class="product">
-  <img src="HG.png">
-  <h2>HG</h2>
-
-  <select onchange="setPrice(this,[5,12])">
-    <option value="0">NO ROOT - 10 días $5</option>
-    <option value="1">ROOT - 30 días $12</option>
-  </select>
-
-  <button onclick="addToCart('HG')">➕ Añadir al carrito</button>
-</section>
-
-<section class="product">
-  <img src="Stricker.png">
-  <h2>STRICKS VR</h2>
-
-  <select onchange="setPrice(this,[15])">
-    <option value="0">Virtual - $15</option>
-  </select>
-
-  <button onclick="addToCart('STRICKS VR')">➕ Añadir al carrito</button>
-</section>
-
-<section class="product">
-  <img src="cuban.png">
-  <h2>CUBAN</h2>
-
-  <select onchange="setPrice(this,[25,30])">
-    <option value="0">Panel PERMA - $25</option>
-    <option value="1">Rage PERMA - $30</option>
-  </select>
-
-  <button onclick="addToCart('CUBAN')">➕ Añadir al carrito</button>
-</section>
-
-<!-- CHECKOUT -->
-<section id="checkout">
-  <h2>🛒 Carrito</h2>
-  <div id="cart"></div>
-  <h3 id="total"></h3>
 
   <button class="pay" onclick="pay()">Pagar y crear ticket</button>
 </section>
 
-<div id="toast">Producto añadido al carrito</div>
-
+<div id="toast">✔ Producto añadido al carrito</div>
 <audio id="sound" src="add.mp3"></audio>
 
 <script src="script.js"></script>
