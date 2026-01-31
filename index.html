@@ -6,111 +6,101 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="card">
+<header>
   <h1>DZSTORE OFICIAL</h1>
-  <p class="subtitle">Game Cheats · Ventas digitales · Seguro</p>
+  <p>Game Cheats · Ventas digitales · Seguro</p>
 
-  <!-- ================== SELECTORES ================== -->
-  <select id="seller" onchange="setSeller(this.value)">
-    <option value="">👤 Selecciona vendedor</option>
-    <option value="Dz Diogo|+18294103676">Dz Diogo</option>
-    <option value="Dz Ozoria|+18093185425">Dz Ozoria</option>
-    <option value="David|+584262984228">David</option>
+  <div class="selectors">
+    <select id="seller">
+      <option value="8294103676">Dz Diogo</option>
+      <option value="8093185425">David</option>
+      <option value="584262984228">Vendedor 3</option>
+    </select>
+
+    <select id="currency" onchange="renderCart()">
+      <option value="USD">USD</option>
+      <option value="DOP">DOP</option>
+    </select>
+  </div>
+</header>
+
+<!-- PRODUCTOS -->
+<section class="product">
+  <img src="drip.png">
+  <h2>DRIP CLIENT</h2>
+
+  <select onchange="setPrice(this,[3,12,25,35])">
+    <option value="0">1 Día - $3</option>
+    <option value="1">7 Días - $12</option>
+    <option value="2">15 Días - $25</option>
+    <option value="3">30 Días - $35</option>
   </select>
 
-  <select id="currency" onchange="setCurrency(this.value)">
-    <option value="USD">USD</option>
-    <option value="MXN">MXN</option>
-    <option value="COP">COP</option>
-    <option value="ARS">ARS</option>
+  <button onclick="addToCart('DRIP CLIENT')">➕ Añadir al carrito</button>
+</section>
+
+<section class="product">
+  <img src="Brmods.png">
+  <h2>BR MODS PC</h2>
+
+  <select onchange="setPrice(this,[10,15])">
+    <option value="0">15 días - $10</option>
+    <option value="1">30 días - $15</option>
   </select>
 
-  <!-- ================== DRIP ================== -->
-  <div class="product">
-    <img src="drip.png">
-    <h2>DRIP CLIENT</h2>
+  <button onclick="addToCart('BR MODS PC')">➕ Añadir al carrito</button>
+</section>
 
-    <select onchange="updatePrice(this,'drip')">
-      <option value="3|1 Día">1 Día - $3</option>
-      <option value="12|7 Días">7 Días - $12</option>
-      <option value="25|15 Días">15 Días - $25</option>
-      <option value="35|30 Días">30 Días - $35</option>
-    </select>
+<section class="product">
+  <img src="HG.png">
+  <h2>HG</h2>
 
-    <div class="price" id="drip">$3 USD</div>
-    <button onclick="buy('DRIP CLIENT','drip',this)">COMPRAR AHORA</button>
-  </div>
+  <select onchange="setPrice(this,[5,12])">
+    <option value="0">NO ROOT - 10 días $5</option>
+    <option value="1">ROOT - 30 días $12</option>
+  </select>
 
-  <!-- ================== BR MODS ================== -->
-  <div class="product">
-    <img src="Brmods.png">
-    <h2>BR MODS PC</h2>
+  <button onclick="addToCart('HG')">➕ Añadir al carrito</button>
+</section>
 
-    <select onchange="updatePrice(this,'br')">
-      <option value="10|15 Días">15 Días - $10</option>
-      <option value="15|30 Días">30 Días - $15</option>
-    </select>
+<section class="product">
+  <img src="Stricker.png">
+  <h2>STRICKS VR</h2>
 
-    <div class="price" id="br">$10 USD</div>
-    <button onclick="buy('BR MODS PC','br',this)">COMPRAR AHORA</button>
-  </div>
+  <select onchange="setPrice(this,[15])">
+    <option value="0">Virtual - $15</option>
+  </select>
 
-  <!-- ================== HG ================== -->
-  <div class="product">
-    <img src="HG.png">
-    <h2>HG</h2>
+  <button onclick="addToCart('STRICKS VR')">➕ Añadir al carrito</button>
+</section>
 
-    <select onchange="updatePrice(this,'hg')">
-      <option value="5|NO ROOT 10 Días">NO ROOT - $5</option>
-      <option value="12|ROOT 30 Días">ROOT - $12</option>
-    </select>
+<section class="product">
+  <img src="cuban.png">
+  <h2>CUBAN</h2>
 
-    <div class="price" id="hg">$5 USD</div>
-    <button onclick="buy('HG','hg',this)">COMPRAR AHORA</button>
-  </div>
+  <select onchange="setPrice(this,[25,30])">
+    <option value="0">Panel PERMA - $25</option>
+    <option value="1">Rage PERMA - $30</option>
+  </select>
 
-  <!-- ================== STRICKS ================== -->
-  <div class="product">
-    <img src="Stricker.png">
-    <h2>STRICKS VR</h2>
+  <button onclick="addToCart('CUBAN')">➕ Añadir al carrito</button>
+</section>
 
-    <select onchange="updatePrice(this,'str')">
-      <option value="15|Virtual">Virtual - $15</option>
-    </select>
+<!-- CHECKOUT -->
+<section id="checkout">
+  <h2>🛒 Carrito</h2>
+  <div id="cart"></div>
+  <h3 id="total"></h3>
 
-    <div class="price" id="str">$15 USD</div>
-    <button onclick="buy('STRICKS VR','str',this)">COMPRAR AHORA</button>
-  </div>
+  <button class="pay" onclick="pay()">Pagar y crear ticket</button>
+</section>
 
-  <!-- ================== CUBAN ================== -->
-  <div class="product">
-    <img src="cuban.png">
-    <h2>CUBAN</h2>
+<div id="toast">Producto añadido al carrito</div>
 
-    <select onchange="updatePrice(this,'cub')">
-      <option value="25|Panel PERMA">Panel - $25</option>
-      <option value="30|Rage PERMA">Rage - $30</option>
-    </select>
+<audio id="sound" src="add.mp3"></audio>
 
-    <div class="price" id="cub">$25 USD</div>
-    <button onclick="buy('CUBAN','cub',this)">COMPRAR AHORA</button>
-  </div>
-
-  <!-- ================== CARRITO ================== -->
-  <h3>🛒 Carrito (<span id="count">0</span>)</h3>
-  <div id="items"></div>
-  <div id="total"></div>
-
-  <!-- ================== PAGOS ================== -->
-  <button class="pay paypal" onclick="pay('paypal')">🅿️ PayPal</button>
-  <button class="pay other" onclick="pay('other')">📲 Otro método</button>
-
-</div>
-
-<audio id="sound"><source src="add.mp3"></audio>
 <script src="script.js"></script>
 </body>
 </html>
