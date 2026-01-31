@@ -145,3 +145,29 @@ select{
   from{opacity:0;transform:translateY(30px) scale(0.95)}
   to{opacity:1;transform:translateY(0) scale(1)}
 }
+.status-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #3cff78;
+    color: #000;
+    font-size: 10px;
+    font-weight: 900;
+    padding: 4px 8px;
+    border-radius: 6px;
+    z-index: 5;
+}
+
+.total-display {
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-align: center;
+    margin: 20px 0;
+    color: #3cff78;
+}
+
+.checkout-forms {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 15px;
+}
