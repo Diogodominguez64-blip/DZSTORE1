@@ -2,13 +2,17 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>DZSTORE OFICIAL</title>
+  <title>DZ STORE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- FONDO LOGO -->
+<div class="bg-logo"></div>
+
 <header class="top">
+  <h1>DZ STORE</h1>
   <p class="subtitle">GAME CHEATS · SERVICIOS PREMIUM</p>
 </header>
 
@@ -20,9 +24,9 @@
     <div class="card-body">
       <h2>DRIP</h2>
       <select id="drip">
-        <option value="1|3">1 Día - 3 USD</option>
-        <option value="7|5">7 Días - 5 USD</option>
-        <option value="30|20">30 Días - 20 USD</option>
+        <option value="1 Día|3">1 Día - 3 USD</option>
+        <option value="7 Días|5">7 Días - 5 USD</option>
+        <option value="30 Días|20">30 Días - 20 USD</option>
       </select>
       <button onclick="addToCart('DRIP','drip')">AÑADIR AL CARRITO</button>
     </div>
@@ -34,9 +38,9 @@
     <div class="card-body">
       <h2>HG</h2>
       <select id="hg">
-        <option value="7|5">7 Días - 5 USD</option>
-        <option value="15|8">15 Días - 8 USD</option>
-        <option value="30|12">30 Días - 12 USD</option>
+        <option value="7 Días|5">7 Días - 5 USD</option>
+        <option value="15 Días|8">15 Días - 8 USD</option>
+        <option value="30 Días|12">30 Días - 12 USD</option>
       </select>
       <button onclick="addToCart('HG','hg')">AÑADIR AL CARRITO</button>
     </div>
@@ -73,8 +77,8 @@
     <div class="card-body">
       <h2>BR MODS</h2>
       <select id="brmods">
-        <option value="15|10">15 Días - 10 USD</option>
-        <option value="30|15">30 Días - 15 USD</option>
+        <option value="15 Días|10">15 Días - 10 USD</option>
+        <option value="30 Días|15">30 Días - 15 USD</option>
       </select>
       <button onclick="addToCart('BR MODS','brmods')">AÑADIR AL CARRITO</button>
     </div>
@@ -83,13 +87,17 @@
 </main>
 
 <section id="ticket" class="ticket">
-  <h3>🧾 FACTURA DIGITAL</h3>
+  <div class="ticket-header">
+    <span class="sticker">✔ FACTURA</span>
+    <p id="orderId"></p>
+  </div>
 
   <div id="cart" class="cart"></div>
 
-  <div class="totals">
+  <div class="summary">
+    <p id="itemsCount">Productos: 0</p>
     <p id="totalUsd">Total: 0 USD</p>
-    <p id="totalLocal">Equivalente: 0</p>
+    <p id="totalLocal"></p>
   </div>
 
   <select id="seller">
@@ -106,11 +114,13 @@
     <option value="ARS">ARS</option>
   </select>
 
-  <button class="pay" onclick="sendTicket()">PAGAR Y ABRIR TICKET</button>
+  <button id="payBtn" class="pay" onclick="sendTicket()" disabled>
+    PAGAR Y ABRIR TICKET
+  </button>
 </section>
 
 <div id="toast" class="toast">Producto añadido al carrito</div>
 
-<script src="script.js"></script>
+<script src="script.js" defer></script>
 </body>
 </html>
