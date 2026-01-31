@@ -1,114 +1,111 @@
 let cart = [];
-
-const rates = {
-  USD: 1,
-  MXN: 17,
-  COP: 3900,
-  PEN: 3.7,
-  ARS: 900
-};
+const rates = { USD:1, MXN:17, COP:3900, PEN:3.7, ARS:900 };
 
 function addToCart(name){
   const card = event.target.closest('.card');
   const select = card.querySelector('.plan');
-  const price = parseFloat(select.value);
-  const label = select.selectedOptions[0].dataset.label;
-
-  cart.push({ name, label, price });
-
+  cart.push({
+    name,
+    label: select.selectedOptions[0].dataset.label,
+    price: parseFloat(select.value)
+  });
   showToast();
   renderCart();
-  document.getElementById("checkout").scrollIntoView({ behavior: "smooth" });
 }
 
 function renderCart(){
   const box = document.getElementById("cart");
-  box.innerHTML = "";
+  box.innerHTML="";
+  let total=0;
 
-  let total = 0;
-
-  cart.forEach((p, i) => {
-    total += p.price;
-    box.innerHTML += `
+  cart.forEach((p,i)=>{
+    total+=p.price;
+    box.innerHTML+=`
       <div class="cart-item">
-        <span>📦 ${p.name} — ${p.label}</span>
-        <span>${p.price.toFixed(2)} USD</span>
+        🔥 ${p.name} — ${p.label}
+        <b>${p.price} USD</b>
         <button onclick="removeItem(${i})">❌</button>
-      </div>
-    `;
+      </div>`;
   });
-
   updateTotal(total);
 }
 
 function removeItem(i){
-  cart.splice(i, 1);
+  cart.splice(i,1);
   renderCart();
 }
 
 function updateTotal(usd){
-  const cur = document.getElementById("currency").value;
-  let text = `💰 TOTAL: ${usd.toFixed(2)} USD`;
-
-  if(cur !== "USD"){
-    text += ` | ${(usd * rates[cur]).toFixed(0)} ${cur}`;
-  }
-
-  document.getElementById("total").innerText = text;
+  const cur=document.getElementById("currency").value;
+  let t=`💰 TOTAL: ${usd.toFixed(2)} USD`;
+  if(cur!=="USD") t+=` | ${(usd*rates[cur]).toFixed(0)} ${cur}`;
+  document.getElementById("total").innerText=t;
 }
 
-document.getElementById("currency").addEventListener("change", () => {
-  let sum = cart.reduce((a, b) => a + b.price, 0);
-  updateTotal(sum);
-});
-
 function sendTicket(){
-  if(!cart.length){
-    alert("Carrito vacío");
-    return;
-  }
+  if(!cart.length) return alert("Carrito vacío");
 
-  const sellerValue = document.getElementById("seller").value;
-  if(!sellerValue){
-    alert("Selecciona un vendedor");
-    return;
-  }
+  const sellerVal=document.getElementById("seller").value;
+  const pay=document.getElementById("payment").value;
+  if(!sellerVal||!pay) return alert("Completa vendedor y pago");
 
-  const [sellerName, phone] = sellerValue.split("|");
+  const [seller,phone]=sellerVal.split("|");
+  const order="#DZ-"+(Math.floor(Math.random()*90000)+10000);
+  const time=new Date().toLocaleString();
 
-  const order = Math.floor(Math.random() * 90000) + 10000;
-  const time = new Date().toLocaleTimeString('es-ES');
+  let totalUSD=cart.reduce((a,b)=>a+b.price,0);
 
-  let msg =
-`🧾 DZ STORE — FACTURA
-━━━━━━━━━━━━━━━━━━
-🆔 ORDEN: #DZ-${order}
-⏰ HORA: ${time}
+  let msg=`💣🧾 DZ STORE — FACTURA
+━━━━━━━━━━━━━━
+🆔 ORDEN: ${order}
+⏱️ ${time}
 
 📦 PRODUCTOS
 `;
+  cart.forEach(p=>msg+=`• ${p.name} ${p.label} — ${p.price} USD\n`);
 
-  cart.forEach(p => {
-    msg += `• ${p.name} ${p.label} — 💵 ${p.price.toFixed(2)} USD\n`;
-  });
+  msg+=`
+━━━━━━━━━━━━━━
+💳 MÉTODO: ${pay}
+👤 VENDEDOR: ${seller}
 
-  msg += `
-━━━━━━━━━━━━━━━━━━
-💳 MÉTODO DE PAGO: OTROS
-👤 VENDEDOR: ${sellerName}
-
-✅ ${sellerName} te atenderá en breves
-🔥 Gracias por tu compra
+🚀 ${seller} te atenderá en breves
+💚 Gracias por tu compra
 `;
 
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
+  saveOrder({order,time,totalUSD,seller});
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
 
-  cart = [];
+  cart=[];
   renderCart();
 }
 
+function saveOrder(order){
+  let orders=JSON.parse(localStorage.getItem("dz_orders"))||[];
+  orders.unshift(order);
+  localStorage.setItem("dz_orders",JSON.stringify(orders));
+}
+
+function toggleOrders(){
+  const modal=document.getElementById("ordersModal");
+  modal.classList.toggle("show");
+  loadOrders();
+}
+
+function loadOrders(){
+  const list=document.getElementById("ordersList");
+  const orders=JSON.parse(localStorage.getItem("dz_orders"))||[];
+  list.innerHTML=orders.length?orders.map(o=>`
+    <div class="order-item">
+      🧾 ${o.order}<br>
+      👤 ${o.seller}<br>
+      💰 ${o.totalUSD} USD<br>
+      ⏱️ ${o.time}
+    </div>`).join(""):"<p>No hay pedidos aún</p>";
+}
+
 function showToast(){
-  const t = document.getElementById("toast");
+  const t=document.getElementById("toast");
   t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 1500);
+  setTimeout(()=>t.classList.remove("show"),1500);
 }
