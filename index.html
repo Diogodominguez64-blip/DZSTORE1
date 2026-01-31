@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>DZSTORE OFICIAL</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,9 +20,9 @@
     <div class="card-body">
       <h2>DRIP</h2>
       <select id="drip">
-        <option>1 Día</option>
-        <option>7 Días</option>
-        <option>30 Días</option>
+        <option value="1|3">1 Día - 3 USD</option>
+        <option value="7|5">7 Días - 5 USD</option>
+        <option value="30|20">30 Días - 20 USD</option>
       </select>
       <button onclick="addToCart('DRIP','drip')">AÑADIR AL CARRITO</button>
     </div>
@@ -34,9 +34,9 @@
     <div class="card-body">
       <h2>HG</h2>
       <select id="hg">
-        <option>7 Días</option>
-        <option>15 Días</option>
-        <option>30 Días</option>
+        <option value="7|5">7 Días - 5 USD</option>
+        <option value="15|8">15 Días - 8 USD</option>
+        <option value="30|12">30 Días - 12 USD</option>
       </select>
       <button onclick="addToCart('HG','hg')">AÑADIR AL CARRITO</button>
     </div>
@@ -48,8 +48,8 @@
     <div class="card-body">
       <h2>STRICKS</h2>
       <select id="stricks">
-        <option>Virtual</option>
-        <option>Root</option>
+        <option value="Virtual|15">Virtual - 15 USD</option>
+        <option value="Root|20">Root - 20 USD</option>
       </select>
       <button onclick="addToCart('STRICKS','stricks')">AÑADIR AL CARRITO</button>
     </div>
@@ -61,7 +61,7 @@
     <div class="card-body">
       <h2>CUBAN</h2>
       <select id="cuban">
-        <option>PERMA</option>
+        <option value="PERMA|25">PERMA - 25 USD</option>
       </select>
       <button onclick="addToCart('CUBAN','cuban')">AÑADIR AL CARRITO</button>
     </div>
@@ -73,8 +73,8 @@
     <div class="card-body">
       <h2>BR MODS</h2>
       <select id="brmods">
-        <option>15 Días</option>
-        <option>30 Días</option>
+        <option value="15|10">15 Días - 10 USD</option>
+        <option value="30|15">30 Días - 15 USD</option>
       </select>
       <button onclick="addToCart('BR MODS','brmods')">AÑADIR AL CARRITO</button>
     </div>
@@ -85,8 +85,11 @@
 <section id="ticket" class="ticket">
   <h3>🧾 FACTURA DIGITAL</h3>
 
-  <div id="cart" class="cart">
-    <p class="empty">Carrito vacío</p>
+  <div id="cart" class="cart"></div>
+
+  <div class="totals">
+    <p id="totalUsd">Total: 0 USD</p>
+    <p id="totalLocal">Equivalente: 0</p>
   </div>
 
   <select id="seller">
@@ -95,12 +98,12 @@
     <option>Dz Ozoria</option>
   </select>
 
-  <select id="currency">
-    <option>USD</option>
-    <option>MXN</option>
-    <option>COP</option>
-    <option>PEN</option>
-    <option>ARS</option>
+  <select id="currency" onchange="updateTotals()">
+    <option value="USD">USD</option>
+    <option value="MXN">MXN</option>
+    <option value="COP">COP</option>
+    <option value="PEN">PEN</option>
+    <option value="ARS">ARS</option>
   </select>
 
   <button class="pay" onclick="sendTicket()">PAGAR Y ABRIR TICKET</button>
