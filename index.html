@@ -8,85 +8,83 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="header">
-  <img src="logo.png" class="logo" alt="DZSTORE">
-  <p class="subtitle">GAME CHEATS · VENTAS DIGITALES · SEGURO</p>
+  <img src="logo.png" class="logo">
+  <p class="subtitle">GAME CHEATS · SERVICIOS PREMIUM</p>
 </header>
 
-<!-- PRODUCTOS -->
 <main class="products">
 
-  <!-- DRIP -->
-  <section class="product-card">
-    <img src="drip.png" class="product-img" alt="DRIP">
-    <h2>DRIP</h2>
-    <button onclick="addToCart('DRIP')">➕ AÑADIR AL CARRITO</button>
+  <section class="card">
+    <img src="drip.png">
+    <div class="card-body">
+      <h2>DRIP</h2>
+      <button onclick="add('DRIP')">AÑADIR AL CARRITO</button>
+    </div>
   </section>
 
-  <!-- HG -->
-  <section class="product-card">
-    <img src="HG.png" class="product-img" alt="HG">
-    <h2>HG</h2>
-    <button onclick="addToCart('HG')">➕ AÑADIR AL CARRITO</button>
+  <section class="card">
+    <img src="HG.png">
+    <div class="card-body">
+      <h2>HG</h2>
+      <button onclick="add('HG')">AÑADIR AL CARRITO</button>
+    </div>
   </section>
 
-  <!-- STRICKS -->
-  <section class="product-card">
-    <img src="Stricker.png" class="product-img" alt="STRICKS">
-    <h2>STRICKS</h2>
-    <button onclick="addToCart('STRICKS')">➕ AÑADIR AL CARRITO</button>
+  <section class="card">
+    <img src="Stricker.png">
+    <div class="card-body">
+      <h2>STRICKS</h2>
+      <button onclick="add('STRICKS')">AÑADIR AL CARRITO</button>
+    </div>
   </section>
 
-  <!-- CUBAN -->
-  <section class="product-card">
-    <img src="cuban.png" class="product-img" alt="CUBAN">
-    <h2>CUBAN</h2>
-    <button onclick="addToCart('CUBAN')">➕ AÑADIR AL CARRITO</button>
+  <section class="card">
+    <img src="cuban.png">
+    <div class="card-body">
+      <h2>CUBAN</h2>
+      <button onclick="add('CUBAN')">AÑADIR AL CARRITO</button>
+    </div>
   </section>
 
-  <!-- BR MODS -->
-  <section class="product-card">
-    <img src="Brmods.png" class="product-img" alt="BR MODS">
-    <h2>BR MODS</h2>
-    <button onclick="addToCart('BR MODS')">➕ AÑADIR AL CARRITO</button>
+  <section class="card">
+    <img src="Brmods.png">
+    <div class="card-body">
+      <h2>BR MODS</h2>
+      <button onclick="add('BR MODS')">AÑADIR AL CARRITO</button>
+    </div>
   </section>
 
 </main>
 
-<!-- TICKET / CARRITO -->
 <section id="ticket" class="ticket">
+  <h3>🧾 FACTURA DIGITAL</h3>
 
-  <h3>🧾 TICKET DE COMPRA</h3>
-
-  <div id="cartItems" class="cart-items">
-    <p class="empty">No hay productos en el carrito</p>
+  <div id="cartItems" class="cart-box">
+    <p class="empty">Carrito vacío</p>
   </div>
 
-  <label>Seleccionar vendedor</label>
-  <select id="seller">
-    <option value="David">David</option>
-    <option value="Dz Diogo">Dz Diogo</option>
-    <option value="Dz Ozoria">Dz Ozoria</option>
-  </select>
+  <div class="selectors">
+    <select id="seller">
+      <option value="David">David</option>
+      <option value="Dz Diogo">Dz Diogo</option>
+      <option value="Dz Ozoria">Dz Ozoria</option>
+    </select>
 
-  <label>Seleccionar moneda</label>
-  <select id="currency">
-    <option value="USD">USD</option>
-    <option value="MXN">MXN</option>
-    <option value="COP">COP</option>
-    <option value="PEN">PEN</option>
-    <option value="ARS">ARS</option>
-  </select>
+    <select id="currency">
+      <option>USD</option>
+      <option>MXN</option>
+      <option>COP</option>
+      <option>PEN</option>
+      <option>ARS</option>
+    </select>
+  </div>
 
-  <button class="pay">💬 PAGAR Y ABRIR TICKET</button>
-
+  <button class="pay" onclick="openTicket()">PAGAR Y ABRIR TICKET</button>
 </section>
 
-<!-- TOAST -->
-<div id="toast" class="toast">Producto añadido al carrito</div>
+<div id="toast" class="toast">Producto añadido</div>
 
-<!-- JS -->
 <script src="script.js"></script>
 </body>
 </html>
