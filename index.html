@@ -8,61 +8,93 @@
 </head>
 <body>
 
-<header class="top">
-  <h1>DZSTORE OFICIAL</h1>
-  <p>Game Cheats · Ventas digitales · Seguro</p>
+<h1 class="title">DZSTORE OFICIAL</h1>
+<p class="subtitle">Game Cheats · Ventas digitales · Seguro</p>
 
-  <div class="selectors">
-    <select id="seller">
-      <option value="Dz Diogo|+1 829 410 3676">Dz Diogo</option>
-      <option value="David|+1 (809) 318-5425">David</option>
-      <option value="Vendedor 3|+58 426-2984228">Vendedor 3</option>
-    </select>
+<!-- ================= PRODUCTOS ================= -->
 
-    <select id="currency">
-      <option value="USD">USD</option>
-      <option value="MXN">MXN</option>
-      <option value="COP">COP</option>
-      <option value="PEN">PEN</option>
-      <option value="ARS">ARS</option>
-    </select>
-  </div>
-</header>
+<div class="product">
+  <img src="drip.png">
+  <h2>DRIP</h2>
+  <select onchange="selectPlan(this)">
+    <option value="DRIP NO ROOT|1 día|3">NO ROOT – 1 día – $3</option>
+    <option value="DRIP NO ROOT|7 días|5">NO ROOT – 7 días – $5</option>
+    <option value="DRIP ROOT|30 días|20">ROOT – 30 días – $20</option>
+  </select>
+  <button onclick="add()">➕ Añadir al carrito</button>
+</div>
 
-<!-- PRODUCTO HG -->
+<div class="product">
+  <img src="Brmods.png">
+  <h2>BR MODS PC</h2>
+  <select onchange="selectPlan(this)">
+    <option value="BR MODS PC|15 días|10">15 días – $10</option>
+    <option value="BR MODS PC|30 días|15">30 días – $15</option>
+  </select>
+  <button onclick="add()">➕ Añadir al carrito</button>
+</div>
+
 <div class="product">
   <img src="HG.png">
   <h2>HG</h2>
-
-  <div class="plans">
-    <button class="plan active" onclick="selectPlan(this,'HG NO ROOT','10 días',5)">NO ROOT · 10 días · $5</button>
-    <button class="plan" onclick="selectPlan(this,'HG ROOT','30 días',12)">ROOT · 30 días · $12</button>
-  </div>
-
-  <button class="add" onclick="addToCart()">🛒 Añadir al carrito</button>
+  <select onchange="selectPlan(this)">
+    <option value="HG NO ROOT|10 días|5">NO ROOT – 10 días – $5</option>
+    <option value="HG ROOT|30 días|12">ROOT – 30 días – $12</option>
+  </select>
+  <button onclick="add()">➕ Añadir al carrito</button>
 </div>
 
-<!-- STRICKS -->
 <div class="product">
   <img src="Stricker.png">
   <h2>STRICKS VR</h2>
+  <select onchange="selectPlan(this)">
+    <option value="STRICKS VR|Virtual|15">Virtual – $15</option>
+  </select>
+  <button onclick="add()">➕ Añadir al carrito</button>
+</div>
 
-  <div class="plans">
-    <button class="plan active" onclick="selectPlan(this,'STRICKS VR','Virtual',15)">Virtual · $15</button>
+<div class="product">
+  <img src="cuban.png">
+  <h2>CUBAN</h2>
+  <select onchange="selectPlan(this)">
+    <option value="CUBAN PANEL|PERMA|25">Panel – $25</option>
+    <option value="CUBAN RAGE|PERMA|30">Rage – $30</option>
+  </select>
+  <button onclick="add()">➕ Añadir al carrito</button>
+</div>
+
+<!-- ================= CARRITO ================= -->
+
+<div id="cart" class="cart">
+  <h3>🛒 Carrito</h3>
+  <div id="items"></div>
+  <div id="total"></div>
+
+  <!-- SELECTORES ABAJO -->
+  <div class="selectors">
+    <select id="seller">
+      <option value="Dz Diogo|18294103676">Dz Diogo</option>
+      <option value="David|18093185425">David</option>
+      <option value="Vendedor 3|584262984228">Vendedor 3</option>
+    </select>
+
+    <select id="currency">
+      <option>USD</option>
+      <option>MXN</option>
+      <option>COP</option>
+      <option>PEN</option>
+      <option>ARS</option>
+    </select>
   </div>
 
-  <button class="add" onclick="addToCart()">🛒 Añadir al carrito</button>
+  <button class="pay" onclick="sendTicket()">💬 Pagar y abrir ticket</button>
 </div>
 
-<!-- CARRITO -->
-<div class="cart">
-  <h3>🛒 Carrito</h3>
-  <div id="cartItems"></div>
-  <div id="total"></div>
-  <button class="pay" onclick="openTicket()">💬 Pagar y abrir ticket</button>
-</div>
+<div id="toast">Producto agregado</div>
 
-<div id="toast">Producto añadido ✔</div>
+<audio id="sound">
+  <source src="add.mp3" type="audio/mpeg">
+</audio>
 
 <script src="script.js"></script>
 </body>
