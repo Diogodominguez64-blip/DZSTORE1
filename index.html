@@ -1,96 +1,115 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>ZSTORE</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>DZ STORE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="bg-text">ZSTORE</div>
+<!-- TEXTO DE FONDO -->
+<div class="bg-text">DZ STORE</div>
 
 <div class="app">
-<h1 class="title">ZSTORE</h1>
+  <h1 class="title">DZ STORE</h1>
 
-<!-- PRODUCTOS -->
-
-<div class="product-card fade-in">
-  <img src="DRIP.PNG" class="product-img">
-  <div class="product-body">
-    <h3>DRIP NO ROOT</h3>
-    <select id="drip">
-      <option value="3|1 Día">1 Día - 3 USD</option>
-      <option value="5|7 Días">7 Días - 5 USD</option>
-      <option value="20|30 Días">30 Días - 20 USD</option>
-    </select>
-    <button onclick="addProduct('DRIP NO ROOT','drip')">Añadir al carrito</button>
+  <!-- PRODUCTO DRIP -->
+  <div class="product-card fade-in">
+    <img src="DRIP.PNG" class="product-img">
+    <div class="product-body">
+      <h3>DRIP NO ROOT</h3>
+      <select id="drip">
+        <option value="3|1 Día">1 Día - 3 USD</option>
+        <option value="5|7 Días">7 Días - 5 USD</option>
+        <option value="20|30 Días">30 Días - 20 USD</option>
+      </select>
+      <button onclick="addProduct('DRIP NO ROOT','drip')">
+        ➕ AÑADIR AL CARRITO
+      </button>
+    </div>
   </div>
-</div>
 
-<div class="product-card fade-in">
-  <img src="HG.PNG" class="product-img">
-  <div class="product-body">
-    <h3>HG</h3>
-    <select id="hg">
-      <option value="5|10 Días">10 Días - 5 USD</option>
-      <option value="12|30 Días">30 Días - 12 USD</option>
-    </select>
-    <button onclick="addProduct('HG','hg')">Añadir al carrito</button>
+  <!-- PRODUCTO HG -->
+  <div class="product-card fade-in">
+    <img src="HG.PNG" class="product-img">
+    <div class="product-body">
+      <h3>HG</h3>
+      <select id="hg">
+        <option value="5|10 Días">10 Días - 5 USD</option>
+        <option value="12|30 Días">30 Días - 12 USD</option>
+      </select>
+      <button onclick="addProduct('HG','hg')">
+        ➕ AÑADIR AL CARRITO
+      </button>
+    </div>
   </div>
-</div>
 
-<div class="product-card fade-in">
-  <img src="STRICKS.PNG" class="product-img">
-  <div class="product-body">
-    <h3>STRIKE VR</h3>
-    <select id="strike">
-      <option value="15|Virtual">Virtual - 15 USD</option>
-    </select>
-    <button onclick="addProduct('STRIKE VR','strike')">Añadir al carrito</button>
+  <!-- PRODUCTO STRICKS -->
+  <div class="product-card fade-in">
+    <img src="STRICKS.PNG" class="product-img">
+    <div class="product-body">
+      <h3>STRICKS VR</h3>
+      <select id="strike">
+        <option value="15|Virtual">Virtual - 15 USD</option>
+      </select>
+      <button onclick="addProduct('STRICKS VR','strike')">
+        ➕ AÑADIR AL CARRITO
+      </button>
+    </div>
   </div>
-</div>
 
-<div class="product-card fade-in">
-  <img src="CUBAN.PNG" class="product-img">
-  <div class="product-body">
-    <h3>CUBAN PANEL</h3>
-    <select id="cuban">
-      <option value="25|Perma">Perma - 25 USD</option>
-      <option value="30|Rage">Rage - 30 USD</option>
-    </select>
-    <button onclick="addProduct('CUBAN','cuban')">Añadir al carrito</button>
+  <!-- PRODUCTO CUBAN -->
+  <div class="product-card fade-in">
+    <img src="CUBAN.PNG" class="product-img">
+    <div class="product-body">
+      <h3>CUBAN PANEL</h3>
+      <select id="cuban">
+        <option value="25|Perma">Perma - 25 USD</option>
+        <option value="30|Rage">Rage - 30 USD</option>
+      </select>
+      <button onclick="addProduct('CUBAN PANEL','cuban')">
+        ➕ AÑADIR AL CARRITO
+      </button>
+    </div>
   </div>
+
+  <!-- CARRITO -->
+  <div class="cart" id="cartBox">
+    <h2>🛒 Carrito (<span id="count">0</span>)</h2>
+    <div id="cartItems"></div>
+    <p class="total">
+      Total: <span id="total">0</span> USD
+    </p>
+  </div>
+
+  <!-- SELECTOR VENDEDOR -->
+  <select id="seller">
+    <option value="">👤 Seleccionar vendedor</option>
+    <option value="David|584262984228">David</option>
+    <option value="Diogo|18294103676">Diogo</option>
+    <option value="Osoria|18093185425">Osoria</option>
+  </select>
+
+  <!-- SELECTOR MONEDA -->
+  <select id="currency" onchange="convert()">
+    <option value="USD">USD</option>
+    <option value="MXN">MXN</option>
+    <option value="COP">COP</option>
+    <option value="PEN">PEN</option>
+    <option value="ARS">ARS</option>
+  </select>
+
+  <!-- BOTÓN FINAL -->
+  <button class="pay" onclick="openTicket()">
+    💬 Pagar y abrir ticket
+  </button>
+
 </div>
 
-<!-- CARRITO -->
-<div class="cart" id="cartBox">
-  <h2>🛒 Carrito (<span id="count">0</span>)</h2>
-  <div id="cartItems"></div>
-  <p class="total">Total: <span id="total">0</span> USD</p>
-</div>
-
-<select id="seller">
-  <option value="">👤 Seleccionar vendedor</option>
-  <option value="David|584262984228">David</option>
-  <option value="Diego|18294103676">Diego</option>
-  <option value="Osoria|18093185425">Osoria</option>
-</select>
-
-<select id="currency" onchange="convert()">
-  <option value="USD">USD</option>
-  <option value="MXN">MXN</option>
-  <option value="COP">COP</option>
-  <option value="PEN">PEN</option>
-  <option value="ARS">ARS</option>
-</select>
-
-<button class="pay" onclick="openTicket()">💬 Pagar y abrir ticket</button>
-
-</div>
-
-<div id="toast">Producto añadido</div>
+<!-- TOAST -->
+<div id="toast">Producto añadido al carrito</div>
 
 <script src="script.js"></script>
 </body>
