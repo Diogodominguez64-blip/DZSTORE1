@@ -1,120 +1,92 @@
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Segoe UI,system-ui,sans-serif;
+let cart = JSON.parse(localStorage.getItem("dz_cart")) || [];
+let currency = "USD";
+let seller = "";
+let sellerPhone = "";
+
+const rates = { USD:1, MXN:17, COP:4000, ARS:900 };
+
+const sellers = {
+  diogo: { name:"Dz Diogo", phone:"18294103676" },
+  ozoria:{ name:"Dz Ozoria", phone:"18093185425" },
+  david:{ name:"David", phone:"584262984228" }
+};
+
+function setSeller(key){
+  seller = sellers[key].name;
+  sellerPhone = sellers[key].phone;
 }
 
-body{
-  background:#0b0b0b;
-  color:#fff;
-  display:flex;
-  justify-content:center;
-  padding:20px;
+function add(name, price){
+  cart.push({name, price});
+  save(); render();
+  toast("✔ Producto agregado");
+  playSound();
 }
 
-.card{
-  width:100%;
-  max-width:420px;
-  background:#111;
-  border-radius:18px;
-  padding:20px;
+function removeItem(i){
+  cart.splice(i,1);
+  save(); render();
 }
 
-.subtitle{
-  text-align:center;
-  color:#aaa;
-  font-size:14px;
-  margin-bottom:20px;
+function save(){
+  localStorage.setItem("dz_cart", JSON.stringify(cart));
 }
 
-.category{
-  margin:22px 0 10px;
-  color:#00ff7f;
+function render(){
+  const items = document.getElementById("items");
+  const invoice = document.getElementById("invoice");
+  items.innerHTML = "";
+  invoice.innerHTML = "";
+  let total = 0;
+
+  cart.forEach((p,i)=>{
+    total += p.price;
+    items.innerHTML += `
+      <div class="cart-item">
+        ${p.name} - ${p.price} USD
+        <button onclick="removeItem(${i})">✖</button>
+      </div>`;
+    invoice.innerHTML += `${i+1}. ${p.name} - ${p.price} USD<br>`;
+  });
+
+  document.getElementById("count").innerText = cart.length;
+  invoice.innerHTML += `<hr>Total USD: ${total}<br>
+  Total ${currency}: ${Math.round(total*rates[currency])}`;
 }
 
-.service{
-  background:#181818;
-  border-radius:14px;
-  padding:14px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:10px;
+function send(type){
+  if(!cart.length || !sellerPhone){
+    alert("Selecciona productos y vendedor");
+    return;
+  }
+
+  const id = "DZ-" + Math.floor(10000 + Math.random()*90000);
+  let total = cart.reduce((s,p)=>s+p.price,0);
+
+  let msg = `🧾 *TICKET DZSTORE OFICIAL*\nPedido: *${id}*\nVendedor: *${seller}*\n\n`;
+  cart.forEach((p,i)=> msg += `${i+1}. ${p.name} - ${p.price} USD\n`);
+  msg += `\n💵 Total USD: ${total}`;
+
+  window.open(`https://wa.me/${sellerPhone}?text=${encodeURIComponent(msg)}`);
+
+  if(type === "paypal"){
+    setTimeout(()=>{
+      window.open("https://www.paypal.me/dzstore0817");
+    },600);
+  }
 }
 
-.service button{
-  width:42px;
-  height:42px;
-  border:none;
-  border-radius:12px;
-  background:#00ff7f;
-  color:#000;
-  font-size:22px;
-  font-weight:bold;
+function toast(text){
+  const t = document.getElementById("toast");
+  t.innerText = text;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),1500);
 }
 
-.cart-item{
-  background:#161616;
-  border-radius:12px;
-  padding:10px;
-  margin-bottom:8px;
-  display:flex;
-  justify-content:space-between;
+function playSound(){
+  const s = document.getElementById("cart-sound");
+  s.currentTime = 0;
+  s.play().catch(()=>{});
 }
 
-.cart-item button{
-  background:none;
-  border:none;
-  color:#ff4d4d;
-}
-
-select,.btn{
-  width:100%;
-  margin-top:10px;
-  padding:12px;
-  border-radius:12px;
-  border:none;
-}
-
-select{
-  background:#181818;
-  color:#fff;
-  border:1px solid #222;
-}
-
-.btn{
-  background:#00ff7f;
-  color:#000;
-  font-weight:bold;
-}
-
-.btn.alt{
-  background:#1f1f1f;
-  color:#fff;
-}
-
-.invoice{
-  background:#0f0f0f;
-  border-radius:12px;
-  padding:12px;
-  margin-top:12px;
-  font-size:14px;
-}
-
-.toast{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#00ff7f;
-  color:#000;
-  padding:12px 18px;
-  border-radius:12px;
-  opacity:0;
-  transition:.3s;
-}
-
-.toast.show{
-  opacity:1;
-}
+render();
