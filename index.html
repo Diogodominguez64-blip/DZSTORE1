@@ -8,140 +8,119 @@
 </head>
 <body>
 
-<div class="container">
+<div class="bg-logo"></div>
 
-  <header>
-    <h1>DZSTORE OFICIAL</h1>
-    <p>Game Cheats · Ventas digitales · Seguro</p>
-  </header>
+<header class="header">
+  <h1>DZSTORE OFICIAL</h1>
+  <p>Game Cheats · Ventas digitales · Seguro</p>
+</header>
 
-  <!-- ================= PRODUCTOS ================= -->
+<main class="products">
 
   <!-- DRIP NO ROOT -->
   <div class="product-card">
-    <img src="drip.png" alt="DRIP">
-    <h2>🟢 DRIP NO ROOT</h2>
-
-    <select id="drip-nr">
-      <option value="3">1 día - 3 USD</option>
-      <option value="5">7 días - 5 USD</option>
-    </select>
-
-    <button onclick="addFromSelect('DRIP NO ROOT', 'drip-nr')">
-      ➕ Añadir al carrito
-    </button>
+    <img src="drip.png">
+    <div class="product-info">
+      <h2>DRIP NO ROOT</h2>
+      <select onchange="selectPlan(this,'DRIP NO ROOT')">
+        <option value="3">1 día - 3 USD</option>
+        <option value="5">7 días - 5 USD</option>
+        <option value="8">15 días - 8 USD</option>
+        <option value="12">30 días - 12 USD</option>
+      </select>
+      <button onclick="addToCart('DRIP NO ROOT')">➕ Añadir al carrito</button>
+    </div>
   </div>
 
   <!-- DRIP ROOT -->
   <div class="product-card">
-    <img src="drip.png" alt="DRIP ROOT">
-    <h2>🔥 DRIP ROOT</h2>
-
-    <select id="drip-root">
-      <option value="20">30 días - 20 USD</option>
-    </select>
-
-    <button onclick="addFromSelect('DRIP ROOT', 'drip-root')">
-      ➕ Añadir al carrito
-    </button>
+    <img src="drip.png">
+    <div class="product-info">
+      <h2>DRIP ROOT</h2>
+      <select onchange="selectPlan(this,'DRIP ROOT')">
+        <option value="10">10 días - 10 USD</option>
+        <option value="16">20 días - 16 USD</option>
+        <option value="20">30 días - 20 USD</option>
+      </select>
+      <button onclick="addToCart('DRIP ROOT')">➕ Añadir al carrito</button>
+    </div>
   </div>
 
   <!-- HG -->
   <div class="product-card">
-    <img src="HG.png" alt="HG">
-    <h2>🛡️ HG</h2>
-
-    <select id="hg">
-      <option value="5">NO ROOT - 10 días - 5 USD</option>
-      <option value="12">ROOT - 30 días - 12 USD</option>
-    </select>
-
-    <button onclick="addFromSelect('HG', 'hg')">
-      ➕ Añadir al carrito
-    </button>
+    <img src="HG.png">
+    <div class="product-info">
+      <h2>HG</h2>
+      <select onchange="selectPlan(this,'HG')">
+        <option value="5">NO ROOT - 10 días - 5 USD</option>
+        <option value="12">ROOT - 30 días - 12 USD</option>
+      </select>
+      <button onclick="addToCart('HG')">➕ Añadir al carrito</button>
+    </div>
   </div>
 
-  <!-- STRICKS -->
+  <!-- STRICKS VR -->
   <div class="product-card">
-    <img src="Stricker.png" alt="STRICKS">
-    <h2>🎯 STRICKS VR</h2>
-
-    <select id="stricks">
-      <option value="15">Virtual - 15 USD</option>
-    </select>
-
-    <button onclick="addFromSelect('STRICKS VR', 'stricks')">
-      ➕ Añadir al carrito
-    </button>
+    <img src="Stricker.png">
+    <div class="product-info">
+      <h2>STRICKS VR</h2>
+      <select onchange="selectPlan(this,'STRICKS VR')">
+        <option value="15">Virtual - 15 USD</option>
+      </select>
+      <button onclick="addToCart('STRICKS VR')">➕ Añadir al carrito</button>
+    </div>
   </div>
 
   <!-- BR MODS -->
   <div class="product-card">
-    <img src="Brmods.png" alt="BR MODS">
-    <h2>💻 BR MODS PC</h2>
-
-    <select id="brmods">
-      <option value="10">15 días - 10 USD</option>
-      <option value="15">30 días - 15 USD</option>
-    </select>
-
-    <button onclick="addFromSelect('BR MODS PC', 'brmods')">
-      ➕ Añadir al carrito
-    </button>
+    <img src="Brmods.png">
+    <div class="product-info">
+      <h2>BR MODS PC</h2>
+      <select onchange="selectPlan(this,'BR MODS PC')">
+        <option value="3">1 día - 3 USD</option>
+        <option value="7">7 días - 7 USD</option>
+        <option value="10">15 días - 10 USD</option>
+        <option value="15">30 días - 15 USD</option>
+      </select>
+      <button onclick="addToCart('BR MODS PC')">➕ Añadir al carrito</button>
+    </div>
   </div>
 
   <!-- CUBAN -->
   <div class="product-card">
-    <img src="cuban.png" alt="CUBAN">
-    <h2>💥 CUBAN</h2>
-
-    <select id="cuban">
-      <option value="25">PANEL - PERMA - 25 USD</option>
-      <option value="30">RAGE - PERMA - 30 USD</option>
-    </select>
-
-    <button onclick="addFromSelect('CUBAN', 'cuban')">
-      ➕ Añadir al carrito
-    </button>
+    <img src="cuban.png">
+    <div class="product-info">
+      <h2>CUBAN</h2>
+      <select onchange="selectPlan(this,'CUBAN')">
+        <option value="25">CUBAN PANEL - PERMA - 25 USD</option>
+        <option value="30">CUBAN RANGE - PERMA - 30 USD</option>
+      </select>
+      <button onclick="addToCart('CUBAN')">➕ Añadir al carrito</button>
+    </div>
   </div>
 
-  <!-- ================= CARRITO ================= -->
+</main>
 
-  <section id="checkout">
-    <h3>🛒 Carrito (<span id="count">0</span>)</h3>
-    <div id="items"></div>
+<!-- CHECKOUT -->
+<section id="checkout">
+  <h3>🧾 Abrir ticket</h3>
 
-    <div class="selectors">
-      <select id="seller">
-        <option value="">Selecciona vendedor</option>
-        <option value="Dz Diogo">Dz Diogo</option>
-        <option value="Dz Ozoria">Dz Ozoria</option>
-        <option value="David">David</option>
-      </select>
+  <select id="seller">
+    <option>Dz Diogo</option>
+    <option>Dz Ozoria</option>
+    <option>David</option>
+  </select>
 
-      <select id="currency" onchange="render()">
-        <option value="USD">USD</option>
-        <option value="MXN">MXN</option>
-        <option value="COP">COP</option>
-        <option value="PEN">PEN</option>
-        <option value="ARS">ARS</option>
-      </select>
-    </div>
+  <select id="currency">
+    <option value="USD">USD</option>
+    <option value="MXN">MXN</option>
+    <option value="COP">COP</option>
+    <option value="PEN">PEN</option>
+    <option value="ARS">ARS</option>
+  </select>
 
-    <div id="invoice"></div>
-
-    <button class="pay-btn" onclick="openTicket()">
-      💬 Pagar y abrir ticket
-    </button>
-  </section>
-
-</div>
-
-<div id="toast" class="toast">Producto agregado</div>
-
-<audio id="cart-sound">
-  <source src="add.mp3" type="audio/mpeg">
-</audio>
+  <button class="pay" onclick="openTicket()">💬 Pagar y abrir ticket</button>
+</section>
 
 <script src="script.js"></script>
 </body>
