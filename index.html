@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <div class="card">
@@ -17,7 +16,7 @@
   <h3 class="category">🟢 DRIP</h3>
 
   <div class="service">
-    <img src="./drip.png" class="product-img">
+    <img src="drip.png" class="product-img">
     <div class="info">
       <span>DRIP NO ROOT – 1 día</span>
       <strong>3 USD</strong>
@@ -26,7 +25,7 @@
   </div>
 
   <div class="service">
-    <img src="./drip.png" class="product-img">
+    <img src="drip.png" class="product-img">
     <div class="info">
       <span>DRIP NO ROOT – 7 días</span>
       <strong>5 USD</strong>
@@ -35,7 +34,7 @@
   </div>
 
   <div class="service">
-    <img src="./drip.png" class="product-img">
+    <img src="drip.png" class="product-img">
     <div class="info">
       <span>DRIP ROOT – 30 días</span>
       <strong>20 USD</strong>
@@ -47,18 +46,18 @@
   <h3 class="category">💻 BR MODS PC</h3>
 
   <div class="service">
-    <img src="./Brmods.png" class="product-img">
+    <img src="Brmods.png" class="product-img">
     <div class="info">
-      <span>BR MODS PC – 15 días</span>
+      <span>BR MODS – 15 días</span>
       <strong>10 USD</strong>
     </div>
     <button onclick="add({name:'BR MODS PC',plan:'15 días',price:10})">+</button>
   </div>
 
   <div class="service">
-    <img src="./Brmods.png" class="product-img">
+    <img src="Brmods.png" class="product-img">
     <div class="info">
-      <span>BR MODS PC – 30 días</span>
+      <span>BR MODS – 30 días</span>
       <strong>15 USD</strong>
     </div>
     <button onclick="add({name:'BR MODS PC',plan:'30 días',price:15})">+</button>
@@ -68,7 +67,7 @@
   <h3 class="category">🛡️ HG</h3>
 
   <div class="service">
-    <img src="./HG.png" class="product-img">
+    <img src="HG.png" class="product-img">
     <div class="info">
       <span>HG NO ROOT – 10 días</span>
       <strong>5 USD</strong>
@@ -77,7 +76,7 @@
   </div>
 
   <div class="service">
-    <img src="./HG.png" class="product-img">
+    <img src="HG.png" class="product-img">
     <div class="info">
       <span>HG ROOT – 30 días</span>
       <strong>12 USD</strong>
@@ -89,7 +88,7 @@
   <h3 class="category">🎯 STRICKS VR</h3>
 
   <div class="service">
-    <img src="./Stricker.png" class="product-img">
+    <img src="Stricker.png" class="product-img">
     <div class="info">
       <span>STRICKS VR – Virtual</span>
       <strong>15 USD</strong>
@@ -101,7 +100,7 @@
   <h3 class="category">💥 CUBAN</h3>
 
   <div class="service">
-    <img src="./cuban.png" class="product-img">
+    <img src="cuban.png" class="product-img">
     <div class="info">
       <span>CUBAN PANEL – PERMA</span>
       <strong>25 USD</strong>
@@ -110,7 +109,7 @@
   </div>
 
   <div class="service">
-    <img src="./cuban.png" class="product-img">
+    <img src="cuban.png" class="product-img">
     <div class="info">
       <span>CUBAN RAGE – PERMA</span>
       <strong>30 USD</strong>
@@ -121,18 +120,36 @@
   <!-- ================= CARRITO ================= -->
   <h3 class="category">🛒 Carrito (<span id="count">0</span>)</h3>
   <div id="items"></div>
-
   <div class="invoice" id="invoice"></div>
+
+  <!-- ================= OPCIONES ================= -->
+  <h3 class="category">👤 Vendedor</h3>
+  <select id="seller">
+    <option value="">Selecciona un vendedor</option>
+    <option value="DZ Diogo|18294103676">DZ Diogo</option>
+    <option value="DZ Store|18093185425">DZ Store</option>
+    <option value="David|584262984228">David</option>
+  </select>
+
+  <h3 class="category">💱 Moneda</h3>
+  <select id="currency">
+    <option value="USD">USD</option>
+    <option value="DOP">DOP</option>
+  </select>
+
+  <div class="pay-buttons">
+    <button class="paypal" onclick="payPaypal()">💳 Pagar con PayPal</button>
+    <button class="other" onclick="payOther()">📲 Otro método de pago</button>
+  </div>
+
 </div>
 
-<!-- NOTIFICACIÓN -->
-<div id="toast" class="toast">Producto agregado</div>
+<div id="toast" class="toast"></div>
 
-<!-- SONIDO -->
-<audio id="cart-sound" preload="auto">
-  <source src="./add.mp3" type="audio/mpeg">
+<audio id="cart-sound">
+  <source src="add.mp3" type="audio/mpeg">
 </audio>
 
-<script src="./script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
