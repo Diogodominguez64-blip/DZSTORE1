@@ -2,120 +2,144 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>DZ STORE</title>
+  <title>DZ STORE | GAME CHEATS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="navbar">
   <div class="nav-left">
-    <img src="logo.png" class="nav-logo">
+    <img src="logo.png" class="nav-logo" alt="DZ LOGO">
     <div>
       <h1>DZ STORE</h1>
-      <span>GAME CHEATS</span>
+      <span>PREMIUM GAME CHEATS</span>
     </div>
   </div>
 
   <div class="nav-right">
+    <select id="currency" onchange="renderCart()">
+      <option value="USD">USD</option>
+      <option value="MXN">MXN</option>
+      <option value="COP">COP</option>
+      <option value="PEN">PEN</option>
+      <option value="ARS">ARS</option>
+    </select>
     <button class="icon-btn" onclick="toggleOrders()">🛍️</button>
   </div>
 </header>
 
+<section class="hero-text" style="text-align:center; padding: 40px 20px 10px;">
+    <h2 style="font-size: 2.5rem; margin-bottom: 5px;">EQUÍPATE <span style="color:#3cff78;">COMO UN PRO</span></h2>
+    <p style="opacity: 0.6;">Selecciona tu herramienta y domina la partida.</p>
+</section>
+
 <main class="products">
 
   <div class="card">
-    <img src="drip.png">
-    <h2>DRIP</h2>
-    <select class="plan">
-      <option value="3" data-label="1 DÍA">1 DÍA – 3 USD</option>
-      <option value="5" data-label="7 DÍAS">7 DÍAS – 5 USD</option>
-      <option value="20" data-label="30 DÍAS ROOT">30 DÍAS ROOT – 20 USD</option>
-    </select>
-    <button onclick="addToCart('DRIP')">➕ AÑADIR AL CARRITO</button>
+    <div class="status-badge">ONLINE</div> <img src="drip.png" alt="DRIP">
+    <div class="card-info">
+        <h2>DRIP</h2>
+        <select class="plan">
+          <option value="3" data-label="1 DÍA">1 DÍA – 3 USD</option>
+          <option value="5" data-label="7 DÍAS">7 DÍAS – 5 USD</option>
+          <option value="20" data-label="30 DÍAS ROOT">30 DÍAS ROOT – 20 USD</option>
+        </select>
+        <button onclick="addToCart('DRIP')">➕ AÑADIR AL CARRITO</button>
+    </div>
   </div>
 
   <div class="card">
-    <img src="HG.png">
-    <h2>HG</h2>
-    <select class="plan">
-      <option value="5" data-label="10 DÍAS">10 DÍAS – 5 USD</option>
-      <option value="12" data-label="30 DÍAS ROOT">30 DÍAS ROOT – 12 USD</option>
-    </select>
-    <button onclick="addToCart('HG')">➕ AÑADIR AL CARRITO</button>
+    <div class="status-badge">ONLINE</div>
+    <img src="HG.png" alt="HG">
+    <div class="card-info">
+        <h2>HG</h2>
+        <select class="plan">
+          <option value="5" data-label="10 DÍAS">10 DÍAS – 5 USD</option>
+          <option value="12" data-label="30 DÍAS ROOT">30 DÍAS ROOT – 12 USD</option>
+        </select>
+        <button onclick="addToCart('HG')">➕ AÑADIR AL CARRITO</button>
+    </div>
   </div>
 
   <div class="card">
-    <img src="Brmods.png">
-    <h2>BR MODS PC</h2>
-    <select class="plan">
-      <option value="10" data-label="15 DÍAS">15 DÍAS – 10 USD</option>
-      <option value="15" data-label="30 DÍAS">30 DÍAS – 15 USD</option>
-    </select>
-    <button onclick="addToCart('BR MODS PC')">➕ AÑADIR AL CARRITO</button>
+    <div class="status-badge">ONLINE</div>
+    <img src="Brmods.png" alt="BR MODS PC">
+    <div class="card-info">
+        <h2>BR MODS PC</h2>
+        <select class="plan">
+          <option value="10" data-label="15 DÍAS">15 DÍAS – 10 USD</option>
+          <option value="15" data-label="30 DÍAS">30 DÍAS – 15 USD</option>
+        </select>
+        <button onclick="addToCart('BR MODS PC')">➕ AÑADIR AL CARRITO</button>
+    </div>
   </div>
 
   <div class="card">
-    <img src="Stricker.png">
-    <h2>STRICKER VR</h2>
-    <select class="plan">
-      <option value="15" data-label="VIRTUAL">VIRTUAL – 15 USD</option>
-    </select>
-    <button onclick="addToCart('STRICKER VR')">➕ AÑADIR AL CARRITO</button>
+    <div class="status-badge" style="background:#ff4757;">OFERTA</div>
+    <img src="Stricker.png" alt="STRICKER VR">
+    <div class="card-info">
+        <h2>STRICKER VR</h2>
+        <select class="plan">
+          <option value="15" data-label="VIRTUAL">VIRTUAL – 15 USD</option>
+        </select>
+        <button onclick="addToCart('STRICKER VR')">➕ AÑADIR AL CARRITO</button>
+    </div>
   </div>
 
   <div class="card">
-    <img src="cuban.png">
-    <h2>CUBAN</h2>
-    <select class="plan">
-      <option value="25" data-label="PANEL PERMA">PANEL PERMA – 25 USD</option>
-      <option value="30" data-label="RAGE PERMA">RAGE PERMA – 30 USD</option>
-    </select>
-    <button onclick="addToCart('CUBAN')">➕ AÑADIR AL CARRITO</button>
+    <div class="status-badge">ONLINE</div>
+    <img src="cuban.png" alt="CUBAN">
+    <div class="card-info">
+        <h2>CUBAN</h2>
+        <select class="plan">
+          <option value="25" data-label="PANEL PERMA">PANEL PERMA – 25 USD</option>
+          <option value="30" data-label="RAGE PERMA">RAGE PERMA – 30 USD</option>
+        </select>
+        <button onclick="addToCart('CUBAN')">➕ AÑADIR AL CARRITO</button>
+    </div>
   </div>
 
 </main>
 
 <section id="checkout">
-  <h3>🛒 RESUMEN</h3>
+  <div class="checkout-header">
+    <h3>🛒 RESUMEN DE COMPRA</h3>
+  </div>
+  
   <div id="cart"></div>
 
-  <select id="seller">
-    <option value="">👤 Vendedor</option>
-    <option value="David|584262984228">David (+58)</option>
-    <option value="Diogo|18294103676">Diogo (+1 829)</option>
-    <option value="Osoria|18093185425">Osoria (+1 809)</option>
-  </select>
+  <div class="checkout-forms">
+      <select id="seller">
+        <option value="">👤 Seleccionar Vendedor</option>
+        <option value="David|584262984228">David (+58)</option>
+        <option value="Diogo|18294103676">Diogo (+1 829)</option>
+        <option value="Osoria|18093185425">Osoria (+1 809)</option>
+      </select>
 
-  <select id="payment">
-    <option value="">💳 Método de pago</option>
-    <option>Bancolombia</option>
-    <option>Nequi</option>
-    <option>Zelle</option>
-    <option>OXXO</option>
-    <option>Transferencia</option>
-  </select>
+      <select id="payment">
+        <option value="">💳 Método de pago</option>
+        <option>Bancolombia</option>
+        <option>Nequi</option>
+        <option>Zelle</option>
+        <option>OXXO</option>
+        <option>Transferencia</option>
+      </select>
+  </div>
 
-  <select id="currency">
-    <option value="USD">USD</option>
-    <option value="MXN">MXN</option>
-    <option value="COP">COP</option>
-    <option value="PEN">PEN</option>
-    <option value="ARS">ARS</option>
-  </select>
+  <div id="total" class="total-display">💰 TOTAL: 0 USD</div>
 
-  <div id="total"></div>
-
-  <button class="pay" onclick="sendTicket()">🚀 PAGAR Y ABRIR TICKET</button>
+  <button class="pay" onclick="sendTicket()">🚀 FINALIZAR Y ENVIAR TICKET</button>
 </section>
 
-<div id="toast">Producto añadido</div>
+<div id="toast">✅ Añadido correctamente</div>
 
-<div id="ordersModal" class="orders-modal">
+<div id="ordersModal" class="orders-modal" onclick="if(event.target==this) toggleOrders()">
   <div class="orders-box">
-    <h3>🛍️ MIS PEDIDOS</h3>
+    <h3>🛍️ MIS PEDIDOS RECIENTES</h3>
     <div id="ordersList"></div>
-    <button onclick="toggleOrders()">Cerrar</button>
+    <button class="btn-close" onclick="toggleOrders()">Cerrar</button>
   </div>
 </div>
 
