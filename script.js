@@ -1,21 +1,6 @@
 let cart = [];
 let seller = "";
-let currency = "USD";
 
-const rates = {
-  USD: 1,
-  MXN: 17,
-  COP: 3900,
-  ARS: 900
-};
-
-const sellerPhones = {
-  "Dz Diogo": "593999999999",
-  "Dz Ozoria": "593888888888",
-  "David": "593777777777"
-};
-
-// ================= AGREGAR PRODUCTO =================
 function add(product){
   cart.push(product);
   render();
@@ -23,95 +8,79 @@ function add(product){
   playSound();
 }
 
-// ================= ELIMINAR =================
 function removeItem(i){
   cart.splice(i,1);
   render();
 }
 
-// ================= RENDER =================
 function render(){
-  const items = document.getElementById("items");
-  const invoice = document.getElementById("invoice");
-  items.innerHTML = "";
-  invoice.innerHTML = "";
-
-  let totalUSD = 0;
+  const items=document.getElementById("items");
+  const invoice=document.getElementById("invoice");
+  items.innerHTML="";
+  let total=0;
 
   cart.forEach((p,i)=>{
-    totalUSD += p.price;
-    items.innerHTML += `
+    total+=p.price;
+    items.innerHTML+=`
       <div class="cart-item">
         ${p.name} - ${p.plan} (${p.price} USD)
         <button onclick="removeItem(${i})">✖</button>
       </div>`;
   });
 
-  const converted = (totalUSD * rates[currency]).toFixed(2);
-
-  document.getElementById("count").innerText = cart.length;
-  invoice.innerHTML = `
-    <strong>Total:</strong> ${converted} ${currency}
-  `;
+  document.getElementById("count").innerText=cart.length;
+  invoice.innerHTML=`💵 Total: ${total} USD`;
 }
 
-// ================= PAGO =================
 function pay(method){
-  if(cart.length === 0){
-    alert("❌ El carrito está vacío");
-    return;
-  }
+  if(cart.length===0) return alert("Carrito vacío");
+  if(!seller) return alert("Selecciona un vendedor");
 
-  if(!seller){
-    alert("❌ Selecciona un vendedor");
-    return;
-  }
+  const id="DZ-"+Math.floor(Math.random()*99999);
+  let total=cart.reduce((s,p)=>s+p.price,0);
 
-  const phone = sellerPhones[seller];
-  let totalUSD = cart.reduce((s,p)=>s+p.price,0);
-  const converted = (totalUSD * rates[currency]).toFixed(2);
+  let msg=`🧾 *TICKET DZSTORE OFICIAL*
+Pedido: *${id}*
+Vendedor: *${seller}*
 
-  let ticket = `🧾 *NUEVO PEDIDO DZSTORE*\n\n`;
-  cart.forEach(p=>{
-    ticket += `• ${p.name} - ${p.plan} (${p.price} USD)\n`;
-  });
-
-  ticket += `
-----------------------
-💰 Total: ${converted} ${currency}
-💳 Método de pago: ${method === "paypal" ? "PayPal" : "Otro método"}
-👤 Vendedor: ${seller}
-
-Gracias por tu compra 💚
-En breve ${seller} te atenderá.
 `;
 
-  // WhatsApp
-  const wa = `https://wa.me/${phone}?text=${encodeURIComponent(ticket)}`;
-  window.open(wa, "_blank");
+  cart.forEach((p,i)=>{
+    msg+=`${i+1}. ${p.name} - ${p.plan} (${p.price} USD)\n`;
+  });
 
-  // PayPal redirect
-  if(method === "paypal"){
+  msg+=`
+------------------
+💵 Total: ${total} USD
+💳 Pago: ${method === "paypal" ? "PayPal" : "Otro método"}
+
+🙏 Gracias por tu compra.
+${seller} se pondrá en contacto contigo en breve.
+`;
+
+  let phone=
+    seller.includes("Ozoria")?"18093185425":
+    seller.includes("David")?"584262984228":
+    "18294103676";
+
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
+
+  if(method==="paypal"){
     setTimeout(()=>{
-      window.open(
-        `https://www.paypal.com/paypalme/dzstore0817/${totalUSD}`,
-        "_blank"
-      );
-    }, 800);
+      window.open("https://www.paypal.me/dzstore0817");
+    },1200);
   }
 }
 
-// ================= TOAST =================
 function toast(msg){
-  const t = document.getElementById("toast");
-  t.innerText = msg;
+  const t=document.getElementById("toast");
+  t.innerText=msg;
   t.classList.add("show");
   setTimeout(()=>t.classList.remove("show"),1500);
 }
 
-// ================= SONIDO =================
 function playSound(){
-  const s = document.getElementById("cart-sound");
-  s.currentTime = 0;
+  const s=document.getElementById("cart-sound");
+  s.currentTime=0;
   s.play().catch(()=>{});
 }
