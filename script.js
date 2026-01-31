@@ -53,7 +53,7 @@ function updateTotal(usd) {
     document.getElementById("total").innerText = t;
 }
 
-// TICKET PROFESIONAL ACTUALIZADO
+// TICKET PROFESIONAL CON NOMBRE DINÁMICO
 function sendTicket() {
     if (!cart.length) return alert("⚠️ El carrito está vacío");
     const sellerSelect = document.getElementById("seller");
@@ -61,36 +61,37 @@ function sendTicket() {
     
     if (!sellerSelect.value || !pay) return alert("⚠️ Selecciona vendedor y método de pago");
 
+    // Sacamos el nombre y el celular por separado
     const [name, phone] = sellerSelect.value.split("|");
     const orderID = "DZ-" + Math.floor(10000 + Math.random() * 90000); 
     const totalUSD = cart.reduce((a, b) => a + b.price, 0);
     const currency = document.getElementById("currency").value;
     const totalLocal = (totalUSD * rates[currency]).toFixed(0);
     
-    // Obtener hora actual en formato 24h
+    // Hora actual 24h
     const now = new Date();
     const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    // --- CONSTRUCCIÓN DEL MENSAJE (TICKET) ---
+    // --- CONSTRUCCIÓN DEL MENSAJE FINAL ---
     let msg = `🧾 *TICKET DZSTORE OFICIAL*\n`;
     msg += `🆔 Pedido: *${orderID}*\n`;
     msg += `👤 Vendedor: *${name}*\n`;
     msg += `💳 Método de pago: *${pay}*\n`;
     msg += `⏰ Hora: *${time}*\n\n`;
 
-    // Lista numerada de productos
+    // Lista numerada dinámica
     cart.forEach((p, index) => {
         msg += `${index + 1}. ${p.name} – ${p.label} - ${p.price} USD\n`;
     });
 
     msg += `\n💵 Total USD: *${totalUSD}*`;
     
-    // Agregamos conversión si no es USD
     if(currency !== "USD") {
         msg += `\n🌍 Total ${currency}: *${totalLocal}*`;
     }
 
-    msg += `\n\nGracias por confiar en *DZ Store*. Diogo te atenderá en breves.`;
+    // Aquí ya no dice siempre Diogo, sino el vendedor que seleccionaste
+    msg += `\n\nGracias por confiar en *DZ Store*. ${name} te atenderá en breves.`;
     // ------------------------------------------
 
     saveOrder({ order: orderID, time: new Date().toLocaleString(), totalUSD, seller: name });
