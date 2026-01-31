@@ -1,115 +1,120 @@
-let cart = JSON.parse(localStorage.getItem("dz_cart")) || [];
-let seller = "";
-let currency = "USD";
-
-const rates = { USD:1, MXN:17, COP:4000, ARS:900 };
-
-// ================= AGREGAR PRODUCTO =================
-function add(name, price){
-  cart.push({name,price});
-  save();
-  render();
-  toast("✔ Producto agregado al carrito");
-  playSound();
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Segoe UI,system-ui,sans-serif;
 }
 
-function removeItem(i){
-  cart.splice(i,1);
-  save();
-  render();
+body{
+  background:#0b0b0b;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  padding:20px;
 }
 
-function save(){
-  localStorage.setItem("dz_cart",JSON.stringify(cart));
+.card{
+  width:100%;
+  max-width:420px;
+  background:#111;
+  border-radius:18px;
+  padding:20px;
 }
 
-// ================= RENDER =================
-function render(){
-  const items = document.getElementById("items");
-  const invoice = document.getElementById("invoice");
-
-  items.innerHTML = "";
-  invoice.innerHTML = "";
-
-  let total = 0;
-
-  cart.forEach((p,i)=>{
-    total += p.price;
-    items.innerHTML += `
-      <div class="cart-item">
-        ${p.name} - ${p.price} USD
-        <button onclick="removeItem(${i})">✖</button>
-      </div>
-    `;
-  });
-
-  document.getElementById("count").innerText = cart.length;
-
-  invoice.innerHTML = `
-    💵 Total USD: ${total}<br>
-    🌍 Total ${currency}: ${Math.round(total * rates[currency])}
-  `;
+.subtitle{
+  text-align:center;
+  color:#aaa;
+  font-size:14px;
+  margin-bottom:20px;
 }
 
-// ================= PAGO =================
-function pay(method){
-  if(cart.length === 0){
-    toast("❌ El carrito está vacío");
-    return;
-  }
-
-  if(!seller){
-    toast("❌ Selecciona un vendedor");
-    return;
-  }
-
-  const id = "DZ-" + Math.floor(10000 + Math.random()*90000);
-  const total = cart.reduce((s,p)=>s+p.price,0);
-
-  let msg = `🧾 *TICKET DZSTORE OFICIAL*\n`;
-  msg += `🆔 Pedido: *${id}*\n`;
-  msg += `👤 Vendedor: *${seller}*\n`;
-  msg += `💳 Método de pago: *${method === "paypal" ? "PayPal" : "Otros métodos"}*\n\n`;
-
-  cart.forEach((p,i)=>{
-    msg += `${i+1}. ${p.name} - ${p.price} USD\n`;
-  });
-
-  msg += `\n💵 Total USD: ${total}`;
-  msg += `\n🌍 Total ${currency}: ${Math.round(total * rates[currency])}`;
-
-  // 📲 WHATSAPP PRINCIPAL
-  const phone = "18294103676";
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,"_blank");
-
-  // 🅿️ PAYPAL
-  if(method === "paypal"){
-    const paypalEmail = "dzstore0817@gmail.com";
-    const paypalURL =
-      `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick` +
-      `&business=${paypalEmail}` +
-      `&currency_code=USD` +
-      `&amount=${total}` +
-      `&item_name=DZSTORE+Pedido+${id}`;
-
-    setTimeout(()=>{
-      window.open(paypalURL,"_blank");
-    }, 800);
-  }
+.category{
+  margin:22px 0 10px;
+  color:#00ff7f;
 }
 
-// ================= UI =================
-function toast(msg){
-  const t = document.getElementById("toast");
-  t.innerText = msg;
-  t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"), 1800);
+.service{
+  background:#181818;
+  border-radius:14px;
+  padding:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
 }
 
-function playSound(){
-  const s = document.getElementById("cart-sound");
-  s.currentTime = 0;
-  s.play().catch(()=>{});
+.service button{
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:12px;
+  background:#00ff7f;
+  color:#000;
+  font-size:22px;
+  font-weight:bold;
 }
 
-render();
+.cart-item{
+  background:#161616;
+  border-radius:12px;
+  padding:10px;
+  margin-bottom:8px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.cart-item button{
+  background:none;
+  border:none;
+  color:#ff4d4d;
+}
+
+select,.btn{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+}
+
+select{
+  background:#181818;
+  color:#fff;
+  border:1px solid #222;
+}
+
+.btn{
+  background:#00ff7f;
+  color:#000;
+  font-weight:bold;
+}
+
+.btn.alt{
+  background:#1f1f1f;
+  color:#fff;
+}
+
+.invoice{
+  background:#0f0f0f;
+  border-radius:12px;
+  padding:12px;
+  margin-top:12px;
+  font-size:14px;
+}
+
+.toast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#00ff7f;
+  color:#000;
+  padding:12px 18px;
+  border-radius:12px;
+  opacity:0;
+  transition:.3s;
+}
+
+.toast.show{
+  opacity:1;
+}
