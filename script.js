@@ -1,12 +1,15 @@
 let cart=[];
-let currentPrice=0;
+let rates={
+  USD:1,
+  MXN:17,
+  COP:3900,
+  PEN:3.7,
+  ARS:850,
+  DOP:58
+};
 
-function setPrice(sel,prices){
-  currentPrice=prices[sel.value];
-}
-
-function addToCart(name){
-  cart.push({name,price:currentPrice});
+function addToCart(name,price){
+  cart.push({name,price});
   showToast();
   document.getElementById("sound").play();
   renderCart();
@@ -15,13 +18,14 @@ function addToCart(name){
 
 function renderCart(){
   let cur=document.getElementById("currency").value;
-  let rate=cur==="DOP"?58:1;
+  let rate=rates[cur];
   let html="";
   let total=0;
 
   cart.forEach(p=>{
-    total+=p.price*rate;
-    html+=`<div>${p.name} - ${p.price*rate} ${cur}</div>`;
+    let converted=(p.price*rate).toFixed(2);
+    total+=parseFloat(converted);
+    html+=`<div>${p.name} - ${converted} ${cur}</div>`;
   });
 
   document.getElementById("cart").innerHTML=html;
