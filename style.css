@@ -1,31 +1,26 @@
 body{
-  background:#000;
-  font-family:Arial;
+  background:#0b0b0b;
   color:#fff;
+  font-family:Arial;
+  margin:0;
 }
 
-.card{
-  max-width:420px;
-  margin:auto;
-  padding:15px;
+header{
+  padding:20px;
+  text-align:center;
 }
 
-.subtitle{color:#aaa}
-
-select,button{
-  width:100%;
-  padding:12px;
-  margin:8px 0;
-  border-radius:12px;
-  border:none;
+.selectors select{
+  margin:5px;
+  padding:8px;
+  border-radius:8px;
 }
 
 .product{
-  background:#0e0e0e;
+  background:#111;
+  margin:20px;
+  padding:15px;
   border-radius:16px;
-  padding:12px;
-  margin:18px 0;
-  box-shadow:0 0 20px rgba(0,255,200,.2);
 }
 
 .product img{
@@ -33,28 +28,41 @@ select,button{
   border-radius:12px;
 }
 
-.price{
-  font-size:22px;
-  color:#00ffd5;
-  margin:8px 0;
-}
-
-button{
-  background:linear-gradient(135deg,#00ffd5,#00bfff);
-  color:#000;
-  font-weight:bold;
-}
-
-.cart{
-  background:#111;
-  padding:8px;
+.product button{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  background:#00ff88;
+  border:none;
   border-radius:10px;
-  margin:6px 0;
+  font-size:16px;
+}
+
+#checkout{
+  background:#000;
+  padding:20px;
 }
 
 .pay{
-  margin-top:10px;
+  width:100%;
+  padding:15px;
+  font-size:18px;
+  background:#0070ff;
+  color:#fff;
+  border:none;
+  border-radius:12px;
 }
 
-.paypal{background:#ffc439}
-.other{background:#25d366}
+#toast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#00ff88;
+  color:#000;
+  padding:10px 20px;
+  border-radius:20px;
+  opacity:0;
+  transition:.3s;
+}
+#toast.show{opacity:1;}
