@@ -8,10 +8,19 @@
 </head>
 <body>
 
-<header class="top">
-  <h1>DZ STORE</h1>
-  <p>Game Cheats · Ventas Digitales · Seguro</p>
-  <button class="orders-btn" onclick="toggleOrders()">📦 MIS PEDIDOS</button>
+<!-- ===== NAVBAR ===== -->
+<header class="navbar">
+  <div class="nav-left">
+    <img src="logo.png" class="nav-logo">
+    <div class="nav-text">
+      <span class="nav-title">DZ STORE</span>
+      <span class="nav-sub">GAME CHEATS</span>
+    </div>
+  </div>
+
+  <div class="nav-right">
+    <button class="orders-icon" onclick="toggleOrders()">🛒</button>
+  </div>
 </header>
 
 <main class="products">
@@ -35,35 +44,6 @@
       <option value="12" data-label="30 DÍAS ROOT">30 DÍAS ROOT – 12 USD</option>
     </select>
     <button onclick="addToCart('HG')">➕ AÑADIR AL CARRITO</button>
-  </div>
-
-  <div class="card">
-    <img src="Brmods.png">
-    <h2>BR MODS PC</h2>
-    <select class="plan">
-      <option value="10" data-label="15 DÍAS">15 DÍAS – 10 USD</option>
-      <option value="15" data-label="30 DÍAS">30 DÍAS – 15 USD</option>
-    </select>
-    <button onclick="addToCart('BR MODS PC')">➕ AÑADIR AL CARRITO</button>
-  </div>
-
-  <div class="card">
-    <img src="Stricker.png">
-    <h2>STRICKER VR</h2>
-    <select class="plan">
-      <option value="15" data-label="VIRTUAL">VIRTUAL – 15 USD</option>
-    </select>
-    <button onclick="addToCart('STRICKER VR')">➕ AÑADIR AL CARRITO</button>
-  </div>
-
-  <div class="card">
-    <img src="cuban.png">
-    <h2>CUBAN</h2>
-    <select class="plan">
-      <option value="25" data-label="PANEL PERMA">PANEL PERMA – 25 USD</option>
-      <option value="30" data-label="RAGE PERMA">RAGE PERMA – 30 USD</option>
-    </select>
-    <button onclick="addToCart('CUBAN')">➕ AÑADIR AL CARRITO</button>
   </div>
 
 </main>
@@ -100,16 +80,16 @@
   <button class="pay" onclick="sendTicket()">🚀 PAGAR Y ABRIR TICKET</button>
 </section>
 
+<!-- MODAL PEDIDOS -->
 <div id="ordersModal" class="orders-modal">
   <div class="orders-box">
-    <h3>📦 MIS PEDIDOS</h3>
+    <h3>🛍️ MIS PEDIDOS</h3>
     <div id="ordersList"></div>
     <button onclick="toggleOrders()">Cerrar</button>
   </div>
 </div>
 
 <div id="toast">Producto añadido al carrito</div>
-
 <script src="script.js"></script>
 </body>
 </html>
