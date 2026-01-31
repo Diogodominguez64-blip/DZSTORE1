@@ -1,154 +1,132 @@
-// ================= CONFIG =================
-let cart = JSON.parse(localStorage.getItem("dz_cart")) || [];
-let seller = "";
-let currency = "USD";
-let last = localStorage.getItem("dz_last") || 0;
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>DZSTORE OFICIAL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
 
-const rates = {
-  USD: 1,
-  MXN: 17,
-  COP: 4000,
-  ARS: 900
-};
+<body>
 
-// ================= CARRITO =================
-function add(name, price) {
-  cart.push({ name, price });
-  save();
-  render();
-  toast(`✔ ${name} agregado`);
-  playSound();
-}
+<div class="bg"></div>
 
-function removeItem(index) {
-  cart.splice(index, 1);
-  save();
-  render();
-}
+<div class="card">
+<h1>DZSTORE OFICIAL</h1>
+<p class="subtitle">Cheats Premium · Pagos seguros · Soporte inmediato</p>
 
-function save() {
-  localStorage.setItem("dz_cart", JSON.stringify(cart));
-}
+<!-- DRIP -->
+<h3 class="category">🟣 DRIP</h3>
 
-// ================= RENDER =================
-function render() {
-  const items = document.getElementById("items");
-  const invoice = document.getElementById("invoice");
+<div class="product">
+<img src="images/drip.png">
+<div class="info">
+<b>DRIP NO ROOT</b>
+<button onclick="add('DRIP NO ROOT - 30 días',12)">+ 12 USD</button>
+</div>
+</div>
 
-  items.innerHTML = "";
-  invoice.innerHTML = "";
+<div class="product">
+<img src="images/drip.png">
+<div class="info">
+<b>DRIP ROOT</b>
+<button onclick="add('DRIP ROOT - 30 días',20)">+ 20 USD</button>
+</div>
+</div>
 
-  let total = 0;
+<!-- BR MODS -->
+<h3 class="category">🟦 BR MODS PC</h3>
 
-  cart.forEach((p, i) => {
-    total += p.price;
+<div class="product">
+<img src="images/brmods.png">
+<div class="info">
+<b>BR MODS PC</b>
+<button onclick="add('BR MODS PC - 30 días',15)">+ 15 USD</button>
+</div>
+</div>
 
-    items.innerHTML += `
-      <div class="cart-item">
-        ${i + 1}. ${p.name} - ${p.price} USD
-        <button onclick="removeItem(${i})">✖</button>
-      </div>
-    `;
+<!-- HG -->
+<h3 class="category">🔵 HG CHEATS</h3>
 
-    invoice.innerHTML += `${i + 1}. ${p.name} - ${p.price} USD<br>`;
-  });
+<div class="product">
+<img src="images/hg.png">
+<div class="info">
+<b>HG NO ROOT</b>
+<button onclick="add('HG NO ROOT - 30 días',10)">+ 10 USD</button>
+</div>
+</div>
 
-  document.getElementById("count").innerText = cart.length;
+<div class="product">
+<img src="images/hg.png">
+<div class="info">
+<b>HG ROOT</b>
+<button onclick="add('HG ROOT - 30 días',18)">+ 18 USD</button>
+</div>
+</div>
 
-  invoice.innerHTML += `
-    <hr>
-    🌍 Moneda: ${currency}<br>
-    💱 Total local: ${Math.round(total * rates[currency])} ${currency}<br>
-    💵 Total USD: ${total} USD
-  `;
-}
+<!-- STRICKS -->
+<h3 class="category">🟪 STRICKS BR</h3>
 
-// ================= PAGO =================
-function pay(method) {
-  if (!cart.length) {
-    alert("Carrito vacío");
-    return;
-  }
+<div class="product">
+<img src="images/stricks.png">
+<div class="info">
+<b>STRICKS BR ROOT</b>
+<button onclick="add('STRICKS ROOT',25)">+ 25 USD</button>
+</div>
+</div>
 
-  if (!seller) {
-    alert("Selecciona un vendedor");
-    return;
-  }
+<div class="product">
+<img src="images/stricks.png">
+<div class="info">
+<b>STRICKS BR VIRTUAL</b>
+<button onclick="add('STRICKS VIRTUAL',20)">+ 20 USD</button>
+</div>
+</div>
 
-  const now = Date.now();
-  if (now - last < 30000) {
-    alert("Espera 30 segundos para enviar otro pedido");
-    return;
-  }
+<!-- CUBAN -->
+<h3 class="category">🟢 CUBAN</h3>
 
-  localStorage.setItem("dz_last", now);
+<div class="product">
+<img src="images/cuban.png">
+<div class="info">
+<b>CUBAN PANEL</b>
+<button onclick="add('CUBAN PANEL',30)">+ 30 USD</button>
+</div>
+</div>
 
-  const id = "DZ-" + Math.floor(10000 + Math.random() * 90000);
-  const total = cart.reduce((s, p) => s + p.price, 0);
+<div class="product">
+<img src="images/cuban.png">
+<div class="info">
+<b>CUBAN RANGE</b>
+<button onclick="add('CUBAN RANGE',18)">+ 18 USD</button>
+</div>
+</div>
 
-  const paymentText =
-    method === "paypal" ? "PayPal" : "Otros métodos de pago";
+<!-- CARRITO -->
+<h3 class="category">🛒 Carrito (<span id="count">0</span>)</h3>
+<div id="items"></div>
 
-  // ===== TICKET =====
-  let msg = `🧾 *TICKET DZSTORE OFICIAL*\n`;
-  msg += `Pedido: *${id}*\n`;
-  msg += `Vendedor: *${seller}*\n`;
-  msg += `Método de pago: *${paymentText}*\n\n`;
+<select id="seller">
+<option value="">👤 Seleccionar vendedor</option>
+<option value="Dz Diogo|18294103676">Dz Diogo</option>
+<option value="Dz Ozoria|18093185425">Dz Ozoria</option>
+<option value="David|584262984228">David</option>
+</select>
 
-  cart.forEach((p, i) => {
-    msg += `${i + 1}. ${p.name} - ${p.price} USD\n`;
-  });
+<div class="invoice" id="invoice"></div>
 
-  msg += `\n🌍 Moneda: ${currency}`;
-  msg += `\n💱 Total local: ${Math.round(total * rates[currency])} ${currency}`;
-  msg += `\n💵 Total USD: ${total} USD`;
+<h3 class="category">💳 Métodos de pago</h3>
+<button class="btn" onclick="pay('paypal')">🅿️ PayPal</button>
+<button class="btn alt" onclick="pay('otro')">📲 Otro método</button>
 
-  msg += `\n\n━━━━━━━━━━━━━━━`;
-  msg += `\n🙏 *Gracias por tu compra*`;
-  msg += `\n*${seller}* te atenderá en breve.`;
-  msg += `\nDZSTORE OFICIAL ✅`;
+</div>
 
-  // ===== NÚMEROS =====
-  let phone =
-    seller === "Dz Ozoria"
-      ? "18093185425"
-      : seller === "David"
-      ? "584262984228"
-      : "18294103676"; // Dz Diogo
+<div id="toast" class="toast"></div>
 
-  // ===== WHATSAPP =====
-  window.open(
-    `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,
-    "_blank"
-  );
+<audio id="cart-sound">
+<source src="add.mp3" type="audio/mpeg">
+</audio>
 
-  // ===== PAYPAL =====
-  if (method === "paypal") {
-    setTimeout(() => {
-      window.open(
-        `https://www.paypal.com/paypalme/dzstore0817/${total}`,
-        "_blank"
-      );
-    }, 1200);
-  }
-}
-
-// ================= TOAST =================
-function toast(msg) {
-  const t = document.getElementById("toast");
-  t.innerText = msg;
-  t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 1800);
-}
-
-// ================= SONIDO =================
-function playSound() {
-  const s = document.getElementById("cart-sound");
-  if (!s) return;
-  s.currentTime = 0;
-  s.play().catch(() => {});
-}
-
-// ================= INIT =================
-render();
-document.addEventListener("contextmenu", e => e.preventDefault());
+<script src="script.js"></script>
+</body>
+</html>
