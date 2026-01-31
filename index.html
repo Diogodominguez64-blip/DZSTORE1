@@ -8,7 +8,6 @@
 </head>
 <body>
 
-<!-- FONDO LOGO -->
 <div class="bg-logo"></div>
 
 <header class="top">
@@ -18,6 +17,7 @@
 
 <main class="products">
 
+  <!-- PRODUCTOS (IGUAL QUE ANTES) -->
   <!-- DRIP -->
   <section class="card">
     <img src="drip.png">
@@ -46,81 +46,48 @@
     </div>
   </section>
 
-  <!-- STRICKS -->
-  <section class="card">
-    <img src="Stricker.png">
-    <div class="card-body">
-      <h2>STRICKS</h2>
-      <select id="stricks">
-        <option value="Virtual|15">Virtual - 15 USD</option>
-        <option value="Root|20">Root - 20 USD</option>
-      </select>
-      <button onclick="addToCart('STRICKS','stricks')">AÑADIR AL CARRITO</button>
-    </div>
-  </section>
-
-  <!-- CUBAN -->
-  <section class="card">
-    <img src="cuban.png">
-    <div class="card-body">
-      <h2>CUBAN</h2>
-      <select id="cuban">
-        <option value="PERMA|25">PERMA - 25 USD</option>
-      </select>
-      <button onclick="addToCart('CUBAN','cuban')">AÑADIR AL CARRITO</button>
-    </div>
-  </section>
-
-  <!-- BR MODS -->
-  <section class="card">
-    <img src="Brmods.png">
-    <div class="card-body">
-      <h2>BR MODS</h2>
-      <select id="brmods">
-        <option value="15 Días|10">15 Días - 10 USD</option>
-        <option value="30 Días|15">30 Días - 15 USD</option>
-      </select>
-      <button onclick="addToCart('BR MODS','brmods')">AÑADIR AL CARRITO</button>
-    </div>
-  </section>
-
 </main>
 
 <section id="ticket" class="ticket">
+
   <div class="ticket-header">
-    <span class="sticker">✔ FACTURA</span>
+    <span class="sticker">🧾 DZ STORE</span>
     <p id="orderId"></p>
   </div>
 
   <div id="cart" class="cart"></div>
 
   <div class="summary">
-    <p id="itemsCount">Productos: 0</p>
-    <p id="totalUsd">Total: 0 USD</p>
+    <p id="itemsCount">📦 Productos: 0</p>
+    <p id="totalUsd">💵 Total: 0 USD</p>
     <p id="totalLocal"></p>
+    <p>💳 Método de pago: <b>OTROS</b></p>
   </div>
 
+  <!-- VENDEDOR -->
   <select id="seller">
-    <option>David</option>
-    <option>Dz Diogo</option>
-    <option>Dz Ozoria</option>
+    <option value="">👤 SELECCIONAR VENDEDOR ⬇️</option>
+    <option value="David">David</option>
+    <option value="Diego">Diego</option>
+    <option value="Osoria">Osoria</option>
   </select>
 
+  <!-- MONEDA -->
   <select id="currency" onchange="updateTotals()">
-    <option value="USD">USD</option>
-    <option value="MXN">MXN</option>
-    <option value="COP">COP</option>
-    <option value="PEN">PEN</option>
-    <option value="ARS">ARS</option>
+    <option value="USD">💱 USD ⬅️➡️</option>
+    <option value="MXN">💱 MXN ⬅️➡️</option>
+    <option value="COP">💱 COP ⬅️➡️</option>
+    <option value="PEN">💱 PEN ⬅️➡️</option>
+    <option value="ARS">💱 ARS ⬅️➡️</option>
   </select>
 
   <button id="payBtn" class="pay" onclick="sendTicket()" disabled>
-    PAGAR Y ABRIR TICKET
+    🚀 PAGAR Y ABRIR TICKET
   </button>
 </section>
 
-<div id="toast" class="toast">Producto añadido al carrito</div>
+<div id="toast" class="toast">✅ Producto añadido al carrito</div>
 
-<script src="script.js" defer></script>
+<script src="script.js"></script>
 </body>
 </html>
