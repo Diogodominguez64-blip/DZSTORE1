@@ -1,5 +1,5 @@
 let cart = [];
-// Tasas de cambio (puedes ajustarlas según el mercado)
+// Tasas de cambio actualizadas
 const rates = { USD: 1, MXN: 17.5, COP: 3900, PEN: 3.7, ARS: 850 };
 
 function addToCart(name) {
@@ -53,7 +53,7 @@ function updateTotal(usd) {
     document.getElementById("total").innerText = t;
 }
 
-// ESTA ES LA PARTE QUE HACE EL TICKET PROFESIONAL
+// TICKET PROFESIONAL ACTUALIZADO
 function sendTicket() {
     if (!cart.length) return alert("⚠️ El carrito está vacío");
     const sellerSelect = document.getElementById("seller");
@@ -62,34 +62,36 @@ function sendTicket() {
     if (!sellerSelect.value || !pay) return alert("⚠️ Selecciona vendedor y método de pago");
 
     const [name, phone] = sellerSelect.value.split("|");
-    // Generamos un ID de orden más profesional de 6 dígitos
-    const orderID = "DZ-" + Math.floor(100000 + Math.random() * 900000); 
+    const orderID = "DZ-" + Math.floor(10000 + Math.random() * 90000); 
     const totalUSD = cart.reduce((a, b) => a + b.price, 0);
     const currency = document.getElementById("currency").value;
-    const totalLocal = (totalUSD * rates[currency]).toLocaleString();
-
-    // Formateo del mensaje para WhatsApp con estilo profesional
-    let msg = `*🎫 NUEVA ORDEN - DZ STORE*\n`;
-    msg += `━━━━━━━━━━━━━━━━━━\n`;
-    msg += `🆔 *ORDEN:* ${orderID}\n`;
-    msg += `👤 *CLIENTE:* Solicitando acceso\n`;
-    msg += `━━━━━━━━━━━━━━━━━━\n\n`;
-    msg += `📦 *PRODUCTOS:*\n`;
+    const totalLocal = (totalUSD * rates[currency]).toFixed(0);
     
-    cart.forEach(p => {
-        msg += `▸ *${p.name}*\n  └ _${p.label}_ → *$${p.price} USD*\n`;
+    // Obtener hora actual en formato 24h
+    const now = new Date();
+    const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    // --- CONSTRUCCIÓN DEL MENSAJE (TICKET) ---
+    let msg = `🧾 *TICKET DZSTORE OFICIAL*\n`;
+    msg += `🆔 Pedido: *${orderID}*\n`;
+    msg += `👤 Vendedor: *${name}*\n`;
+    msg += `💳 Método de pago: *${pay}*\n`;
+    msg += `⏰ Hora: *${time}*\n\n`;
+
+    // Lista numerada de productos
+    cart.forEach((p, index) => {
+        msg += `${index + 1}. ${p.name} – ${p.label} - ${p.price} USD\n`;
     });
 
-    msg += `\n━━━━━━━━━━━━━━━━━━\n`;
-    msg += `💰 *TOTAL A PAGAR:* \n`;
-    msg += `💵 *$${totalUSD.toFixed(2)} USD*\n`;
+    msg += `\n💵 Total USD: *${totalUSD}*`;
+    
+    // Agregamos conversión si no es USD
     if(currency !== "USD") {
-        msg += `🪙 *${totalLocal} ${currency}*\n`;
+        msg += `\n🌍 Total ${currency}: *${totalLocal}*`;
     }
-    msg += `━━━━━━━━━━━━━━━━━━\n`;
-    msg += `💳 *MÉTODO:* ${pay}\n`;
-    msg += `👤 *VENDEDOR:* ${name}\n\n`;
-    msg += `🚀 _Enviando comprobante de pago..._`;
+
+    msg += `\n\nGracias por confiar en *DZ Store*. Diogo te atenderá en breves.`;
+    // ------------------------------------------
 
     saveOrder({ order: orderID, time: new Date().toLocaleString(), totalUSD, seller: name });
     
