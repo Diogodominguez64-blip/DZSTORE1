@@ -4,59 +4,46 @@ body{
   margin:0;
   background:#050505;
   color:#fff;
+  position:relative;
 }
 
-.top{
-  text-align:center;
-  padding:20px;
+.bg-logo{
+  position:fixed;
+  inset:0;
+  background:url("logo.png") center/300px no-repeat;
+  opacity:0.05;
+  z-index:-1;
 }
 
-.subtitle{
-  color:#00ff6a;
-  font-size:13px;
-}
+.top{text-align:center;padding:20px}
+.top h1{color:#00ff6a;margin:0}
+.subtitle{font-size:12px;color:#00ff6a}
 
-.products{
-  padding:20px;
-  display:flex;
-  flex-direction:column;
-  gap:22px;
-}
+.products{padding:20px;display:flex;flex-direction:column;gap:22px}
 
 .card{
-  background:linear-gradient(145deg,#0b0b0b,#111);
+  background:#0c0c0c;
   border-radius:18px;
   overflow:hidden;
-  box-shadow:0 0 30px rgba(0,255,106,.25);
-  animation:fade .6s ease;
+  box-shadow:0 0 30px rgba(0,255,106,.2);
 }
 
-.card img{
-  width:100%;
-  max-height:170px;
-  object-fit:cover;
-}
+.card img{width:100%;max-height:160px;object-fit:cover}
 
-.card-body{
-  padding:15px;
-}
-
-.card h2{
-  text-align:center;
-  margin:10px 0;
-}
+.card-body{padding:15px}
+.card h2{text-align:center}
 
 select{
   width:100%;
   padding:12px;
-  margin-bottom:12px;
   border-radius:12px;
   background:#0d0d0d;
   color:#00ff6a;
   border:1px solid #00ff6a;
+  margin-bottom:10px;
 }
 
-.card button{
+.card button,.pay{
   width:100%;
   padding:14px;
   border:none;
@@ -65,13 +52,9 @@ select{
   font-weight:bold;
   cursor:pointer;
   box-shadow:0 0 25px #00ff6a;
-  transition:.2s;
 }
 
-.card button:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 40px #00ff6a;
-}
+.pay:disabled{opacity:.4;cursor:not-allowed}
 
 .ticket{
   margin-top:30px;
@@ -79,37 +62,40 @@ select{
   border-top:2px solid #00ff6a;
 }
 
-.ticket h3{
-  text-align:center;
-  color:#00ff6a;
+.ticket-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.cart{
-  background:#0c0c0c;
-  padding:10px;
-  border-radius:12px;
-  margin-bottom:15px;
+.sticker{
+  background:#00ff6a;
+  color:#000;
+  padding:4px 10px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
 }
 
-.cart div{
+.cart-item{
+  display:flex;
+  justify-content:space-between;
   padding:6px 0;
   border-bottom:1px solid #222;
 }
 
-.empty{
-  text-align:center;
-  opacity:.6;
+.cart-item button{
+  background:none;
+  border:none;
+  color:#ff4d4d;
+  font-size:16px;
 }
 
-.pay{
-  width:100%;
-  padding:16px;
-  border:none;
-  border-radius:14px;
-  background:#00ff6a;
-  font-weight:bold;
-  box-shadow:0 0 35px #00ff6a;
-  cursor:pointer;
+.summary{
+  margin:10px 0;
+  background:#0c0c0c;
+  padding:10px;
+  border-radius:10px;
 }
 
 .toast{
@@ -124,10 +110,4 @@ select{
   opacity:0;
   transition:.3s;
 }
-
 .toast.show{opacity:1}
-
-@keyframes fade{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:translateY(0)}
-}
