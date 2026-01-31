@@ -1,4 +1,9 @@
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:'Segoe UI',system-ui,sans-serif;
+}
 
 body{
   background:#0b0b0b;
@@ -19,7 +24,12 @@ body{
 }
 
 h1{text-align:center}
-.subtitle{text-align:center;color:#aaa;margin-bottom:20px}
+.subtitle{
+  text-align:center;
+  color:#9f9f9f;
+  font-size:14px;
+  margin-bottom:20px;
+}
 
 .category{
   margin:22px 0 10px;
@@ -32,27 +42,28 @@ h1{text-align:center}
   padding:12px;
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:10px;
   margin-bottom:12px;
 }
 
 .product-img{
-  width:48px;
-  height:48px;
-  border-radius:10px;
-  object-fit:cover;
+  width:42px;
+  height:42px;
+  border-radius:8px;
 }
 
-.info{flex:1}
+.info{
+  flex:1;
+  font-size:14px;
+}
 
 .service button{
-  width:44px;
-  height:44px;
+  width:40px;
+  height:40px;
   border:none;
   border-radius:12px;
   background:#00ff7f;
-  font-size:22px;
-  font-weight:bold;
+  font-size:20px;
   cursor:pointer;
 }
 
@@ -65,11 +76,54 @@ h1{text-align:center}
   justify-content:space-between;
 }
 
+.cart-item button{
+  background:none;
+  border:none;
+  color:#ff4d4d;
+  cursor:pointer;
+}
+
+select{
+  width:100%;
+  margin-top:10px;
+  padding:10px;
+  background:#181818;
+  border:1px solid #222;
+  border-radius:10px;
+  color:#fff;
+}
+
 .invoice{
   background:#0f0f0f;
   border-radius:12px;
   padding:12px;
   margin-top:12px;
+  font-size:14px;
+}
+
+.payment-box{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.pay-btn{
+  padding:14px;
+  border-radius:14px;
+  border:none;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.pay-btn.paypal{
+  background:#ffc439;
+  color:#111;
+}
+
+.pay-btn.other{
+  background:#1f1f1f;
+  color:#00ff7f;
+  border:1px solid #00ff7f;
 }
 
 .toast{
@@ -84,4 +138,5 @@ h1{text-align:center}
   opacity:0;
   transition:.3s;
 }
+
 .toast.show{opacity:1}
