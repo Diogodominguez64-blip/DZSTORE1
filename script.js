@@ -1,6 +1,37 @@
 let cart = [];
 // Tasas de cambio actualizadas
-const rates = { USD: 1, MXN: 17.5, COP: 3900, PEN: 3.7, ARS: 850 };
+const rates = { USD: 1, MXN: 18.5, COP: 4000, PEN: 3.7, ARS: 1000 };
+
+// 1. FUNCIÓN NUEVA: Actualiza los precios visuales de las tarjetas
+function updateAllCurrency() {
+    const cur = document.getElementById("currency").value;
+    const priceElements = document.querySelectorAll(".val");
+    const labelElements = document.querySelectorAll(".cur");
+
+    priceElements.forEach(el => {
+        const usdValue = parseFloat(el.getAttribute("data-usd"));
+        const converted = (usdValue * rates[cur]).toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+        el.innerText = converted;
+    });
+
+    labelElements.forEach(el => el.innerText = cur);
+    
+    // También refrescamos el carrito para que los items dentro cambien de moneda
+    renderCart();
+}
+
+// 2. FUNCIÓN NUEVA: Actualiza el valor base cuando cambias de plan (1 día, 7 días, etc.)
+function updateCardPrice(selectElement) {
+    const card = selectElement.closest('.card');
+    const priceDisplay = card.querySelector('.val');
+    // Actualizamos el atributo data-usd con el valor del nuevo plan
+    priceDisplay.setAttribute("data-usd", selectElement.value);
+    // Refrescamos la conversión visual
+    updateAllCurrency();
+}
 
 function addToCart(name) {
     const card = event.currentTarget.closest('.card');
@@ -18,11 +49,14 @@ function addToCart(name) {
 
 function renderCart() {
     const box = document.getElementById("cart");
+    const cur = document.getElementById("currency").value;
     box.innerHTML = "";
-    let total = 0;
+    let totalUSD = 0;
 
     cart.forEach((p, i) => {
-        total += p.price;
+        totalUSD += p.price;
+        const localPrice = (p.price * rates[cur]).toLocaleString(undefined, {minimumFractionDigits: 2});
+        
         box.innerHTML += `
             <div style="display:flex; justify-content:space-between; align-items:center; background:#121212; padding:12px; border-radius:8px; margin-bottom:8px; border-left:4px solid #3cff78;">
                 <div style="display:flex; flex-direction:column;">
@@ -30,12 +64,12 @@ function renderCart() {
                     <small style="color:#888;">${p.label}</small>
                 </div>
                 <div style="display:flex; align-items:center;">
-                    <b style="color:#3cff78;">$${p.price} USD</b>
+                    <b style="color:#3cff78;">${localPrice} ${cur}</b>
                     <button onclick="removeItem(${i})" style="background:none; border:none; color:#ff4757; cursor:pointer; font-size:18px; margin-left:15px;">✕</button>
                 </div>
             </div>`;
     });
-    updateTotal(total);
+    updateTotal(totalUSD);
 }
 
 function removeItem(i) {
@@ -46,14 +80,14 @@ function removeItem(i) {
 function updateTotal(usd) {
     const cur = document.getElementById("currency").value;
     const totalLocal = (usd * rates[cur]);
+    
     let t = `TOTAL: ${usd.toFixed(2)} USD`;
     if (cur !== "USD") {
-        t += ` | ${totalLocal.toLocaleString('es-CO')} ${cur}`;
+        t = `TOTAL: ${totalLocal.toLocaleString(undefined, {minimumFractionDigits: 2})} ${cur}`;
     }
     document.getElementById("total").innerText = t;
 }
 
-// TICKET PROFESIONAL CON NOMBRE DINÁMICO
 function sendTicket() {
     if (!cart.length) return alert("⚠️ El carrito está vacío");
     const sellerSelect = document.getElementById("seller");
@@ -61,38 +95,32 @@ function sendTicket() {
     
     if (!sellerSelect.value || !pay) return alert("⚠️ Selecciona vendedor y método de pago");
 
-    // Sacamos el nombre y el celular por separado
     const [name, phone] = sellerSelect.value.split("|");
     const orderID = "DZ-" + Math.floor(10000 + Math.random() * 90000); 
     const totalUSD = cart.reduce((a, b) => a + b.price, 0);
     const currency = document.getElementById("currency").value;
-    const totalLocal = (totalUSD * rates[currency]).toFixed(0);
+    const totalLocal = (totalUSD * rates[currency]).toLocaleString(undefined, {minimumFractionDigits: 2});
     
-    // Hora actual 24h
     const now = new Date();
     const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    // --- CONSTRUCCIÓN DEL MENSAJE FINAL ---
     let msg = `🧾 *TICKET DZSTORE OFICIAL*\n`;
     msg += `🆔 Pedido: *${orderID}*\n`;
     msg += `👤 Vendedor: *${name}*\n`;
     msg += `💳 Método de pago: *${pay}*\n`;
     msg += `⏰ Hora: *${time}*\n\n`;
 
-    // Lista numerada dinámica
     cart.forEach((p, index) => {
-        msg += `${index + 1}. ${p.name} – ${p.label} - ${p.price} USD\n`;
+        msg += `${index + 1}. ${p.name} – ${p.label}\n`;
     });
 
-    msg += `\n💵 Total USD: *${totalUSD}*`;
-    
     if(currency !== "USD") {
         msg += `\n🌍 Total ${currency}: *${totalLocal}*`;
+    } else {
+        msg += `\n💵 Total USD: *${totalUSD.toFixed(2)}*`;
     }
 
-    // Aquí ya no dice siempre Diogo, sino el vendedor que seleccionaste
     msg += `\n\nGracias por confiar en *DZ Store*. ${name} te atenderá en breves.`;
-    // ------------------------------------------
 
     saveOrder({ order: orderID, time: new Date().toLocaleString(), totalUSD, seller: name });
     
