@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>DZ STORE</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>DZ STORE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="navbar">
   <div class="nav-left">
     <img src="logo.png" class="nav-logo">
-    <div class="nav-text">
-      <span class="nav-title">DZ STORE</span>
-      <span class="nav-sub">GAME CHEATS</span>
+    <div>
+      <h1>DZ STORE</h1>
+      <span>GAME CHEATS</span>
     </div>
   </div>
-  <button class="orders-icon" onclick="toggleOrders()">🛒</button>
+
+  <div class="nav-right">
+    <button class="icon-btn" onclick="toggleOrders()">📦</button>
+  </div>
 </header>
 
 <main class="products">
 
-  <!-- DRIP -->
   <div class="card">
     <img src="drip.png">
     <h2>DRIP</h2>
@@ -33,7 +35,6 @@
     <button onclick="addToCart('DRIP')">➕ AÑADIR AL CARRITO</button>
   </div>
 
-  <!-- HG -->
   <div class="card">
     <img src="HG.png">
     <h2>HG</h2>
@@ -44,7 +45,6 @@
     <button onclick="addToCart('HG')">➕ AÑADIR AL CARRITO</button>
   </div>
 
-  <!-- BR MODS -->
   <div class="card">
     <img src="Brmods.png">
     <h2>BR MODS PC</h2>
@@ -55,7 +55,6 @@
     <button onclick="addToCart('BR MODS PC')">➕ AÑADIR AL CARRITO</button>
   </div>
 
-  <!-- STRICKER -->
   <div class="card">
     <img src="Stricker.png">
     <h2>STRICKER VR</h2>
@@ -65,7 +64,6 @@
     <button onclick="addToCart('STRICKER VR')">➕ AÑADIR AL CARRITO</button>
   </div>
 
-  <!-- CUBAN -->
   <div class="card">
     <img src="cuban.png">
     <h2>CUBAN</h2>
@@ -79,11 +77,11 @@
 </main>
 
 <section id="checkout">
-  <h3>🛒 RESUMEN DEL PEDIDO</h3>
+  <h3>🛒 RESUMEN</h3>
   <div id="cart"></div>
 
   <select id="seller">
-    <option value="">👤 Seleccionar vendedor</option>
+    <option value="">👤 Vendedor</option>
     <option value="David|584262984228">David (+58)</option>
     <option value="Diogo|18294103676">Diogo (+1 829)</option>
     <option value="Osoria|18093185425">Osoria (+1 809)</option>
@@ -99,17 +97,27 @@
   </select>
 
   <select id="currency">
-    <option value="USD">💱 USD</option>
-    <option value="COP">COP</option>
+    <option value="USD">USD</option>
     <option value="MXN">MXN</option>
+    <option value="COP">COP</option>
+    <option value="PEN">PEN</option>
     <option value="ARS">ARS</option>
   </select>
 
   <div id="total"></div>
-  <button class="pay" onclick="sendTicket()">🚀 PAGAR Y ABRIR WHATSAPP</button>
+
+  <button class="pay" onclick="sendTicket()">🚀 PAGAR Y ABRIR TICKET</button>
 </section>
 
-<div id="toast">✅ Producto añadido</div>
+<div id="toast">Producto añadido</div>
+
+<div id="ordersModal" class="orders-modal">
+  <div class="orders-box">
+    <h3>🛍️ MIS PEDIDOS</h3>
+    <div id="ordersList"></div>
+    <button onclick="toggleOrders()">Cerrar</button>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
