@@ -74,13 +74,15 @@ function sendTicket() {
     return;
   }
 
-  const seller = document.getElementById("seller").value;
+  const sellerName = document.getElementById("seller").value;
+  const sellerNumber = sellers[sellerName];
   const currency = document.getElementById("currency").value;
   const time = new Date().toLocaleString();
 
   let total = cart.reduce((s, i) => s + i.price, 0);
 
   let msg = `🧾 FACTURA DZSTORE\n\n`;
+
   cart.forEach(i => {
     msg += `• ${i.product} - ${i.plan}: ${i.price} USD\n`;
   });
@@ -91,11 +93,12 @@ function sendTicket() {
     msg += `\nEquivalente en ${currency}: ${(total * rates[currency]).toFixed(2)}`;
   }
 
-  msg += `\n\nVendedor: ${seller}`;
+  msg += `\n\nVendedor: ${sellerName}`;
   msg += `\nHora: ${time}`;
-  msg += `\n\nGracias por tu compra. ${seller} te atenderá en breves.`;
+  msg += `\n\nGracias por tu compra. ${sellerName} te atenderá en breves.`;
 
-  window.open(
-    `https://wa.me/18294103676?text=${encodeURIComponent(msg)}`
-  );
+  // 🔥 ESTE LINK ES EL MÁS DIRECTO POSIBLE
+  const url = `https://wa.me/${sellerNumber}?text=${encodeURIComponent(msg)}`;
+
+  window.location.href = url;
 }
