@@ -2,36 +2,15 @@
   box-sizing:border-box;
   margin:0;
   padding:0;
-  font-family:'Segoe UI',system-ui,sans-serif;
+  font-family:Segoe UI,system-ui,sans-serif;
 }
 
 body{
   background:#0b0b0b;
-  min-height:100vh;
+  color:#fff;
   display:flex;
   justify-content:center;
   padding:20px;
-  color:#fff;
-  position:relative;
-  overflow-x:hidden;
-}
-
-/* FONDO ANIMADO NEON */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(28,255,133,.18), transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(28,255,133,.15), transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(28,255,133,.08), transparent 50%);
-  animation: neonMove 12s linear infinite;
-  z-index:-1;
-}
-
-@keyframes neonMove{
-  0%{background-position:0% 0%,100% 100%,50% 50%}
-  100%{background-position:100% 100%,0% 0%,60% 40%}
 }
 
 .card{
@@ -40,43 +19,43 @@ body::before{
   background:#111;
   border-radius:18px;
   padding:20px;
-  box-shadow:0 0 30px rgba(0,0,0,.85);
 }
 
-h1{text-align:center;margin-bottom:6px}
-.subtitle{text-align:center;font-size:14px;color:#9a9a9a;margin-bottom:20px}
+.subtitle{
+  text-align:center;
+  color:#aaa;
+  font-size:14px;
+  margin-bottom:20px;
+}
 
 .category{
   margin:22px 0 10px;
-  color:#eaeaea;
-  font-size:15px;
-  font-weight:600;
+  color:#00ff7f;
 }
 
 .service{
-  background:#171717;
+  background:#181818;
   border-radius:14px;
   padding:14px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 
 .service button{
-  width:44px;
-  height:44px;
+  width:42px;
+  height:42px;
   border:none;
   border-radius:12px;
-  background:#1cff85;
+  background:#00ff7f;
   color:#000;
   font-size:22px;
   font-weight:bold;
-  cursor:pointer;
 }
 
 .cart-item{
-  background:#151515;
+  background:#161616;
   border-radius:12px;
   padding:10px;
   margin-bottom:8px;
@@ -87,45 +66,40 @@ h1{text-align:center;margin-bottom:6px}
 .cart-item button{
   background:none;
   border:none;
-  color:#ff5a5a;
-  cursor:pointer;
+  color:#ff4d4d;
+}
+
+select,.btn{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border-radius:12px;
+  border:none;
 }
 
 select{
-  width:100%;
-  margin-top:10px;
-  padding:10px;
-  border-radius:10px;
   background:#181818;
   color:#fff;
-  border:1px solid #2a2a2a;
+  border:1px solid #222;
+}
+
+.btn{
+  background:#00ff7f;
+  color:#000;
+  font-weight:bold;
+}
+
+.btn.alt{
+  background:#1f1f1f;
+  color:#fff;
 }
 
 .invoice{
-  background:#101010;
+  background:#0f0f0f;
   border-radius:12px;
   padding:12px;
   margin-top:12px;
   font-size:14px;
-}
-
-.btn{
-  width:100%;
-  margin-top:12px;
-  padding:14px;
-  border:none;
-  border-radius:14px;
-  background:#1cff85;
-  color:#000;
-  font-weight:700;
-  font-size:16px;
-  cursor:pointer;
-}
-
-.btn.alt{
-  background:#181818;
-  color:#1cff85;
-  border:1px solid #1cff85;
 }
 
 .toast{
@@ -133,12 +107,14 @@ select{
   bottom:20px;
   left:50%;
   transform:translateX(-50%);
-  background:#1a1a1a;
-  color:#1cff85;
+  background:#00ff7f;
+  color:#000;
   padding:12px 18px;
   border-radius:12px;
   opacity:0;
   transition:.3s;
 }
 
-.toast.show{opacity:1}
+.toast.show{
+  opacity:1;
+}
