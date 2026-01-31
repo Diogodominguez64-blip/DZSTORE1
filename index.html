@@ -105,17 +105,18 @@
     </div>
   </div>
 
-  <div class="card">
+  <div class="card card-promo">
+    <div class="badge-fire">🔥 2x1 ACTIVO</div>
     <img src="HG.png">
     <div class="card-content">
       <h2>HG NO ROOT</h2>
-      <label>Planes</label>
+      <label>Planes (OFERTA 2x1)</label>
       <select class="plan">
-        <option value="3" data-label="1 DÍA">1 DÍA – 3 USD</option>
-        <option value="5" data-label="10 DÍAS">10 DÍAS – 5 USD</option>
-        <option value="12" data-label="30 DÍAS">30 DÍAS – 12 USD</option>
+        <option value="3" data-label="1 DÍA (2x1)">1 DÍA – 3 USD</option>
+        <option value="5" data-label="10 DÍAS (2x1)">10 DÍAS – 5 USD</option>
+        <option value="12" data-label="30 DÍAS (2x1)">30 DÍAS – 12 USD</option>
       </select>
-      <button onclick="addToCart('HG NO ROOT')">ADD TO CART</button>
+      <button onclick="addToCart('HG NO ROOT (2x1)')" style="background: #ff0000; color: white;">ADD TO CART</button>
     </div>
   </div>
 
@@ -169,12 +170,13 @@
   <h3>🛒 RESUMEN DE COMPRA</h3>
   <div id="cart"></div>
   
-<select id="seller">
-  <option value="">👤 Seleccionar Vendedor</option>
-  <option value="Ozoria|18093185425">Ozoria </option>
-  <option value="Diogo|18294103676">Diogo </option>
-  <option value="David|584262984228">David </option>
-</select>
+  <div class="checkout-grid">
+    <select id="seller">
+      <option value="">👤 Seleccionar Vendedor</option>
+      <option value="Ozoria|18093185425">Ozoria </option>
+      <option value="Diogo|18294103676">Diogo </option>
+      <option value="David|584262984228">David </option>
+    </select>
 
     <select id="payment">
       <option value="">💳 Método de pago</option>
