@@ -1,36 +1,47 @@
 let cart = [];
+let current = null;
 
-function addToCart(product) {
-  cart.push(product);
-
-  const checkout = document.getElementById('checkout');
-  checkout.classList.remove('hidden');
-
-  checkout.scrollIntoView({ behavior: 'smooth' });
-
-  alert(product + " añadido al carrito");
+function selectProduct(sel,name){
+  const [days,price] = sel.value.split("|");
+  current = {name,days,price:Number(price)};
 }
 
-function sendTicket() {
-  const seller = document.getElementById('seller').value;
-  const currency = document.getElementById('currency').value;
-  const time = new Date().toLocaleString();
+function addFromSelect(btn){
+  if(!current) return;
+  cart.push(current);
+  current = null;
+  renderCart();
+  showToast("Producto añadido al carrito");
+  document.getElementById("sound").play().catch(()=>{});
+  document.getElementById("checkout").scrollIntoView({behavior:"smooth"});
+}
 
-  let message =
-`🧾 TICKET DE COMPRA - DZSTORE
+function renderCart(){
+  const c = document.getElementById("cart");
+  c.innerHTML="";
+  let total=0;
+  cart.forEach(p=>{
+    total+=p.price;
+    c.innerHTML+=`<div>${p.name} - ${p.days} días - ${p.price} USD</div>`;
+  });
+  c.innerHTML+=`<strong>Total: ${total} USD</strong>`;
+}
 
-🕒 Fecha: ${time}
-👤 Vendedor: ${seller}
-💳 Método de pago: Otros
-🌎 Moneda: ${currency}
+function sendTicket(){
+  const seller = document.getElementById("seller").value;
+  if(!seller){alert("Selecciona vendedor");return;}
+  const [name,phone]=seller.split("|");
+  let text=`🧾 DZSTORE OFICIAL\n\n`;
+  cart.forEach(p=>{
+    text+=`• ${p.name} ${p.days} días - ${p.price} USD\n`;
+  });
+  text+=`\nGracias por tu compra.\n${name} te atenderá en breves.`;
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`,"_blank");
+}
 
-📦 Productos:
-${cart.join('\n')}
-
-Gracias por tu compra 🙌
-${seller} te atenderá en breves.`;
-
-  const phone = "18294103676"; // número principal
-  const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-  window.open(url, "_blank");
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.innerText=msg;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),1500);
 }
