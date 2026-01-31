@@ -1,104 +1,84 @@
-let cart = [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-const rates = {
-  USD: 1,
-  MXN: 17,
-  COP: 3900,
-  PEN: 3.7,
-  ARS: 900
+const rates = {USD:1,MXN:17,COP:3900,PEN:3.7,ARS:900};
+
+const sellers = {
+  "David":"18294103676",
+  "Dz Diogo":"18093185425",
+  "Dz Ozoria":"584262984228"
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("JS cargado correctamente");
-});
-
-function addToCart(product, selectId) {
-  const select = document.getElementById(selectId);
-  if (!select) {
-    alert("Error: selector no encontrado");
-    return;
-  }
-
-  const [plan, price] = select.value.split("|");
-
-  cart.push({
-    product,
-    plan,
-    price: parseFloat(price)
-  });
-
-  renderCart();
-  showToast();
-
-  document.getElementById("ticket")
-    .scrollIntoView({ behavior: "smooth" });
+function generateOrder(){
+  return "CT-" + Math.floor(100000 + Math.random()*900000);
 }
 
-function renderCart() {
-  const cartBox = document.getElementById("cart");
-  cartBox.innerHTML = "";
+let orderId = generateOrder();
+document.getElementById("orderId").innerText = `Orden #${orderId}`;
 
-  cart.forEach(item => {
-    const div = document.createElement("div");
-    div.textContent = `✔ ${item.product} - ${item.plan} (${item.price} USD)`;
-    cartBox.appendChild(div);
+function addToCart(product,id){
+  const [plan,price] = document.getElementById(id).value.split("|");
+  cart.push({product,plan,price:+price});
+  save();
+  render();
+  toast();
+  document.getElementById("ticket").scrollIntoView({behavior:"smooth"});
+}
+
+function removeItem(i){
+  cart.splice(i,1);
+  save(); render();
+}
+
+function render(){
+  const box=document.getElementById("cart");
+  box.innerHTML="";
+  cart.forEach((p,i)=>{
+    box.innerHTML+=`
+      <div class="cart-item">
+        <span>${p.product} - ${p.plan} (${p.price} USD)</span>
+        <button onclick="removeItem(${i})">✖</button>
+      </div>`;
   });
-
+  document.getElementById("itemsCount").innerText=`Productos: ${cart.length}`;
+  document.getElementById("payBtn").disabled = cart.length===0;
   updateTotals();
 }
 
-function updateTotals() {
-  let total = cart.reduce((sum, i) => sum + i.price, 0);
-  document.getElementById("totalUsd").innerText =
-    `Total: ${total} USD`;
-
-  const currency = document.getElementById("currency").value;
-  if (currency !== "USD") {
-    const converted = (total * rates[currency]).toFixed(2);
-    document.getElementById("totalLocal").innerText =
-      `Equivalente en ${currency}: ${converted}`;
-  } else {
-    document.getElementById("totalLocal").innerText = "";
-  }
+function updateTotals(){
+  const total=cart.reduce((s,p)=>s+p.price,0);
+  document.getElementById("totalUsd").innerText=`Total: ${total} USD`;
+  const cur=document.getElementById("currency").value;
+  document.getElementById("totalLocal").innerText =
+    cur==="USD"?"":`Equivalente ${cur}: ${(total*rates[cur]).toFixed(2)}`;
 }
 
-function showToast() {
-  const toast = document.getElementById("toast");
-  toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 1500);
+function sendTicket(){
+  if(!confirm("¿Deseas abrir el ticket con este pedido?"))return;
+  const seller=document.getElementById("seller").value;
+  const num=sellers[seller];
+  const cur=document.getElementById("currency").value;
+  let total=cart.reduce((s,p)=>s+p.price,0);
+  let msg=`🧾 CT STORE\nOrden #${orderId}\n\n`;
+  cart.forEach(p=>msg+=`• ${p.product} - ${p.plan}: ${p.price} USD\n`);
+  msg+=`\nTotal: ${total} USD`;
+  if(cur!=="USD")msg+=`\n${cur}: ${(total*rates[cur]).toFixed(2)}`;
+  msg+=`\n\nVendedor: ${seller}\nGracias por tu compra.`;
+
+  window.location.href=`https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
+
+  cart=[]; save(); render();
+  orderId=generateOrder();
+  document.getElementById("orderId").innerText=`Orden #${orderId}`;
 }
 
-function sendTicket() {
-  if (cart.length === 0) {
-    alert("El carrito está vacío");
-    return;
-  }
-
-  const sellerName = document.getElementById("seller").value;
-  const sellerNumber = sellers[sellerName];
-  const currency = document.getElementById("currency").value;
-  const time = new Date().toLocaleString();
-
-  let total = cart.reduce((s, i) => s + i.price, 0);
-
-  let msg = `🧾 FACTURA DZSTORE\n\n`;
-
-  cart.forEach(i => {
-    msg += `• ${i.product} - ${i.plan}: ${i.price} USD\n`;
-  });
-
-  msg += `\nTotal: ${total} USD`;
-
-  if (currency !== "USD") {
-    msg += `\nEquivalente en ${currency}: ${(total * rates[currency]).toFixed(2)}`;
-  }
-
-  msg += `\n\nVendedor: ${sellerName}`;
-  msg += `\nHora: ${time}`;
-  msg += `\n\nGracias por tu compra. ${sellerName} te atenderá en breves.`;
-
-  // 🔥 ESTE LINK ES EL MÁS DIRECTO POSIBLE
-  const url = `https://wa.me/${sellerNumber}?text=${encodeURIComponent(msg)}`;
-
-  window.location.href = url;
+function save(){
+  localStorage.setItem("cart",JSON.stringify(cart));
 }
+
+function toast(){
+  const t=document.getElementById("toast");
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),1500);
+}
+
+render();
